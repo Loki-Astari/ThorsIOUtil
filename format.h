@@ -11,6 +11,7 @@
 #include <typeindex>
 #include <cstdint>
 #include <cstddef>
+#include <cctype>
 #include <cassert>
 
 namespace ThorsAnvil::IOUtil
@@ -268,10 +269,10 @@ class Format
                     }
 
                     // Set up the stream for formatting
-                    std::ios_base::fmtflags oldFlags = s.flags(format);
-                    char                    oldFill  = s.fill(fill);
-                    std::streamsize         oldWidth = s.width(fillWidth);
-                    std::streamsize         oldPrec  = s.precision(precision);
+                    auto oldFlags = s.flags(format);
+                    auto oldFill  = s.fill(fill);
+                    auto oldWidth = s.width(fillWidth);
+                    auto oldPrec  = s.precision(precision);
 
                     // Print the value.
                     s << arg;
@@ -297,13 +298,13 @@ class Format
                         {{Type::Int,   Length::t},    &typeid(std::ptrdiff_t)},
 
                         {{Type::UInt,  Length::none}, &typeid(unsigned int)},
-                        {{Type::UInt,  Length::none}, &typeid(unsigned char)},
-                        {{Type::UInt,  Length::none}, &typeid(unsigned short int)},
-                        {{Type::UInt,  Length::none}, &typeid(unsigned long int)},
-                        {{Type::UInt,  Length::none}, &typeid(unsigned long long int)},
-                        {{Type::UInt,  Length::none}, &typeid(std::intmax_t)},
-                        {{Type::UInt,  Length::none}, &typeid(std::size_t)},
-                        {{Type::UInt,  Length::none}, &typeid(std::ptrdiff_t)},
+                        {{Type::UInt,  Length::hh},   &typeid(unsigned char)},
+                        {{Type::UInt,  Length::h},    &typeid(unsigned short int)},
+                        {{Type::UInt,  Length::l},    &typeid(unsigned long int)},
+                        {{Type::UInt,  Length::ll},   &typeid(unsigned long long int)},
+                        {{Type::UInt,  Length::j},    &typeid(std::intmax_t)},
+                        {{Type::UInt,  Length::z},    &typeid(std::size_t)},
+                        {{Type::UInt,  Length::t},    &typeid(std::ptrdiff_t)},
 
                         {{Type::Float, Length::none}, &typeid(double)}, {{Type::Float, Length::l}, &typeid(double)}, {{Type::Float, Length::L}, &typeid(long double)},
                         {{Type::Char,  Length::none}, &typeid(int)},    {{Type::Char,  Length::l}, &typeid(std::wint_t)},
@@ -338,7 +339,7 @@ class Format
         {
             std::size_t count = sizeof...(args);
             std::size_t pos   = 0;
-            for(int loop = 0; loop < count; ++loop) {
+            for(std::size_t loop = 0; loop < count; ++loop) {
                 // Not dealing with '\%' yet just trying to get it working.
                 std::size_t nextFormatter = format.find('%', pos);
                 if (nextFormatter == std::string::npos) {
