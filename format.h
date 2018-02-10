@@ -360,17 +360,16 @@ class Format
             doPrint(s, std::make_index_sequence<sizeof...(Args)>());
         }
     private:
-        template<typename A>
-        std::ostream& printValue(std::ostream& s, std::string const& prefix, Formatter const& format, A const& value) const
+        template<std::size_t I>
+        std::ostream& printValue(std::ostream& s) const
         {
-            return s << prefix << format << value;
+            return s << prefixString[I] << formater[I] << std::get<I>(arguments);
         }
-        template<typename A>
-        void forward(A const&...) const{}
+
         template<std::size_t... I>
         void doPrint(std::ostream& s, std::index_sequence<I...> const&) const
         {
-            std::ostream* ignore[] = {&printValue(s, prefixString[I], formater[I], std::get<I>(arguments))...};
+            std::ostream* ignore[] = {&printValue<I>(s)...};
             s << prefixString.back();
         }
 
