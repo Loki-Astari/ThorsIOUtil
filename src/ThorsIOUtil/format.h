@@ -35,7 +35,9 @@ class Format
         //      Specifier:  d i u o x X f F e E g G a A c s p n
 
         // Enum representing the Length and specifier provided in a string
+#pragma vera-pushoff
         enum class Length    {none, hh, h, l, ll, j, z, t, L};
+#pragma vera-pop
         enum class Specifier {d, i, u, o, x, X, f, F, e, E, g, G, a, A, c, s, p, n};
         enum class Type      {Int, UInt, Float, Char, String, Pointer, Count};
         // Flags
@@ -105,9 +107,11 @@ class Format
                 bool flag = true;
                 // Scan the flags.
                 // There can be more than one. So loop until we don't find a flag.
-                do {
+                do
+                {
                     ++fmt;
-                    switch(*fmt) {
+                    switch (*fmt)
+                    {
                         case '-':   leftJustify     = true;break;
                         case '+':   forceSign       = true;break;
                         case ' ':   forceSignWidth  = true;break;
@@ -118,21 +122,25 @@ class Format
                 } while (flag);
 
                 // Check to see if there is a width.
-                if (std::isdigit(*fmt)) {
+                if (std::isdigit(*fmt))
+                {
                     char* end;
                     width = std::strtol(fmt, &end, 10);
                     fmt = end;
                 }
 
                 // Check to see if there is a precision
-                if (*fmt == '.') {
+                if (*fmt == '.')
+                {
                     ++fmt;
-                    if (std::isdigit(*fmt)) {
+                    if (std::isdigit(*fmt))
+                    {
                         char* end;
                         precision = std::strtol(fmt, &end, 10);
                         fmt = end;
                     }
-                    else {
+                    else
+                    {
                         // The actual value is not required (just the dot).
                         // If there is no value precision is 0 (rather than default)
                         precision = 0;
@@ -144,19 +152,24 @@ class Format
                 // note this is optional.
                 char first = *fmt;
                 ++fmt;
-                switch(first) {
+                switch (first)
+                {
                     case 'h':   length = Length::h;
-                                if (*fmt == 'h') {
+                                if (*fmt == 'h')
+                                {
                                     ++fmt;
                                     length  = Length::hh;
                                 }
                                 break;
+#pragma vera-pushoff
                     case 'l':   length = Length::l;
-                                if (*fmt == 'l') {
+                                if (*fmt == 'l')
+                                {
                                     ++fmt;
                                     length  = Length::ll;
                                 }
                                 break;
+#pragma vera-pop
                     case 'j':   length = Length::j;break;
                     case 'z':   length = Length::z;break;
                     case 't':   length = Length::t;break;
@@ -166,7 +179,8 @@ class Format
                 }
 
                 // Check for the specifier value.
-                switch(*fmt) {
+                switch (*fmt)
+                {
                     case 'd':   specifier = Specifier::d;type = Type::Int;      break;
                     case 'i':   specifier = Specifier::i;type = Type::Int;      break;
                     case 'u':   specifier = Specifier::u;type = Type::UInt;     break;
@@ -202,42 +216,52 @@ class Format
 
                 // Are we expecting a number type?
                 // Set dec/oct/hex/fixed/scientific
-                if (specifier == Specifier::d || specifier == Specifier::i) {
+                if (specifier == Specifier::d || specifier == Specifier::i)
+                {
                     format  |= std::ios_base::dec;
                 }
-                else if (specifier == Specifier::o) {
+                else if (specifier == Specifier::o)
+                {
                     format  |= std::ios_base::oct;
                 }
-                else if (specifier == Specifier::x || specifier == Specifier::X) {
+                else if (specifier == Specifier::x || specifier == Specifier::X)
+                {
                     format  |= std::ios_base::hex;
                 }
-                else if (specifier == Specifier::f || specifier == Specifier::F) {
+                else if (specifier == Specifier::f || specifier == Specifier::F)
+                {
                     format |= std::ios_base::fixed;
                 }
-                else if (specifier == Specifier::e || specifier == Specifier::E) {
+                else if (specifier == Specifier::e || specifier == Specifier::E)
+                {
                     format |= std::ios_base::scientific;
                 }
-                else if (specifier == Specifier::a || specifier == Specifier::A) {
+                else if (specifier == Specifier::a || specifier == Specifier::A)
+                {
                     format |= (std::ios_base::fixed | std::ios_base::scientific);
                 }
 
                 // Some specifiers define if we are using upper case (rather than the default lowercase for any letters)
-                if (specifier == Specifier::X || specifier == Specifier::F || specifier == Specifier::E || specifier == Specifier::A || specifier == Specifier::G) {
+                if (specifier == Specifier::X || specifier == Specifier::F || specifier == Specifier::E || specifier == Specifier::A || specifier == Specifier::G)
+                {
                     format |= std::ios_base::uppercase;
                 }
 
                 // Show the base types for certain output specifiers.
-                if (prefixType && (specifier == Specifier::o || specifier == Specifier::x || specifier == Specifier::X)) {
+                if (prefixType && (specifier == Specifier::o || specifier == Specifier::x || specifier == Specifier::X))
+                {
                     format |= std::ios_base::showbase;
                 }
 
                 // Show the floating point even if there is no fraction.
-                if (prefixType && (specifier == Specifier::a || specifier == Specifier::A || specifier == Specifier::e || specifier == Specifier::E || specifier == Specifier::f || specifier == Specifier::F || specifier == Specifier::g || specifier == Specifier::G)) {
+                if (prefixType && (specifier == Specifier::a || specifier == Specifier::A || specifier == Specifier::e || specifier == Specifier::E || specifier == Specifier::f || specifier == Specifier::F || specifier == Specifier::g || specifier == Specifier::G))
+                {
                     format |= std::ios_base::showpoint;
                 }
 
                 // Show the '+' sign for positive values.
-                if (forceSign && (specifier != Specifier::c && specifier != Specifier::s && specifier != Specifier::p)) {
+                if (forceSign && (specifier != Specifier::c && specifier != Specifier::s && specifier != Specifier::p))
+                {
                     format |= std::ios_base::showpos;
                 }
             }
@@ -254,7 +278,8 @@ class Format
                 template<typename A>
                 void apply(std::ostream& s, A const& arg) const
                 {
-                    if (std::type_index(*expectedType) != std::type_index(typeid(A))) {
+                    if (std::type_index(*expectedType) != std::type_index(typeid(A)))
+                    {
                         throw std::invalid_argument(std::string("Actual argument does not match supplied argument: Expected(") + expectedType->name() + ") Got(" + typeid(A).name() + ")");
                     }
 
@@ -263,7 +288,8 @@ class Format
                     int  fillWidth = width;
 
                     // Take special care if we forcing a space in-front of positive values.
-                    if (forceSignWidth && !forceSign && (arg >= 0) && (specifier != Specifier::c && specifier != Specifier::s && specifier != Specifier::p)) {
+                    if (forceSignWidth && !forceSign && (arg >= 0) && (specifier != Specifier::c && specifier != Specifier::s && specifier != Specifier::p))
+                    {
                         s << ' ';
                         --fillWidth;
                     }
@@ -286,8 +312,9 @@ class Format
                 // Only certain combinations of Specifier and Length are supported.
                 static std::type_info const* getType(Specifier specifier, Length length, Type type)
                 {
-                    static std::map<std::pair<Type, Length>, std::type_info const*>    typeMap = {
-                        // Integers.
+                    static std::map<std::pair<Type, Length>, std::type_info const*>    typeMap =
+                    {
+#pragma vera-pushoff
                         {{Type::Int,   Length::none}, &typeid(int)},
                         {{Type::Int,   Length::hh},   &typeid(signed char)},
                         {{Type::Int,   Length::h},    &typeid(short int)},
@@ -320,9 +347,11 @@ class Format
                         {{Type::Count, Length::j},    &typeid(std::intmax_t*)},
                         {{Type::Count, Length::z},    &typeid(std::size_t*)},
                         {{Type::Count, Length::t},    &typeid(std::ptrdiff_t*)}
+#pragma vera-pop
                     };
                     auto find = typeMap.find({type, length});
-                    if (find == typeMap.end()) {
+                    if (find == typeMap.end())
+                    {
                         throw std::invalid_argument("Specifier and length are not a valid combination");
                     }
                     return find->second;
@@ -339,10 +368,12 @@ class Format
         {
             std::size_t count = sizeof...(args);
             std::size_t pos   = 0;
-            for(std::size_t loop = 0; loop < count; ++loop) {
+            for (std::size_t loop = 0; loop < count; ++loop)
+            {
                 // Not dealing with '\%' yet just trying to get it working.
                 std::size_t nextFormatter = format.find('%', pos);
-                if (nextFormatter == std::string::npos) {
+                if (nextFormatter == std::string::npos)
+                {
                     throw std::invalid_argument("Invalid Format: not enough format specifiers for provided arguments");
                 }
                 prefixString.emplace_back(format.substr(pos, (nextFormatter - pos)));
@@ -351,7 +382,8 @@ class Format
                 pos = nextFormatter + formater.back().size();
             }
             std::size_t nextFormatter = format.find(pos, '%');
-            if (nextFormatter != std::string::npos) {
+            if (nextFormatter != std::string::npos)
+            {
                 throw std::invalid_argument("Invalid Format: too many format specifiers for provided arguments");
             }
             prefixString.emplace_back(format.substr(pos));
