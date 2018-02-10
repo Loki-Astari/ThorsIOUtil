@@ -361,19 +361,16 @@ class Format
         }
     private:
         template<typename A>
-        struct Printer
+        std::ostream& printValue(std::ostream& s, std::string const& prefix, Formatter const& format, A const& value) const
         {
-            Printer(std::ostream& s, std::string const& prefix, Formatter const& format, A const& value)
-            {
-                s << prefix << format << value;
-            }
-        };
+            return s << prefix << format << value;
+        }
         template<typename A>
         void forward(A const&...) const{}
         template<std::size_t... I>
         void doPrint(std::ostream& s, std::index_sequence<I...> const&) const
         {
-            forward(1, Printer<decltype(std::get<I>(arguments))>(s, prefixString[I], formater[I], std::get<I>(arguments))...);
+            std::ostream* ignore[] = {&printValue(s, prefixString[I], formater[I], std::get<I>(arguments))...};
             s << prefixString.back();
         }
 
