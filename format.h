@@ -21,39 +21,67 @@ class Format
 {
     class Formatter
     {
+        // The number of characters read in the formatter.
         std::size_t             used;
-        // Flags
+
+        // Formatter has the text representation:
+        //      %<Flag>*<Width>?[.<Precision>]?<Length>?<Specifier>
+        //
+        //      Flag:       - + <space> # 0
+        //      Width:      {1-9}{0-9}*
+        //      Precision:  {0-9}*
+        //      Length:     hh h l ll j z t L
+        //      Specifier:  d i u o x X f F e E g G a A c s p n
+
+        // Enum representing the Length and specifier provided in a string
         enum class Length    {none, hh, h, l, ll, j, z, t, L};
         enum class Specifier {d, i, u, o, x, X, f, F, e, E, g, G, a, A, c, s, p, n};
+        enum class Type      {Int, UInt, Float, Char, String, Pointer, Count};
+        // Flags
         bool                    leftJustify;    // -    Left-justify within the given field width; Right justification is the default (see width sub-specifier).
-        bool                    forceSign;      // +    Forces to preceed the result with a plus or minus sign (+ or -) even for positive numbers. By default, only negative numbers are preceded with a - sign.
+        bool                    forceSign;      // +    Forces to precede the result with a plus or minus sign (+ or -) even for positive numbers. By default, only negative numbers are preceded with a - sign.
         bool                    forceSignWidth; // (space)  If no sign is going to be written, a blank space is inserted before the value.
-        bool                    prefixType;     // #    Used with o, x or X specifiers the value is preceeded with 0, 0x or 0X respectively for values different than zero.
-                                                // Used with a, A, e, E, f, F, g or G it forces the written output to contain a decimal point even if no more digits follow. By default, if no digits follow, no decimal point is written.
+        bool                    prefixType;     // #    Used with o, x or X specifiers the value is preceded with 0, 0x or 0X respectively for values different than zero.
+                                                //      Used with a, A, e, E, f, F, g or G it forces the written output to contain a decimal point even if no more digits follow. By default, if no digits follow, no decimal point is written.
         bool                    leftPad;        // 0    Left-pads the number with zeroes (0) instead of spaces when padding is specified (see width sub-specifier).
+        // Width and precision of the formatter.
         int                     width;
         int                     precision;
         Length                  length;
         Specifier               specifier;
-        std::type_info const*   expectedType;
-        std::ios_base::fmtflags format;
+        Type                    type;
 
-        public:
-            struct FormatterCheck
+        // Pre-calculate a some values based on the format string
+        std::type_info const*   expectedType;   // Type info we expect the next argument to be based on length/specifier
+        std::ios_base::fmtflags format;         // The format flags that will be applied to stream before the next argument
+
+        // When you apply a `Formatter` object to a stream this temporary object is created.
+        // When the actual object is then applied to this object we call back to the Formatter::apply()
+        // method to do the actual work of setting up the stream and printing the value. When it is
+        // all done we return the original stream.
+        // see below friend FormatterCheck operator<<(std::ostream&, Format const&)
+        // Usage:
+        //      stream << FormatObject << value;
+        //      Notes:
+        //          stream << FormatObject          returns a FormatChecker
+        //          FormatChecker << value          calls apply()
+        //                                          the returns the original stream
+        struct FormatterCheck
+        {
+            std::ostream&       stream;
+            Formatter const&    formatter;
+            FormatterCheck(std::ostream& s, Formatter const& formatter)
+                : stream(s)
+                , formatter(formatter)
+            {}
+            template<typename A>
+            std::ostream& operator<<(A const& nextArg)
             {
-                std::ostream&       stream;
-                Formatter const&    formatter;
-                FormatterCheck(std::ostream& s, Formatter const& formatter)
-                    : stream(s)
-                    , formatter(formatter)
-                {}
-                template<typename A>
-                std::ostream& operator<<(A const& nextArg)
-                {
-                    formatter.apply(stream, nextArg);
-                    return stream;
-                }
-            };
+                formatter.apply(stream, nextArg);
+                return stream;
+            }
+        };
+        public:
            Formatter(char const* formatStr)
                 : used(0)
                 , leftJustify(false)
@@ -66,10 +94,16 @@ class Format
                 , length(Length::none)
                 , format(0)
             {
+                // Scan the format string to set up all the
+                // the member variables.
                 char const* fmt = formatStr;
+
+                // Must start with a '%'
                 assert(*fmt == '%');
 
                 bool flag = true;
+                // Scan the flags.
+                // There can be more than one. So loop until we don't find a flag.
                 do {
                     ++fmt;
                     switch(*fmt) {
@@ -81,11 +115,15 @@ class Format
                         default:    flag = false;
                     }
                 } while (flag);
+
+                // Check to see if there is a width.
                 if (std::isdigit(*fmt)) {
                     char* end;
                     width = std::strtol(fmt, &end, 10);
                     fmt = end;
                 }
+
+                // Check to see if there is a precision
                 if (*fmt == '.') {
                     ++fmt;
                     if (std::isdigit(*fmt)) {
@@ -94,9 +132,15 @@ class Format
                         fmt = end;
                     }
                     else {
+                        // The actual value is not required (just the dot).
+                        // If there is no value precision is 0 (rather than default)
                         precision = 0;
                     }
                 }
+
+                // Check for the length
+                // This converts from int to long int etc.
+                // note this is optional.
                 char first = *fmt;
                 ++fmt;
                 switch(first) {
@@ -119,36 +163,44 @@ class Format
                     default:
                         --fmt;
                 }
+
+                // Check for the specifier value.
                 switch(*fmt) {
-                    case 'd':   specifier = Specifier::d;break;
-                    case 'i':   specifier = Specifier::i;break;
-                    case 'u':   specifier = Specifier::u;break;
-                    case 'o':   specifier = Specifier::o;break;
-                    case 'x':   specifier = Specifier::x;break;
-                    case 'X':   specifier = Specifier::X;break;
-                    case 'f':   specifier = Specifier::f;break;
-                    case 'F':   specifier = Specifier::F;break;
-                    case 'e':   specifier = Specifier::e;break;
-                    case 'E':   specifier = Specifier::E;break;
-                    case 'g':   specifier = Specifier::g;break;
-                    case 'G':   specifier = Specifier::G;break;
-                    case 'a':   specifier = Specifier::a;break;
-                    case 'A':   specifier = Specifier::A;break;
-                    case 'c':   specifier = Specifier::c;break;
-                    case 's':   specifier = Specifier::s;break;
-                    case 'p':   specifier = Specifier::p;break;
-                    case 'n':   specifier = Specifier::n;break;
+                    case 'd':   specifier = Specifier::d;type = Type::Int;      break;
+                    case 'i':   specifier = Specifier::i;type = Type::Int;      break;
+                    case 'u':   specifier = Specifier::u;type = Type::UInt;     break;
+                    case 'o':   specifier = Specifier::o;type = Type::UInt;     break;
+                    case 'x':   specifier = Specifier::x;type = Type::UInt;     break;
+                    case 'X':   specifier = Specifier::X;type = Type::UInt;     break;
+                    case 'f':   specifier = Specifier::f;type = Type::Float;    break;
+                    case 'F':   specifier = Specifier::F;type = Type::Float;    break;
+                    case 'e':   specifier = Specifier::e;type = Type::Float;    break;
+                    case 'E':   specifier = Specifier::E;type = Type::Float;    break;
+                    case 'g':   specifier = Specifier::g;type = Type::Float;    break;
+                    case 'G':   specifier = Specifier::G;type = Type::Float;    break;
+                    case 'a':   specifier = Specifier::a;type = Type::Float;    break;
+                    case 'A':   specifier = Specifier::A;type = Type::Float;    break;
+                    case 'c':   specifier = Specifier::c;type = Type::Char;     break;
+                    case 's':   specifier = Specifier::s;type = Type::String;   break;
+                    case 'p':   specifier = Specifier::p;type = Type::Pointer;  break;
+                    case 'n':   specifier = Specifier::n;type = Type::Count;    break;
                     default:
+                        // Not optional so throw if we don't find it.
                        throw std::invalid_argument(std::string("Invalid Parameter specifier: ") + *fmt);
                 }
                 ++fmt;
 
-                expectedType = getType(specifier, length);
-
+                // Now we know how much string was used to calculate the value.
                 used  = fmt - formatStr;
 
+                // Pre-calculate the type information of the next argument.
+                expectedType = getType(specifier, length, type);
+
+                // Pre-calculate the format flags that will be used to set up the stream.
                 format  |= (leftJustify ? std::ios_base::left : std::ios_base::right);
 
+                // Are we expecting a number type?
+                // Set dec/oct/hex/fixed/scientific
                 if (specifier == Specifier::d || specifier == Specifier::i) {
                     format  |= std::ios_base::dec;
                 }
@@ -167,21 +219,32 @@ class Format
                 else if (specifier == Specifier::a || specifier == Specifier::A) {
                     format |= (std::ios_base::fixed | std::ios_base::scientific);
                 }
+
+                // Some specifiers define if we are using upper case (rather than the default lowercase for any letters)
                 if (specifier == Specifier::X || specifier == Specifier::F || specifier == Specifier::E || specifier == Specifier::A || specifier == Specifier::G) {
                     format |= std::ios_base::uppercase;
                 }
+
+                // Show the base types for certain output specifiers.
                 if (prefixType && (specifier == Specifier::o || specifier == Specifier::x || specifier == Specifier::X)) {
                     format |= std::ios_base::showbase;
                 }
+
+                // Show the floating point even if there is no fraction.
                 if (prefixType && (specifier == Specifier::a || specifier == Specifier::A || specifier == Specifier::e || specifier == Specifier::E || specifier == Specifier::f || specifier == Specifier::F || specifier == Specifier::g || specifier == Specifier::G)) {
                     format |= std::ios_base::showpoint;
                 }
+
+                // Show the '+' sign for positive values.
                 if (forceSign && (specifier != Specifier::c && specifier != Specifier::s && specifier != Specifier::p)) {
                     format |= std::ios_base::showpos;
                 }
             }
             std::size_t size() const {return used;}
 
+            // We pass the formatter to the stream first
+            // So we create a marker object used to print the actual argument.
+            // This will call apply() with the actual argument.
             friend FormatterCheck operator<<(std::ostream& s, Formatter const& formatter)
             {
                 return FormatterCheck(s, formatter);
@@ -194,60 +257,70 @@ class Format
                         throw std::invalid_argument(std::string("Actual argument does not match supplied argument: Expected(") + expectedType->name() + ") Got(" + typeid(A).name() + ")");
                     }
 
-
+                    // Fill is either 0 or space and only used for numbers.
                     char fill      = (!leftJustify && leftPad && (specifier != Specifier::c && specifier != Specifier::s && specifier != Specifier::p)) ? '0' : ' ';
                     int  fillWidth = width;
 
+                    // Take special care if we forcing a space in-front of positive values.
                     if (forceSignWidth && !forceSign && (arg >= 0) && (specifier != Specifier::c && specifier != Specifier::s && specifier != Specifier::p)) {
                         s << ' ';
                         --fillWidth;
                     }
+
+                    // Set up the stream for formatting
                     std::ios_base::fmtflags oldFlags = s.flags(format);
                     char                    oldFill  = s.fill(fill);
-                    int                     oldWidth = s.width(fillWidth);
+                    std::streamsize         oldWidth = s.width(fillWidth);
                     std::streamsize         oldPrec  = s.precision(precision);
 
+                    // Print the value.
                     s << arg;
 
+                    // reset the stream to original state
                     s.precision(oldPrec);
                     s.width(oldWidth);
                     s.fill(oldFill);
                     s.flags(oldFlags);
                 }
-
-                static std::type_info const* getType(Specifier specifier, Length length)
+                // Only certain combinations of Specifier and Length are supported.
+                static std::type_info const* getType(Specifier specifier, Length length, Type type)
                 {
-                    static std::map<std::pair<Specifier, Length>, std::type_info const*>    typeMap = {
-                        {{Specifier::d, Length::none}, &typeid(int)},           {{Specifier::i, Length::none}, &typeid(int)},           {{Specifier::d, Length::none}, &typeid(int*)},
-                        {{Specifier::d, Length::hh},   &typeid(signed char)},   {{Specifier::i, Length::none}, &typeid(signed char)},   {{Specifier::d, Length::hh},   &typeid(signed char*)},
-                        {{Specifier::d, Length::h},    &typeid(short int)},     {{Specifier::i, Length::none}, &typeid(short int)},     {{Specifier::d, Length::h},    &typeid(short int*)},
-                        {{Specifier::d, Length::l},    &typeid(long int)},      {{Specifier::i, Length::none}, &typeid(long int)},      {{Specifier::d, Length::l},    &typeid(long int*)},
-                        {{Specifier::d, Length::ll},   &typeid(long long int)}, {{Specifier::i, Length::none}, &typeid(long long int)}, {{Specifier::d, Length::ll},   &typeid(long long int*)},
-                        {{Specifier::d, Length::j},    &typeid(std::intmax_t)}, {{Specifier::i, Length::none}, &typeid(std::intmax_t)}, {{Specifier::d, Length::j},    &typeid(std::intmax_t*)},
-                        {{Specifier::d, Length::z},    &typeid(std::size_t)},   {{Specifier::i, Length::none}, &typeid(std::size_t)},   {{Specifier::d, Length::z},    &typeid(std::size_t*)},
-                        {{Specifier::d, Length::t},    &typeid(std::ptrdiff_t)},{{Specifier::i, Length::none}, &typeid(std::ptrdiff_t)},{{Specifier::d, Length::t},    &typeid(std::ptrdiff_t*)},
+                    static std::map<std::pair<Type, Length>, std::type_info const*>    typeMap = {
+                        // Integers.
+                        {{Type::Int,   Length::none}, &typeid(int)},
+                        {{Type::Int,   Length::hh},   &typeid(signed char)},
+                        {{Type::Int,   Length::h},    &typeid(short int)},
+                        {{Type::Int,   Length::l},    &typeid(long int)},
+                        {{Type::Int,   Length::ll},   &typeid(long long int)},
+                        {{Type::Int,   Length::j},    &typeid(std::intmax_t)},
+                        {{Type::Int,   Length::z},    &typeid(std::size_t)},
+                        {{Type::Int,   Length::t},    &typeid(std::ptrdiff_t)},
 
+                        {{Type::UInt,  Length::none}, &typeid(unsigned int)},
+                        {{Type::UInt,  Length::none}, &typeid(unsigned char)},
+                        {{Type::UInt,  Length::none}, &typeid(unsigned short int)},
+                        {{Type::UInt,  Length::none}, &typeid(unsigned long int)},
+                        {{Type::UInt,  Length::none}, &typeid(unsigned long long int)},
+                        {{Type::UInt,  Length::none}, &typeid(std::intmax_t)},
+                        {{Type::UInt,  Length::none}, &typeid(std::size_t)},
+                        {{Type::UInt,  Length::none}, &typeid(std::ptrdiff_t)},
 
-                        {{Specifier::u, Length::none}, &typeid(unsigned int)},          {{Specifier::o, Length::none}, &typeid(unsigned int)},          {{Specifier::x, Length::none}, &typeid(unsigned int)},          {{Specifier::X, Length::none}, &typeid(unsigned int)},
-                        {{Specifier::u, Length::hh},   &typeid(unsigned char)},         {{Specifier::o, Length::hh},   &typeid(unsigned char)},         {{Specifier::x, Length::hh},   &typeid(unsigned char)},         {{Specifier::X, Length::hh},   &typeid(unsigned char)},
-                        {{Specifier::u, Length::h},    &typeid(unsigned short int)},    {{Specifier::o, Length::h},    &typeid(unsigned short int)},    {{Specifier::x, Length::h},    &typeid(unsigned short int)},    {{Specifier::X, Length::h},    &typeid(unsigned short int)},
-                        {{Specifier::u, Length::l},    &typeid(unsigned long int)},     {{Specifier::o, Length::l},    &typeid(unsigned long int)},     {{Specifier::x, Length::l},    &typeid(unsigned long int)},     {{Specifier::X, Length::l},    &typeid(unsigned long int)},
-                        {{Specifier::u, Length::ll},   &typeid(unsigned long long int)},{{Specifier::o, Length::ll},   &typeid(unsigned long long int)},{{Specifier::x, Length::ll},   &typeid(unsigned long long int)},{{Specifier::X, Length::ll},   &typeid(unsigned long long int)},
-                        {{Specifier::u, Length::j},    &typeid(std::uintmax_t)},        {{Specifier::o, Length::j},    &typeid(std::uintmax_t)},        {{Specifier::x, Length::j},    &typeid(std::uintmax_t)},        {{Specifier::X, Length::j},    &typeid(std::uintmax_t)},
-                        {{Specifier::u, Length::z},    &typeid(std::size_t)},           {{Specifier::o, Length::z},    &typeid(std::size_t)},           {{Specifier::x, Length::z},    &typeid(std::size_t)},           {{Specifier::X, Length::z},    &typeid(std::size_t)},
-                        {{Specifier::u, Length::t},    &typeid(ptrdiff_t)},             {{Specifier::o, Length::t},    &typeid(ptrdiff_t)},             {{Specifier::x, Length::t},    &typeid(ptrdiff_t)},             {{Specifier::X, Length::t},    &typeid(ptrdiff_t)},
+                        {{Type::Float, Length::none}, &typeid(double)}, {{Type::Float, Length::l}, &typeid(double)}, {{Type::Float, Length::L}, &typeid(long double)},
+                        {{Type::Char,  Length::none}, &typeid(int)},    {{Type::Char,  Length::l}, &typeid(std::wint_t)},
+                        {{Type::String,Length::none}, &typeid(char*)},  {{Type::String,Length::l}, &typeid(wchar_t*)},
 
-                        {{Specifier::f, Length::none}, &typeid(double)}, {{Specifier::F, Length::none}, &typeid(double)},   {{Specifier::f, Length::L}, &typeid(long double)}, {{Specifier::F, Length::L}, &typeid(long double)},
-                        {{Specifier::e, Length::none}, &typeid(double)}, {{Specifier::E, Length::none}, &typeid(double)},   {{Specifier::e, Length::L}, &typeid(long double)}, {{Specifier::E, Length::L}, &typeid(long double)},
-                        {{Specifier::g, Length::none}, &typeid(double)}, {{Specifier::G, Length::none}, &typeid(double)},   {{Specifier::g, Length::L}, &typeid(long double)}, {{Specifier::G, Length::L}, &typeid(long double)},
-                        {{Specifier::a, Length::none}, &typeid(double)}, {{Specifier::A, Length::none}, &typeid(double)},   {{Specifier::a, Length::L}, &typeid(long double)}, {{Specifier::A, Length::L}, &typeid(long double)},
+                        {{Type::Pointer,Length::none},&typeid(void*)},
 
-                        {{Specifier::c, Length::none}, &typeid(int)},   {{Specifier::c, Length::l}, &typeid(std::wint_t)},
-                        {{Specifier::s, Length::none}, &typeid(char*)}, {{Specifier::c, Length::l}, &typeid(wchar_t*)},
-
-                        {{Specifier::p, Length::none}, &typeid(void*)}
+                        {{Type::Count, Length::none}, &typeid(int*)},
+                        {{Type::Count, Length::hh},   &typeid(signed char*)},
+                        {{Type::Count, Length::h},    &typeid(short int*)},
+                        {{Type::Count, Length::l},    &typeid(long int*)},
+                        {{Type::Count, Length::ll},   &typeid(long long int*)},
+                        {{Type::Count, Length::j},    &typeid(std::intmax_t*)},
+                        {{Type::Count, Length::z},    &typeid(std::size_t*)},
+                        {{Type::Count, Length::t},    &typeid(std::ptrdiff_t*)}
                     };
-                    auto find = typeMap.find({specifier, length});
+                    auto find = typeMap.find({type, length});
                     if (find == typeMap.end()) {
                         throw std::invalid_argument("Specifier and length are not a valid combination");
                     }
@@ -280,7 +353,7 @@ class Format
             if (nextFormatter != std::string::npos) {
                 throw std::invalid_argument("Invalid Format: too many format specifiers for provided arguments");
             }
-            prefixString.emplace_back(format.substr(pos, format.size() - pos));
+            prefixString.emplace_back(format.substr(pos));
         }
         void print(std::ostream& s) const
         {
