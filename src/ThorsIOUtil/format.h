@@ -17,6 +17,11 @@
 namespace ThorsAnvil::IOUtil
 {
 
+template<typename T>
+inline bool checkNumLargerEqualToZero(T const& value)  {return value >= 0;}
+
+inline bool checkNumLargerEqualToZero(char const*)     {return false;}
+
 template<typename... Args>
 class Format
 {
@@ -288,7 +293,7 @@ class Format
                     int  fillWidth = width;
 
                     // Take special care if we forcing a space in-front of positive values.
-                    if (forceSignWidth && !forceSign && (arg >= 0) && (specifier != Specifier::c && specifier != Specifier::s && specifier != Specifier::p))
+                    if (forceSignWidth && !forceSign && checkNumLargerEqualToZero(arg) && (specifier != Specifier::c && specifier != Specifier::s && specifier != Specifier::p))
                     {
                         s << ' ';
                         --fillWidth;
@@ -335,7 +340,7 @@ class Format
 
                         {{Type::Float, Length::none}, &typeid(double)}, {{Type::Float, Length::l}, &typeid(double)}, {{Type::Float, Length::L}, &typeid(long double)},
                         {{Type::Char,  Length::none}, &typeid(int)},    {{Type::Char,  Length::l}, &typeid(std::wint_t)},
-                        {{Type::String,Length::none}, &typeid(char*)},  {{Type::String,Length::l}, &typeid(wchar_t*)},
+                        {{Type::String,Length::none}, &typeid(char const*)},  {{Type::String,Length::l}, &typeid(wchar_t const*)},
 
                         {{Type::Pointer,Length::none},&typeid(void*)},
 
