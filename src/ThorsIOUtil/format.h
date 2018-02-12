@@ -22,6 +22,43 @@ inline bool checkNumLargerEqualToZero(T const& value)  {return value >= 0;}
 
 inline bool checkNumLargerEqualToZero(char const*)     {return false;}
 
+template<typename T>
+inline void printToStream(std::ostream& s, T const& arg, int, int, bool)
+{
+    s << arg;
+}
+
+inline void printToStream(std::ostream& s, char const* const& arg, int width, int precision, bool leftJustify)
+{
+    if (precision == -1)
+    {
+        s << arg;
+    }
+    else
+    {
+        s.width(0);
+        std::size_t     padding = (precision >= width) ? 0 :  (width - precision);
+        if (!leftJustify)
+        {
+            for(std::size_t loop = 0; loop < padding; ++loop)
+            {
+                s.put(' ');
+            }
+        }
+        for(std::size_t loop = 0; arg[loop] != '\0' && loop < precision; ++loop)
+        {
+            s.put(arg[loop]);
+        }
+        if (leftJustify)
+        {
+            for(std::size_t loop = 0; loop < padding; ++loop)
+            {
+                s.put(' ');
+            }
+        }
+    }
+}
+
 template<typename... Args>
 class Format
 {
@@ -53,8 +90,8 @@ class Format
                                                 //      Used with a, A, e, E, f, F, g or G it forces the written output to contain a decimal point even if no more digits follow. By default, if no digits follow, no decimal point is written.
         bool                    leftPad;        // 0    Left-pads the number with zeroes (0) instead of spaces when padding is specified (see width sub-specifier).
         // Width and precision of the formatter.
-        int                     width;
-        int                     precision;
+        std::size_t             width;
+        std::size_t             precision;
         Length                  length;
         Specifier               specifier;
         Type                    type;
@@ -98,7 +135,7 @@ class Format
                 , prefixType(false)
                 , leftPad(false)
                 , width(0)
-                , precision(6)
+                , precision(-1)
                 , length(Length::none)
                 , format(0)
             {
@@ -289,8 +326,9 @@ class Format
                     }
 
                     // Fill is either 0 or space and only used for numbers.
-                    char fill      = (!leftJustify && leftPad && (specifier != Specifier::c && specifier != Specifier::s && specifier != Specifier::p)) ? '0' : ' ';
-                    int  fillWidth = width;
+                    char        fill      = (!leftJustify && leftPad && (specifier != Specifier::c && specifier != Specifier::s && specifier != Specifier::p)) ? '0' : ' ';
+                    std::size_t fillWidth = width;
+                    std::size_t fractPrec = precision == -1 && type == Type::Float ? 6 : precision;
 
                     // Take special care if we forcing a space in-front of positive values.
                     if (forceSignWidth && !forceSign && checkNumLargerEqualToZero(arg) && (specifier != Specifier::c && specifier != Specifier::s && specifier != Specifier::p))
@@ -303,10 +341,9 @@ class Format
                     auto oldFlags = s.flags(format);
                     auto oldFill  = s.fill(fill);
                     auto oldWidth = s.width(fillWidth);
-                    auto oldPrec  = s.precision(precision);
+                    auto oldPrec  = s.precision(fractPrec);
 
-                    // Print the value.
-                    s << arg;
+                    printToStream(s, arg, width, precision, leftJustify);
 
                     // reset the stream to original state
                     s.precision(oldPrec);
