@@ -13,6 +13,7 @@
 #include <cstddef>
 #include <cctype>
 #include <cassert>
+#include <cmath>
 
 namespace ThorsAnvil::IOUtil
 {
@@ -23,12 +24,94 @@ inline bool checkNumLargerEqualToZero(T const& value)  {return value >= 0;}
 inline bool checkNumLargerEqualToZero(char const*)     {return false;}
 
 template<typename T>
-inline void printToStream(std::ostream& s, T const& arg, int, int, bool)
+inline void printToStream(std::ostream& s, T const& arg, int, int, bool, bool, bool)
 {
     s << arg;
 }
 
-inline void printToStream(std::ostream& s, char const* const& arg, int width, int precision, bool leftJustify)
+inline void printToStream(std::ostream& s, long long const& arg, int width, int precision, bool leftJustify, bool leftPad, bool forceSign)
+{
+    if (width == 0 && precision == -1)
+    {
+        s << arg;
+    }
+    else if (precision == -1)
+    {
+        if (arg < 0 && leftPad)
+        {
+            s.width(0);
+            s.put('-');
+            s.width(width-1);
+            s << std::abs(arg);
+        }
+        else if (arg >= 0 && leftPad && forceSign)
+        {
+            s.width(0);
+            s.put('+');
+            s.width(width-1);
+            s << std::abs(arg);
+        }
+        else
+        {
+            s << arg;
+        }
+    }
+    else
+    {
+        s.width(0);
+        s.unsetf(std::ios_base::showpos);
+        std::size_t signWidth      =  (arg < 0) || (arg >=0 && forceSign) ? 1 : 0;
+
+        width = width == 0 ? 0 : width - signWidth;
+
+        std::size_t numberOfDigits = arg != 0 ? static_cast<int>((std::log10(std::abs(arg)) + 1)) : ( precision == 0 ? 0 : 1);;
+        std::size_t sizeOfNumber   = numberOfDigits > precision ? numberOfDigits : precision;
+        std::size_t prefix         = numberOfDigits > precision ? 0 : (precision - numberOfDigits);
+        std::size_t padding        = (sizeOfNumber >= width) ? 0 :  (width - sizeOfNumber);
+        if (!leftJustify)
+        {
+            for(std::size_t loop = 0; loop < padding; ++loop)
+            {
+                s.put(' ');
+            }
+        }
+        if (arg < 0)
+        {
+            s.put('-');
+        }
+        else if (arg >=0 && forceSign)
+        {
+            s.put('+');
+        }
+        for(std::size_t loop = 0; loop < prefix; ++loop)
+        {
+            s.put('0');
+        }
+        if (precision != 0 || arg != 0)
+        {
+            s << std::abs(arg);
+        }
+        if (leftJustify)
+        {
+            for(std::size_t loop = 0; loop < padding; ++loop)
+            {
+                s.put(' ');
+            }
+        }
+    }
+}
+
+inline void printToStream(std::ostream& s, long const& arg, int width, int precision, bool leftJustify, bool leftPad, bool forceSign)
+{
+    printToStream(s, static_cast<long long>(arg), width, precision, leftJustify, leftPad, forceSign);
+}
+
+inline void printToStream(std::ostream& s, int const& arg, int width, int precision, bool leftJustify, bool leftPad, bool forceSign)
+{
+    printToStream(s, static_cast<long long>(arg), width, precision, leftJustify, leftPad, forceSign);
+}
+
+inline void printToStream(std::ostream& s, char const* const& arg, int width, int precision, bool leftJustify, bool, bool)
 {
     if (precision == -1)
     {
@@ -334,7 +417,7 @@ class Format
                     if (forceSignWidth && !forceSign && checkNumLargerEqualToZero(arg) && (specifier != Specifier::c && specifier != Specifier::s && specifier != Specifier::p))
                     {
                         s << ' ';
-                        --fillWidth;
+                        fillWidth = fillWidth == 0 ? 0 : fillWidth - 1;
                     }
 
                     // Set up the stream for formatting
@@ -343,7 +426,7 @@ class Format
                     auto oldWidth = s.width(fillWidth);
                     auto oldPrec  = s.precision(fractPrec);
 
-                    printToStream(s, arg, width, precision, leftJustify);
+                    printToStream(s, arg, fillWidth, precision, leftJustify, leftPad, forceSign);
 
                     // reset the stream to original state
                     s.precision(oldPrec);
