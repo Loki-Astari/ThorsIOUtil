@@ -160,42 +160,56 @@ inline void printIntToStream(std::ostream& s, T arg, int width, int precision, b
 }
 
 template<typename T>
-inline void printToStream(std::ostream& s, T const& arg, int, int, bool, bool, bool, bool)
+inline void printToStream(std::ostream& s, T const& arg, int, int, bool, bool, bool, bool, bool)
 {
     s << arg;
 }
 
-inline void printToStream(std::ostream& s, long long const& arg, int width, int precision, bool leftJustify, bool leftPad, bool forceSign, bool prefixType)
+inline void printToStream(std::ostream& s, long long const& arg, int width, int precision, bool leftJustify, bool leftPad, bool forceSign, bool prefixType, bool)
 {
     printIntToStream(s, arg, width, precision, leftJustify, leftPad, forceSign, prefixType);
 }
 
-inline void printToStream(std::ostream& s, long const& arg, int width, int precision, bool leftJustify, bool leftPad, bool forceSign, bool prefixType)
+inline void printToStream(std::ostream& s, long const& arg, int width, int precision, bool leftJustify, bool leftPad, bool forceSign, bool prefixType, bool)
 {
     printIntToStream(s, arg, width, precision, leftJustify, leftPad, forceSign, prefixType);
 }
 
-inline void printToStream(std::ostream& s, int const& arg, int width, int precision, bool leftJustify, bool leftPad, bool forceSign, bool prefixType)
+inline void printToStream(std::ostream& s, int const& arg, int width, int precision, bool leftJustify, bool leftPad, bool forceSign, bool prefixType, bool isChar)
+{
+    if (isChar)
+    {
+        printToStream(s, static_cast<char>(arg), width, precision, leftJustify, leftPad, forceSign, prefixType, isChar);
+    }
+    else
+    {
+        printIntToStream(s, arg, width, precision, leftJustify, leftPad, forceSign, prefixType);
+    }
+}
+
+inline void printIntToStream(std::ostream& s, unsigned long long const& arg, int width, int precision, bool leftJustify, bool leftPad, bool forceSign, bool prefixType, bool)
 {
     printIntToStream(s, arg, width, precision, leftJustify, leftPad, forceSign, prefixType);
 }
 
-inline void printIntToStream(std::ostream& s, unsigned long long const& arg, int width, int precision, bool leftJustify, bool leftPad, bool forceSign, bool prefixType)
+inline void printToStream(std::ostream& s, unsigned long const& arg, int width, int precision, bool leftJustify, bool leftPad, bool forceSign, bool prefixType, bool, bool)
 {
     printIntToStream(s, arg, width, precision, leftJustify, leftPad, forceSign, prefixType);
 }
 
-inline void printToStream(std::ostream& s, unsigned long const& arg, int width, int precision, bool leftJustify, bool leftPad, bool forceSign, bool prefixType)
+inline void printToStream(std::ostream& s, unsigned int const& arg, int width, int precision, bool leftJustify, bool leftPad, bool forceSign, bool prefixType, bool isChar)
 {
-    printIntToStream(s, arg, width, precision, leftJustify, leftPad, forceSign, prefixType);
+    if (isChar)
+    {
+        printToStream(s, static_cast<char>(arg), width, precision, leftJustify, leftPad, forceSign, prefixType, isChar);
+    }
+    else
+    {
+        printIntToStream(s, arg, width, precision, leftJustify, leftPad, forceSign, prefixType);
+    }
 }
 
-inline void printToStream(std::ostream& s, unsigned int const& arg, int width, int precision, bool leftJustify, bool leftPad, bool forceSign, bool prefixType)
-{
-    printIntToStream(s, arg, width, precision, leftJustify, leftPad, forceSign, prefixType);
-}
-
-inline void printToStream(std::ostream& s, char const* const& arg, int width, int precision, bool leftJustify, bool, bool, bool prefixType)
+inline void printToStream(std::ostream& s, char const* const& arg, int width, int precision, bool leftJustify, bool, bool, bool prefixType, bool)
 {
     if (precision == -1)
     {
@@ -510,7 +524,7 @@ class Format
                     auto oldWidth = s.width(fillWidth);
                     auto oldPrec  = s.precision(fractPrec);
 
-                    printToStream(s, arg, fillWidth, precision, leftJustify, leftPad, forceSign, prefixType);
+                    printToStream(s, arg, fillWidth, precision, leftJustify, leftPad, forceSign, prefixType, type == Type::Char);
 
                     // reset the stream to original state
                     s.precision(oldPrec);
