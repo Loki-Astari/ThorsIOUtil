@@ -3,6 +3,7 @@
 
 
 #include <ostream>
+#include <sstream>
 #include <string>
 #include <vector>
 #include <map>
@@ -594,28 +595,49 @@ class Format
             for (std::size_t loop = 0; loop < count; ++loop)
             {
                 // Not dealing with '\%' yet just trying to get it working.
-                std::size_t nextFormatter = format.find('%', pos);
-                if (nextFormatter == std::string::npos)
-                {
-                    throw std::invalid_argument("Invalid Format: not enough format specifiers for provided arguments");
-                }
-                prefixString.emplace_back(format.substr(pos, (nextFormatter - pos)));
+                std::pair<std::string, std::size_t> prefix = getNextPrefix(format, pos, [](std::size_t p){return p == std::string::npos;}, "not enough format");
+                pos += prefix.second;
+                prefixString.emplace_back(std::move(prefix.first));
 
-                formater.emplace_back(format.data() + nextFormatter);
-                pos = nextFormatter + formater.back().size();
+                formater.emplace_back(format.data() + pos);
+                pos += formater.back().size();
             }
-            std::size_t nextFormatter = format.find(pos, '%');
-            if (nextFormatter != std::string::npos)
-            {
-                throw std::invalid_argument("Invalid Format: too many format specifiers for provided arguments");
-            }
-            prefixString.emplace_back(format.substr(pos));
+            std::pair<std::string, std::size_t> prefix = getNextPrefix(format, pos, [](std::size_t p){return p != std::string::npos;}, "too many format");
+            pos += prefix.second;
+            prefixString.emplace_back(std::move(prefix.first));
         }
         void print(std::ostream& s) const
         {
             doPrint(s, std::make_index_sequence<sizeof...(Args)>());
         }
     private:
+        std::pair<std::string, std::size_t> getNextPrefix(std::string const&, std::size_t pos, std::function<bool(std::size_t)>&& test, char const* mes)
+        {
+            std::string prefix;
+            std::size_t extra = 0;
+            std::size_t nextFormatter = format.find('%', pos);
+            while(nextFormatter != std::string::npos && format[nextFormatter + 1] == '%')
+            {
+                nextFormatter = format.find('%', nextFormatter + 2);
+            }
+            prefix += format.substr(pos, nextFormatter - pos);
+            prefix.erase(std::remove_if(std::begin(prefix), std::end(prefix), [first = false](char val) mutable
+            {
+                if (val == '%')
+                {
+                    first = !first;
+                    return !first;
+                }
+                return false;
+            }), std::end(prefix));
+            if (test(nextFormatter))
+            {
+                std::stringstream message;
+                message << "Invalid Format: " << mes << " specifiers for provided arguments";
+                throw std::invalid_argument(message.str());
+            }
+            return {prefix, prefix.size() + extra};
+        }
         template<std::size_t I>
         std::ostream& printValue(std::ostream& s) const
         {
