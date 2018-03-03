@@ -1,6 +1,9 @@
 #ifndef THORSANVIL_IOUTIL_FORMAT_INFO_H
 #define THORSANVIL_IOUTIL_FORMAT_INFO_H
 
+#include <iostream>
+#include <typeinfo>
+
 namespace ThorsAnvil::IOUtil
 {
 

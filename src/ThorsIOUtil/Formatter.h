@@ -263,7 +263,7 @@ class Formatter
                 auto oldWidth = s.width(fillWidth);
                 auto oldPrec  = s.precision(fractPrec);
 
-                printToStream(s, arg, fillWidth, info.precision, info.leftJustify, info.leftPad, info.forceSign, info.prefixType, info.type == Type::Char);
+                printToStream(s, arg, fillWidth, info);
 
                 // reset the stream to original state
                 s.precision(oldPrec);

@@ -1,6 +1,7 @@
 #ifndef THORSANVIL_IOUTIL_PRINT_INT_TO_STREAM_H
 #define THORSANVIL_IOUTIL_PRINT_INT_TO_STREAM_H
 
+#include "FormatInfo.h"
 #include "printToStream.h"
 
 #include <ostream>
@@ -17,7 +18,7 @@ inline unsigned long        absm(unsigned long arg)        {return arg;}
 inline unsigned int         absm(unsigned int arg)         {return arg;}
 
 template<typename T>
-inline void printIntToStream(std::ostream& s, T arg, int width, int precision, bool leftJustify, bool leftPad, bool forceSign, bool prefixType)
+inline void printIntToStream(std::ostream& s, T arg, int width, FormatInfo const& info)
 {
     static double  const logFor16    = std::log10(16);
     static double  const logFor10    = std::log10(10);
@@ -25,41 +26,41 @@ inline void printIntToStream(std::ostream& s, T arg, int width, int precision, b
 
     double const&  logBase = s.flags() & std::ios_base::oct ? logFor08 : s.flags() & std::ios_base::hex ? logFor16 : logFor10;
 
-    if (width == 0 && precision == -1)
+    if (width == 0 && info.precision == -1)
     {
         s << arg;
     }
-    else if (precision == -1)
+    else if (info.precision == -1)
     {
         std::size_t reduceWidth = 0;
-        reduceWidth += ((arg >= 0 && forceSign) || arg < 0) ? 1 : 0;
-        reduceWidth += (prefixType && (s.flags() & std::ios_base::oct)) ? 1 : 0;
-        reduceWidth += (prefixType && (s.flags() & std::ios_base::hex)) ? 2 : 0;
+        reduceWidth += ((arg >= 0 && info.forceSign) || arg < 0) ? 1 : 0;
+        reduceWidth += (info.prefixType && (s.flags() & std::ios_base::oct)) ? 1 : 0;
+        reduceWidth += (info.prefixType && (s.flags() & std::ios_base::hex)) ? 2 : 0;
         width        = reduceWidth > width ? 0 : width - reduceWidth;
 
         s.width(0);
         s.unsetf(std::ios_base::showpos | std::ios_base::showbase);
         std::size_t padding = 0;
-        if (!leftPad)
+        if (!info.leftPad)
         {
-            std::size_t numberOfDigits = arg != 0 ? static_cast<int>((std::log10(absm(arg)) / logBase + 1)) : ( precision == 0 ? 0 : 1);;
+            std::size_t numberOfDigits = arg != 0 ? static_cast<int>((std::log10(absm(arg)) / logBase + 1)) : ( info.precision == 0 ? 0 : 1);;
             padding        = (numberOfDigits >= width) ? 0 :  (width - numberOfDigits);
             width          -= padding;
         }
-        if (!leftJustify)
+        if (!info.leftJustify)
         {
             for(std::size_t loop = 0; loop < padding; ++loop)
             {
                 s.put(' ');
             }
         }
-        if ((arg >= 0 && forceSign) || arg < 0 )
+        if ((arg >= 0 && info.forceSign) || arg < 0 )
         {
             s.put(arg < 0 ? '-' : '+');
 
             arg = absm(arg);
         }
-        if (prefixType)
+        if (info.prefixType)
         {
             if (s.flags() & (std::ios_base::hex | std::ios_base::oct))
             {
@@ -72,7 +73,7 @@ inline void printIntToStream(std::ostream& s, T arg, int width, int precision, b
         }
         s.width(width);
         s << arg;
-        if (leftJustify)
+        if (info.leftJustify)
         {
             s.width(0);
             for(std::size_t loop = 0; loop < padding; ++loop)
@@ -85,7 +86,7 @@ inline void printIntToStream(std::ostream& s, T arg, int width, int precision, b
     {
         s.width(0);
         s.unsetf(std::ios_base::showpos | std::ios_base::showbase);
-        std::size_t extraWidth      =  (arg < 0) || (arg >=0 && forceSign) ? 1 : 0;
+        std::size_t extraWidth      =  (arg < 0) || (arg >=0 && info.forceSign) ? 1 : 0;
 
         if (s.flags() & std::ios_base::showbase)
         {
@@ -97,11 +98,11 @@ inline void printIntToStream(std::ostream& s, T arg, int width, int precision, b
         }
         width = extraWidth > width ? 0 : width - extraWidth;
 
-        std::size_t numberOfDigits = arg != 0 ? static_cast<int>((std::log10(absm(arg)) / logBase + 1)) : ( precision == 0 ? 0 : 1);;
-        std::size_t sizeOfNumber   = numberOfDigits > precision ? numberOfDigits : precision;
-        std::size_t prefix         = precision == -1 ? 0 : numberOfDigits > precision ? 0 : (precision - numberOfDigits);
+        std::size_t numberOfDigits = arg != 0 ? static_cast<int>((std::log10(absm(arg)) / logBase + 1)) : ( info.precision == 0 ? 0 : 1);;
+        std::size_t sizeOfNumber   = numberOfDigits > info.precision ? numberOfDigits : info.precision;
+        std::size_t prefix         = info.precision == -1 ? 0 : numberOfDigits > info.precision ? 0 : (info.precision - numberOfDigits);
         std::size_t padding        = (sizeOfNumber >= width) ? 0 :  (width - sizeOfNumber);
-        if (!leftJustify)
+        if (!info.leftJustify)
         {
             for(std::size_t loop = 0; loop < padding; ++loop)
             {
@@ -112,11 +113,11 @@ inline void printIntToStream(std::ostream& s, T arg, int width, int precision, b
         {
             s.put('-');
         }
-        else if (arg >=0 && forceSign)
+        else if (arg >=0 && info.forceSign)
         {
             s.put('+');
         }
-        if (prefixType)
+        if (info.prefixType)
         {
             if (s.flags() & (std::ios_base::hex | std::ios_base::oct))
             {
@@ -131,11 +132,11 @@ inline void printIntToStream(std::ostream& s, T arg, int width, int precision, b
         {
             s.put('0');
         }
-        if (precision != 0 || arg != 0)
+        if (info.precision != 0 || arg != 0)
         {
             s << absm(arg);
         }
-        if (leftJustify)
+        if (info.leftJustify)
         {
             for(std::size_t loop = 0; loop < padding; ++loop)
             {
@@ -145,9 +146,9 @@ inline void printIntToStream(std::ostream& s, T arg, int width, int precision, b
     }
 }
 
-inline void printIntToStream(std::ostream& s, unsigned long long const& arg, int width, int precision, bool leftJustify, bool leftPad, bool forceSign, bool prefixType, bool)
+inline void printIntToStream(std::ostream& s, unsigned long long const& arg, int width, FormatInfo const& info)
 {
-    printIntToStream(s, arg, width, precision, leftJustify, leftPad, forceSign, prefixType);
+    printIntToStream(s, arg, width, info);
 }
 
 }
