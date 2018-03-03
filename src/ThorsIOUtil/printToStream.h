@@ -3,6 +3,7 @@
 
 #include "FormatInfo.h"
 #include "printIntToStream.h"
+#include "printStringToStream.h"
 
 #include <ostream>
 
@@ -64,34 +65,9 @@ inline void printToStream(std::ostream& s, unsigned int const& arg, int width, F
 // C-String
 inline void printToStream(std::ostream& s, char const* const& arg, int width, FormatInfo const& info)
 {
-    if (info.precision == -1)
-    {
-        s << arg;
-    }
-    else
-    {
-        s.width(0);
-        std::size_t     padding = (info.precision >= width) ? 0 :  (width - info.precision);
-        if (!info.leftJustify)
-        {
-            for(std::size_t loop = 0; loop < padding; ++loop)
-            {
-                s.put(' ');
-            }
-        }
-        for(std::size_t loop = 0; arg[loop] != '\0' && loop < info.precision; ++loop)
-        {
-            s.put(arg[loop]);
-        }
-        if (info.leftJustify)
-        {
-            for(std::size_t loop = 0; loop < padding; ++loop)
-            {
-                s.put(' ');
-            }
-        }
-    }
+    printStringToStream(s, arg, width, info);
 }
+
 
 }
 
