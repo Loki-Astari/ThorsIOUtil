@@ -20,9 +20,9 @@ inline unsigned int         absm(unsigned int arg)         {return arg;}
 template<typename T>
 inline void printIntToStream(std::ostream& s, T arg, int width, FormatInfo const& info)
 {
-    static double  const logFor16    = std::log10(16);
-    static double  const logFor10    = std::log10(10);
-    static double  const logFor08    = std::log10(8);
+    static long double  const logFor16    = std::log10(16.0L);
+    static long double  const logFor10    = std::log10(10.0L);
+    static long double  const logFor08    = std::log10(8.0L);
 
     double const&  logBase = s.flags() & std::ios_base::oct ? logFor08 : s.flags() & std::ios_base::hex ? logFor16 : logFor10;
 
@@ -33,7 +33,8 @@ inline void printIntToStream(std::ostream& s, T arg, int width, FormatInfo const
     else if (info.precision == -1)
     {
         std::size_t reduceWidth = 0;
-        reduceWidth += ((arg >= 0 && info.forceSign) || arg < 0) ? 1 : 0;
+        bool octOrHex = s.flags() & (std::ios_base::oct | std::ios_base::hex);
+        reduceWidth += ((arg >= 0 && info.forceSign && !octOrHex) || arg < 0) ? 1 : 0;
         reduceWidth += (info.prefixType && (s.flags() & std::ios_base::oct)) ? 1 : 0;
         reduceWidth += (info.prefixType && (s.flags() & std::ios_base::hex)) ? 2 : 0;
         width        = reduceWidth > width ? 0 : width - reduceWidth;
@@ -43,7 +44,7 @@ inline void printIntToStream(std::ostream& s, T arg, int width, FormatInfo const
         std::size_t padding = 0;
         if (!info.leftPad)
         {
-            std::size_t numberOfDigits = arg != 0 ? static_cast<int>((std::log10(absm(arg)) / logBase + 1)) : ( info.precision == 0 ? 0 : 1);;
+            std::size_t numberOfDigits = arg != 0 ? static_cast<int>((std::log10(static_cast<long double>(absm(arg))) / logBase + 1)) : ( info.precision == 0 ? 0 : 1);;
             padding        = (numberOfDigits >= width) ? 0 :  (width - numberOfDigits);
             width          -= padding;
         }
@@ -54,7 +55,7 @@ inline void printIntToStream(std::ostream& s, T arg, int width, FormatInfo const
                 s.put(' ');
             }
         }
-        if ((arg >= 0 && info.forceSign) || arg < 0 )
+        if ((arg >= 0 && info.forceSign && !octOrHex) || arg < 0 )
         {
             s.put(arg < 0 ? '-' : '+');
 
@@ -84,11 +85,12 @@ inline void printIntToStream(std::ostream& s, T arg, int width, FormatInfo const
     }
     else
     {
+        bool octOrHex = s.flags() & (std::ios_base::oct | std::ios_base::hex);
         s.width(0);
         s.unsetf(std::ios_base::showpos | std::ios_base::showbase);
-        std::size_t extraWidth      =  (arg < 0) || (arg >=0 && info.forceSign) ? 1 : 0;
+        std::size_t extraWidth      =  (arg < 0) || (arg >=0 && info.forceSign && !octOrHex) ? 1 : 0;
 
-        if (s.flags() & std::ios_base::showbase)
+        if (info.prefixType)
         {
             switch (s.flags() & std::ios_base::basefield)
             {
@@ -98,7 +100,7 @@ inline void printIntToStream(std::ostream& s, T arg, int width, FormatInfo const
         }
         width = extraWidth > width ? 0 : width - extraWidth;
 
-        std::size_t numberOfDigits = arg != 0 ? static_cast<int>((std::log10(absm(arg)) / logBase + 1)) : ( info.precision == 0 ? 0 : 1);;
+        std::size_t numberOfDigits = arg != 0 ? static_cast<int>((std::log10(static_cast<long double>(absm(arg))) / logBase + 1)) : ( info.precision == 0 ? 0 : 1);;
         std::size_t sizeOfNumber   = numberOfDigits > info.precision ? numberOfDigits : info.precision;
         std::size_t prefix         = info.precision == -1 ? 0 : numberOfDigits > info.precision ? 0 : (info.precision - numberOfDigits);
         std::size_t padding        = (sizeOfNumber >= width) ? 0 :  (width - sizeOfNumber);
@@ -113,7 +115,7 @@ inline void printIntToStream(std::ostream& s, T arg, int width, FormatInfo const
         {
             s.put('-');
         }
-        else if (arg >=0 && info.forceSign)
+        else if (arg >=0 && info.forceSign && !octOrHex)
         {
             s.put('+');
         }
