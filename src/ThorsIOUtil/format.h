@@ -10,12 +10,6 @@
 #include <vector>
 #include <exception>
 #include <stdexcept>
-//#include <typeindex>
-//#include <cstdint>
-//#include <cstddef>
-//#include <cctype>
-//#include <cassert>
-//#include <cmath>
 
 namespace ThorsAnvil::IOUtil
 {

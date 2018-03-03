@@ -4,10 +4,6 @@
 #include "printIntToStream.h"
 
 #include <ostream>
-//#include <cstdint>
-//#include <cstddef>
-//#include <cctype>
-//#include <cassert>
 
 namespace ThorsAnvil::IOUtil
 {
@@ -18,6 +14,7 @@ inline void printToStream(std::ostream& s, T const& arg, int, int, bool, bool, b
     s << arg;
 }
 
+// Signed integers.
 inline void printToStream(std::ostream& s, long long const& arg, int width, int precision, bool leftJustify, bool leftPad, bool forceSign, bool prefixType, bool)
 {
     printIntToStream(s, arg, width, precision, leftJustify, leftPad, forceSign, prefixType);
@@ -40,6 +37,12 @@ inline void printToStream(std::ostream& s, int const& arg, int width, int precis
     }
 }
 
+// Unsigned integers.
+inline void printToStream(std::ostream& s, unsigned long long const& arg, int width, int precision, bool leftJustify, bool leftPad, bool forceSign, bool prefixType, bool, bool)
+{
+    printIntToStream(s, arg, width, precision, leftJustify, leftPad, forceSign, prefixType);
+}
+
 inline void printToStream(std::ostream& s, unsigned long const& arg, int width, int precision, bool leftJustify, bool leftPad, bool forceSign, bool prefixType, bool, bool)
 {
     printIntToStream(s, arg, width, precision, leftJustify, leftPad, forceSign, prefixType);
@@ -57,6 +60,7 @@ inline void printToStream(std::ostream& s, unsigned int const& arg, int width, i
     }
 }
 
+// C-String
 inline void printToStream(std::ostream& s, char const* const& arg, int width, int precision, bool leftJustify, bool, bool, bool prefixType, bool)
 {
     if (precision == -1)

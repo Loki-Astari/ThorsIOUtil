@@ -9,11 +9,7 @@
 #include <exception>
 #include <stdexcept>
 #include <typeindex>
-//#include <cstdint>
-//#include <cstddef>
-//#include <cctype>
 #include <cassert>
-//#include <cmath>
 
 namespace ThorsAnvil::IOUtil
 {
@@ -335,8 +331,8 @@ class Formatter
                     {{Type::UInt,  Length::z},    &typeid(std::size_t)},
                     {{Type::UInt,  Length::t},    &typeid(std::ptrdiff_t)},
 
-                    {{Type::Float, Length::none}, &typeid(double)}, {{Type::Float, Length::l}, &typeid(double)}, {{Type::Float, Length::L}, &typeid(long double)},
-                    {{Type::Char,  Length::none}, &typeid(int)},    {{Type::Char,  Length::l}, &typeid(std::wint_t)},
+                    {{Type::Float, Length::none}, &typeid(double)},       {{Type::Float, Length::l}, &typeid(double)},          {{Type::Float, Length::L}, &typeid(long double)},
+                    {{Type::Char,  Length::none}, &typeid(int)},          {{Type::Char,  Length::l}, &typeid(std::wint_t)},
                     {{Type::String,Length::none}, &typeid(char const*)},  {{Type::String,Length::l}, &typeid(wchar_t const*)},
 
                     {{Type::Pointer,Length::none},&typeid(void*)},

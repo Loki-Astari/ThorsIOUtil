@@ -4,9 +4,6 @@
 #include "printToStream.h"
 
 #include <ostream>
-//#include <cstdint>
-//#include <cstddef>
-//#include <cctype>
 #include <cmath>
 
 namespace ThorsAnvil::IOUtil
