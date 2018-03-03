@@ -88,19 +88,21 @@ inline void printIntToStream(std::ostream& s, T arg, int width, FormatInfo const
         bool octOrHex = s.flags() & (std::ios_base::oct | std::ios_base::hex);
         s.width(0);
         s.unsetf(std::ios_base::showpos | std::ios_base::showbase);
-        std::size_t extraWidth      =  (arg < 0) || (arg >=0 && info.forceSign && !octOrHex) ? 1 : 0;
+        std::size_t extraWidth      = (arg < 0) || (arg >=0 && info.forceSign && !octOrHex) ? 1 : 0;
+        std::size_t extraDigits     = 0;
 
         if (info.prefixType)
         {
             switch (s.flags() & std::ios_base::basefield)
             {
-                case std::ios_base::hex:    extraWidth += 2;break;
-                case std::ios_base::oct:    extraWidth += 1;break;
+                case std::ios_base::hex:    extraWidth  += 2;break;
+                case std::ios_base::oct:    extraDigits += 1;break;
             }
         }
         width = extraWidth > width ? 0 : width - extraWidth;
 
         std::size_t numberOfDigits = arg != 0 ? static_cast<int>((std::log10(static_cast<long double>(absm(arg))) / logBase + 1)) : ( info.precision == 0 ? 0 : 1);;
+        numberOfDigits += extraDigits;
         std::size_t sizeOfNumber   = numberOfDigits > info.precision ? numberOfDigits : info.precision;
         std::size_t prefix         = info.precision == -1 ? 0 : numberOfDigits > info.precision ? 0 : (info.precision - numberOfDigits);
         std::size_t padding        = (sizeOfNumber >= width) ? 0 :  (width - sizeOfNumber);
