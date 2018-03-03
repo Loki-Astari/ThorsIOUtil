@@ -22,6 +22,8 @@ struct SignConversionOption
 {
     using Actual        = T;
     using Alternative   = T;
+    static constexpr bool allowIntConversion = false;
+    static int convertToInt(T const&) {return 0;}
 };
 
 template<>
@@ -29,60 +31,80 @@ struct SignConversionOption<char>
 {
     using Actual        = char;
     using Alternative   = unsigned char;
+    static constexpr bool allowIntConversion = true;
+    static int convertToInt(char const& arg) {return arg;}
 };
 template<>
 struct SignConversionOption<short>
 {
     using Actual        = short;
     using Alternative   = unsigned short;
+    static constexpr bool allowIntConversion = true;
+    static int convertToInt(short const& arg) {return arg;}
 };
 template<>
 struct SignConversionOption<int>
 {
     using Actual        = int;
     using Alternative   = unsigned int;
+    static constexpr bool allowIntConversion = false;
+    static int convertToInt(int const&) {return 0;}
 };
 template<>
 struct SignConversionOption<long>
 {
     using Actual        = long;
     using Alternative   = unsigned long;
+    static constexpr bool allowIntConversion = false;
+    static int convertToInt(long const&) {return 0;}
 };
 template<>
 struct SignConversionOption<long long>
 {
     using Actual        = long long;
     using Alternative   = unsigned long long;
+    static constexpr bool allowIntConversion = false;
+    static int convertToInt(long long const&) {return 0;}
 };
 template<>
 struct SignConversionOption<unsigned char>
 {
     using Actual        = unsigned char;
     using Alternative   = char;
+    static constexpr bool allowIntConversion = true;
+    static int convertToInt(unsigned char const& arg) {return arg;}
 };
 template<>
 struct SignConversionOption<unsigned short>
 {
     using Actual        = unsigned short;
     using Alternative   = short;
+    static constexpr bool allowIntConversion = true;
+    static int convertToInt(unsigned short const& arg) {return arg;}
 };
 template<>
 struct SignConversionOption<unsigned int>
 {
     using Actual        = unsigned int;
     using Alternative   = int;
+    static constexpr bool allowIntConversion = false;
+    static int convertToInt(unsigned int const&) {return 0;}
 };
 template<>
 struct SignConversionOption<unsigned long>
 {
     using Actual        = unsigned long;
     using Alternative   = long;
+    static constexpr bool allowIntConversion = false;
+    static int convertToInt(unsigned long const&) {return 0;}
 };
 template<>
 struct SignConversionOption<unsigned long long>
 {
     using Actual        = unsigned long long;
     using Alternative   = long long;
+    static constexpr bool allowIntConversion = false;
+    static int convertToInt(unsigned long long const&) {return 0;}
 };
 
 
@@ -315,13 +337,21 @@ class Formatter
                 using Actual       = typename SignConversionOption<A>::Actual;
                 using Alternative  = typename SignConversionOption<A>::Alternative;
 
-                if (std::type_index(typeid(Actual)) != std::type_index(typeid(Alternative)) && std::type_index(*info.expectedType) == std::type_index(typeid(Alternative)))
+                if (std::type_index(typeid(Actual)) == std::type_index(*info.expectedType))
+                {
+                    applyData(s, arg);
+                }
+                else if (std::type_index(typeid(Actual)) != std::type_index(typeid(Alternative)) && std::type_index(*info.expectedType) == std::type_index(typeid(Alternative)))
                 {
                     applyData(s, static_cast<Alternative const&>(arg));
                 }
+                else if (SignConversionOption<A>::allowIntConversion)
+                {
+                    applyData(s, SignConversionOption<A>::convertToInt(arg));
+                }
                 else
                 {
-                    applyData(s, arg);
+                    throw std::invalid_argument(std::string("Actual argument does not match supplied argument (or conversions): Expected(") + info.expectedType->name() + ") Got(" + typeid(A).name() + ")");
                 }
             }
 

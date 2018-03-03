@@ -24,37 +24,50 @@ printToStream(std::ostream& s, T const& arg, int width, FormatInfo const& info)
     printToStreamDefault(s, arg, width, info);
 }
 
-// Signed integers.
+template<typename T>
+struct CharIntConverter
+{
+    using Integer   = T;
+    using Character = T;
+};
+template<>
+struct CharIntConverter<int>
+{
+    using Integer   = int;
+    using Character = char;
+};
+template<>
+struct CharIntConverter<unsigned int>
+{
+    using Integer   = unsigned int;
+    using Character = char;
+};
+template<>
+struct CharIntConverter<char>
+{
+    using Integer   = unsigned int;
+    using Character = char;
+};
+template<>
+struct CharIntConverter<unsigned char>
+{
+    using Integer   = unsigned int;
+    using Character = char;
+};
+
+
 template<typename T>
 inline 
 typename std::enable_if<std::is_integral<T>::value>::type
 printToStream(std::ostream& s, T const& arg, int width, FormatInfo const& info)
 {
-    printIntToStream(s, arg, width, info);
-}
-
-inline void printToStream(std::ostream& s, char const& arg, int width, FormatInfo const& info)
-{
     if (info.type == Type::Char)
     {
-        printToStreamDefault(s, arg, width, info);
+        printToStreamDefault(s, static_cast<typename CharIntConverter<T>::Character>(arg), width, info);
     }
     else
     {
-        printIntToStream(s, static_cast<int>(arg), width, info);
-    }
-}
-
-// Unsigned integers.
-inline void printToStream(std::ostream& s, unsigned char const& arg, int width, FormatInfo const& info)
-{
-    if (info.type == Type::Char)
-    {
-        printToStreamDefault(s, arg, width, info);
-    }
-    else
-    {
-        printIntToStream(s, static_cast<unsigned int>(arg), width, info);
+        printIntToStream(s, static_cast<typename CharIntConverter<T>::Integer>(arg), width, info);
     }
 }
 
