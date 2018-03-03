@@ -11,9 +11,57 @@
 #include <stdexcept>
 #include <typeindex>
 #include <cassert>
+#include <type_traits>
+
 
 namespace ThorsAnvil::IOUtil
 {
+
+template<typename T>
+struct SignConversionOption
+{
+    using Actual        = T;
+    using Alternative   = T;
+};
+
+template<>
+struct SignConversionOption<int>
+{
+    using Actual        = int;
+    using Alternative   = unsigned int;
+};
+template<>
+struct SignConversionOption<long>
+{
+    using Actual        = long;
+    using Alternative   = unsigned long;
+};
+template<>
+struct SignConversionOption<long long>
+{
+    using Actual        = long long;
+    using Alternative   = unsigned long long;
+};
+template<>
+struct SignConversionOption<unsigned int>
+{
+    using Actual        = unsigned int;
+    using Alternative   = int;
+};
+template<>
+struct SignConversionOption<unsigned long>
+{
+    using Actual        = unsigned long;
+    using Alternative   = long;
+};
+template<>
+struct SignConversionOption<unsigned long long>
+{
+    using Actual        = unsigned long long;
+    using Alternative   = long long;
+};
+
+
 
 template<typename T>
 inline bool checkNumLargerEqualToZero(T const& value)      {return value >= 0;}
@@ -239,6 +287,22 @@ class Formatter
         private:
             template<typename A>
             void apply(std::ostream& s, A const& arg) const
+            {
+                using Actual       = typename SignConversionOption<A>::Actual;
+                using Alternative  = typename SignConversionOption<A>::Alternative;
+
+                if (std::type_index(typeid(Actual)) != std::type_index(typeid(Alternative)) && std::type_index(*info.expectedType) == std::type_index(typeid(Alternative)))
+                {
+                    applyData(s, static_cast<Alternative const&>(arg));
+                }
+                else
+                {
+                    applyData(s, arg);
+                }
+            }
+
+            template<typename A>
+            void applyData(std::ostream& s, A const& arg) const
             {
                 if (std::type_index(*info.expectedType) != std::type_index(typeid(A)))
                 {

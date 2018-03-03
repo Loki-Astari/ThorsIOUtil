@@ -146,11 +146,6 @@ inline void printIntToStream(std::ostream& s, T arg, int width, FormatInfo const
     }
 }
 
-inline void printIntToStream(std::ostream& s, unsigned long long const& arg, int width, FormatInfo const& info)
-{
-    printIntToStream(s, arg, width, info);
-}
-
 }
 
 #endif
