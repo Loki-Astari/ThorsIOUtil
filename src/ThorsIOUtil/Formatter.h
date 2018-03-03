@@ -25,6 +25,18 @@ struct SignConversionOption
 };
 
 template<>
+struct SignConversionOption<char>
+{
+    using Actual        = char;
+    using Alternative   = unsigned char;
+};
+template<>
+struct SignConversionOption<short>
+{
+    using Actual        = short;
+    using Alternative   = unsigned short;
+};
+template<>
 struct SignConversionOption<int>
 {
     using Actual        = int;
@@ -41,6 +53,18 @@ struct SignConversionOption<long long>
 {
     using Actual        = long long;
     using Alternative   = unsigned long long;
+};
+template<>
+struct SignConversionOption<unsigned char>
+{
+    using Actual        = unsigned char;
+    using Alternative   = char;
+};
+template<>
+struct SignConversionOption<unsigned short>
+{
+    using Actual        = unsigned short;
+    using Alternative   = short;
 };
 template<>
 struct SignConversionOption<unsigned int>

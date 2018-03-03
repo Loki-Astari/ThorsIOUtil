@@ -14,38 +14,6 @@
 namespace ThorsAnvil::IOUtil
 {
 
-template<typename T>
-struct CallArgumentTraits
-{
-    using ParameterType = T;
-};
-template<>
-struct CallArgumentTraits<short>
-{
-    using ParameterType = int;
-};
-template<>
-struct CallArgumentTraits<unsigned short>
-{
-    using ParameterType = unsigned int;
-};
-template<>
-struct CallArgumentTraits<signed char>
-{
-    using ParameterType = int;
-};
-template<>
-struct CallArgumentTraits<unsigned char>
-{
-    using ParameterType = unsigned int;
-};
-template<>
-struct CallArgumentTraits<char>
-{
-    using ParameterType = int;
-};
-
-
 template<typename... Args>
 class Format
 {
@@ -109,11 +77,7 @@ class Format
         template<std::size_t I>
         std::ostream& printValue(std::ostream& s) const
         {
-            using BaseTypeR = decltype(std::get<I>(arguments));
-            using BaseType  = typename std::remove_reference<BaseTypeR>::type;
-            using Type      = typename std::remove_cv<BaseType>::type;
-            using ParamType = typename CallArgumentTraits<Type>::ParameterType; 
-            return s << prefixString[I] << formater[I] << static_cast<ParamType>(std::get<I>(arguments));
+            return s << prefixString[I] << formater[I] << std::get<I>(arguments);
         }
 
         template<std::size_t... I>
