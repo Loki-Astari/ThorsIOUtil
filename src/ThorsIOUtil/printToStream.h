@@ -17,30 +17,22 @@ inline void printToStreamDefault(std::ostream& s, T const& arg, int, FormatInfo 
 }
 
 template<typename T>
-inline void printToStream(std::ostream& s, T const& arg, int width, FormatInfo const& info)
+inline
+typename std::enable_if<!std::is_integral<T>::value>::type
+printToStream(std::ostream& s, T const& arg, int width, FormatInfo const& info)
 {
     printToStreamDefault(s, arg, width, info);
 }
 
 // Signed integers.
-inline void printToStream(std::ostream& s, long long const& arg, int width, FormatInfo const& info)
+template<typename T>
+inline 
+typename std::enable_if<std::is_integral<T>::value>::type
+printToStream(std::ostream& s, T const& arg, int width, FormatInfo const& info)
 {
     printIntToStream(s, arg, width, info);
 }
 
-inline void printToStream(std::ostream& s, long const& arg, int width, FormatInfo const& info)
-{
-    printIntToStream(s, arg, width, info);
-}
-
-inline void printToStream(std::ostream& s, int const& arg, int width, FormatInfo const& info)
-{
-    printIntToStream(s, arg, width, info);
-}
-inline void printToStream(std::ostream& s, short const& arg, int width, FormatInfo const& info)
-{
-    printIntToStream(s, arg, width, info);
-}
 inline void printToStream(std::ostream& s, char const& arg, int width, FormatInfo const& info)
 {
     if (info.type == Type::Char)
@@ -54,24 +46,6 @@ inline void printToStream(std::ostream& s, char const& arg, int width, FormatInf
 }
 
 // Unsigned integers.
-inline void printToStream(std::ostream& s, unsigned long long const& arg, int width, FormatInfo const& info)
-{
-    printIntToStream(s, arg, width, info);
-}
-
-inline void printToStream(std::ostream& s, unsigned long const& arg, int width, FormatInfo const& info)
-{
-    printIntToStream(s, arg, width, info);
-}
-
-inline void printToStream(std::ostream& s, unsigned int const& arg, int width, FormatInfo const& info)
-{
-    printIntToStream(s, arg, width, info);
-}
-inline void printToStream(std::ostream& s, unsigned short const& arg, int width, FormatInfo const& info)
-{
-    printIntToStream(s, arg, width, info);
-}
 inline void printToStream(std::ostream& s, unsigned char const& arg, int width, FormatInfo const& info)
 {
     if (info.type == Type::Char)
