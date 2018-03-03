@@ -18,11 +18,15 @@ template<typename T>
 inline bool checkNumLargerEqualToZero(T const& value)      {return value >= 0;}
 inline bool checkNumLargerEqualToZero(char const*)         {return false;}
 
-class Formatter
-{
-    // The number of characters read in the formatter.
-    std::size_t             used;
+// Enum representing the Length, specifier and type information provided by the format string
+#pragma vera-pushoff
+enum class Length    {none, hh, h, l, ll, j, z, t, L};
+enum class Specifier {d, i, u, o, x, X, f, F, e, E, g, G, a, A, c, s, p, n};
+enum class Type      {Int, UInt, Float, Char, String, Pointer, Count};
+#pragma vera-pop
 
+struct FormatInfo
+{
     // Formatter has the text representation:
     //      %<Flag>*<Width>?[.<Precision>]?<Length>?<Specifier>
     //
@@ -32,12 +36,6 @@ class Formatter
     //      Length:     hh h l ll j z t L
     //      Specifier:  d i u o x X f F e E g G a A c s p n
 
-    // Enum representing the Length and specifier provided in a string
-#pragma vera-pushoff
-    enum class Length    {none, hh, h, l, ll, j, z, t, L};
-#pragma vera-pop
-    enum class Specifier {d, i, u, o, x, X, f, F, e, E, g, G, a, A, c, s, p, n};
-    enum class Type      {Int, UInt, Float, Char, String, Pointer, Count};
     // Flags
     bool                    leftJustify;    // -    Left-justify within the given field width; Right justification is the default (see width sub-specifier).
     bool                    forceSign;      // +    Forces to precede the result with a plus or minus sign (+ or -) even for positive numbers. By default, only negative numbers are preceded with a - sign.
@@ -55,6 +53,16 @@ class Formatter
     // Pre-calculate a some values based on the format string
     std::type_info const*   expectedType;   // Type info we expect the next argument to be based on length/specifier
     std::ios_base::fmtflags format;         // The format flags that will be applied to stream before the next argument
+
+};
+
+class Formatter
+{
+    // The number of characters read in the formatter.
+    std::size_t             used;
+
+    // Details extracted from the format string.
+    FormatInfo              info;
 
     // When you apply a `Formatter` object to a stream this temporary object is created.
     // When the actual object is then applied to this object we call back to the Formatter::apply()
@@ -85,16 +93,9 @@ class Formatter
     public:
        Formatter(char const* formatStr)
             : used(0)
-            , leftJustify(false)
-            , forceSign(false)
-            , forceSignWidth(false)
-            , prefixType(false)
-            , leftPad(false)
-            , width(0)
-            , precision(-1)
-            , length(Length::none)
-            , format(0)
+            , info()
         {
+            info.precision = -1;
             // Scan the format string to set up all the
             // the member variables.
             char const* fmt = formatStr;
@@ -110,11 +111,11 @@ class Formatter
                 ++fmt;
                 switch (*fmt)
                 {
-                    case '-':   leftJustify     = true;break;
-                    case '+':   forceSign       = true;break;
-                    case ' ':   forceSignWidth  = true;break;
-                    case '#':   prefixType      = true;break;
-                    case '0':   leftPad         = true;break;
+                    case '-':   info.leftJustify     = true;break;
+                    case '+':   info.forceSign       = true;break;
+                    case ' ':   info.forceSignWidth  = true;break;
+                    case '#':   info.prefixType      = true;break;
+                    case '0':   info.leftPad         = true;break;
                     default:    flag = false;
                 }
             } while (flag);
@@ -123,7 +124,7 @@ class Formatter
             if (std::isdigit(*fmt))
             {
                 char* end;
-                width = std::strtol(fmt, &end, 10);
+                info.width = std::strtol(fmt, &end, 10);
                 fmt = end;
             }
 
@@ -134,14 +135,14 @@ class Formatter
                 if (std::isdigit(*fmt))
                 {
                     char* end;
-                    precision = std::strtol(fmt, &end, 10);
+                    info.precision = std::strtol(fmt, &end, 10);
                     fmt = end;
                 }
                 else
                 {
                     // The actual value is not required (just the dot).
                     // If there is no value precision is 0 (rather than default)
-                    precision = 0;
+                    info.precision = 0;
                 }
             }
 
@@ -152,26 +153,26 @@ class Formatter
             ++fmt;
             switch (first)
             {
-                case 'h':   length = Length::h;
+                case 'h':   info.length = Length::h;
                             if (*fmt == 'h')
                             {
                                 ++fmt;
-                                length  = Length::hh;
+                                info.length  = Length::hh;
                             }
                             break;
 #pragma vera-pushoff
-                case 'l':   length = Length::l;
+                case 'l':   info.length = Length::l;
                             if (*fmt == 'l')
                             {
                                 ++fmt;
-                                length  = Length::ll;
+                                info.length  = Length::ll;
                             }
                             break;
 #pragma vera-pop
-                case 'j':   length = Length::j;break;
-                case 'z':   length = Length::z;break;
-                case 't':   length = Length::t;break;
-                case 'L':   length = Length::L;break;
+                case 'j':   info.length = Length::j;break;
+                case 'z':   info.length = Length::z;break;
+                case 't':   info.length = Length::t;break;
+                case 'L':   info.length = Length::L;break;
                 default:
                     --fmt;
             }
@@ -179,24 +180,24 @@ class Formatter
             // Check for the specifier value.
             switch (*fmt)
             {
-                case 'd':   specifier = Specifier::d;type = Type::Int;      break;
-                case 'i':   specifier = Specifier::i;type = Type::Int;      break;
-                case 'u':   specifier = Specifier::u;type = Type::UInt;     break;
-                case 'o':   specifier = Specifier::o;type = Type::UInt;     break;
-                case 'x':   specifier = Specifier::x;type = Type::UInt;     break;
-                case 'X':   specifier = Specifier::X;type = Type::UInt;     break;
-                case 'f':   specifier = Specifier::f;type = Type::Float;    break;
-                case 'F':   specifier = Specifier::F;type = Type::Float;    break;
-                case 'e':   specifier = Specifier::e;type = Type::Float;    break;
-                case 'E':   specifier = Specifier::E;type = Type::Float;    break;
-                case 'g':   specifier = Specifier::g;type = Type::Float;    break;
-                case 'G':   specifier = Specifier::G;type = Type::Float;    break;
-                case 'a':   specifier = Specifier::a;type = Type::Float;    break;
-                case 'A':   specifier = Specifier::A;type = Type::Float;    break;
-                case 'c':   specifier = Specifier::c;type = Type::Char;     break;
-                case 's':   specifier = Specifier::s;type = Type::String;   break;
-                case 'p':   specifier = Specifier::p;type = Type::Pointer;  break;
-                case 'n':   specifier = Specifier::n;type = Type::Count;    break;
+                case 'd':   info.specifier = Specifier::d;info.type = Type::Int;      break;
+                case 'i':   info.specifier = Specifier::i;info.type = Type::Int;      break;
+                case 'u':   info.specifier = Specifier::u;info.type = Type::UInt;     break;
+                case 'o':   info.specifier = Specifier::o;info.type = Type::UInt;     break;
+                case 'x':   info.specifier = Specifier::x;info.type = Type::UInt;     break;
+                case 'X':   info.specifier = Specifier::X;info.type = Type::UInt;     break;
+                case 'f':   info.specifier = Specifier::f;info.type = Type::Float;    break;
+                case 'F':   info.specifier = Specifier::F;info.type = Type::Float;    break;
+                case 'e':   info.specifier = Specifier::e;info.type = Type::Float;    break;
+                case 'E':   info.specifier = Specifier::E;info.type = Type::Float;    break;
+                case 'g':   info.specifier = Specifier::g;info.type = Type::Float;    break;
+                case 'G':   info.specifier = Specifier::G;info.type = Type::Float;    break;
+                case 'a':   info.specifier = Specifier::a;info.type = Type::Float;    break;
+                case 'A':   info.specifier = Specifier::A;info.type = Type::Float;    break;
+                case 'c':   info.specifier = Specifier::c;info.type = Type::Char;     break;
+                case 's':   info.specifier = Specifier::s;info.type = Type::String;   break;
+                case 'p':   info.specifier = Specifier::p;info.type = Type::Pointer;  break;
+                case 'n':   info.specifier = Specifier::n;info.type = Type::Count;    break;
                 default:
                     // Not optional so throw if we don't find it.
                    throw std::invalid_argument(std::string("Invalid Parameter specifier: ") + *fmt);
@@ -207,60 +208,60 @@ class Formatter
             used  = fmt - formatStr;
 
             // Pre-calculate the type information of the next argument.
-            expectedType = getType(specifier, length, type);
+            info.expectedType = getType(info.length, info.type);
 
             // Pre-calculate the format flags that will be used to set up the stream.
-            format  |= (leftJustify ? std::ios_base::left : std::ios_base::right);
+            info.format  |= (info.leftJustify ? std::ios_base::left : std::ios_base::right);
 
             // Are we expecting a number type?
             // Set dec/oct/hex/fixed/scientific
-            if (specifier == Specifier::d || specifier == Specifier::i)
+            if (info.specifier == Specifier::d || info.specifier == Specifier::i)
             {
-                format  |= std::ios_base::dec;
+                info.format  |= std::ios_base::dec;
             }
-            else if (specifier == Specifier::o)
+            else if (info.specifier == Specifier::o)
             {
-                format  |= std::ios_base::oct;
+                info.format  |= std::ios_base::oct;
             }
-            else if (specifier == Specifier::x || specifier == Specifier::X)
+            else if (info.specifier == Specifier::x || info.specifier == Specifier::X)
             {
-                format  |= std::ios_base::hex;
+                info.format  |= std::ios_base::hex;
             }
-            else if (specifier == Specifier::f || specifier == Specifier::F)
+            else if (info.specifier == Specifier::f || info.specifier == Specifier::F)
             {
-                format |= std::ios_base::fixed;
+                info.format |= std::ios_base::fixed;
             }
-            else if (specifier == Specifier::e || specifier == Specifier::E)
+            else if (info.specifier == Specifier::e || info.specifier == Specifier::E)
             {
-                format |= std::ios_base::scientific;
+                info.format |= std::ios_base::scientific;
             }
-            else if (specifier == Specifier::a || specifier == Specifier::A)
+            else if (info.specifier == Specifier::a || info.specifier == Specifier::A)
             {
-                format |= (std::ios_base::fixed | std::ios_base::scientific);
+                info.format |= (std::ios_base::fixed | std::ios_base::scientific);
             }
 
             // Some specifiers define if we are using upper case (rather than the default lowercase for any letters)
-            if (specifier == Specifier::X || specifier == Specifier::F || specifier == Specifier::E || specifier == Specifier::A || specifier == Specifier::G)
+            if (info.specifier == Specifier::X || info.specifier == Specifier::F || info.specifier == Specifier::E || info.specifier == Specifier::A || info.specifier == Specifier::G)
             {
-                format |= std::ios_base::uppercase;
+                info.format |= std::ios_base::uppercase;
             }
 
             // Show the base types for certain output specifiers.
-            if (prefixType && (specifier == Specifier::o || specifier == Specifier::x || specifier == Specifier::X))
+            if (info.prefixType && (info.specifier == Specifier::o || info.specifier == Specifier::x || info.specifier == Specifier::X))
             {
-                format |= std::ios_base::showbase;
+                info.format |= std::ios_base::showbase;
             }
 
             // Show the floating point even if there is no fraction.
-            if (prefixType && (specifier == Specifier::a || specifier == Specifier::A || specifier == Specifier::e || specifier == Specifier::E || specifier == Specifier::f || specifier == Specifier::F || specifier == Specifier::g || specifier == Specifier::G))
+            if (info.prefixType && (info.specifier == Specifier::a || info.specifier == Specifier::A || info.specifier == Specifier::e || info.specifier == Specifier::E || info.specifier == Specifier::f || info.specifier == Specifier::F || info.specifier == Specifier::g || info.specifier == Specifier::G))
             {
-                format |= std::ios_base::showpoint;
+                info.format |= std::ios_base::showpoint;
             }
 
             // Show the '+' sign for positive values.
-            if (forceSign && (specifier != Specifier::c && specifier != Specifier::s && specifier != Specifier::p))
+            if (info.forceSign && (info.specifier != Specifier::c && info.specifier != Specifier::s && info.specifier != Specifier::p))
             {
-                format |= std::ios_base::showpos;
+                info.format |= std::ios_base::showpos;
             }
         }
         std::size_t size() const {return used;}
@@ -276,30 +277,30 @@ class Formatter
             template<typename A>
             void apply(std::ostream& s, A const& arg) const
             {
-                if (std::type_index(*expectedType) != std::type_index(typeid(A)))
+                if (std::type_index(*info.expectedType) != std::type_index(typeid(A)))
                 {
-                    throw std::invalid_argument(std::string("Actual argument does not match supplied argument: Expected(") + expectedType->name() + ") Got(" + typeid(A).name() + ")");
+                    throw std::invalid_argument(std::string("Actual argument does not match supplied argument: Expected(") + info.expectedType->name() + ") Got(" + typeid(A).name() + ")");
                 }
 
                 // Fill is either 0 or space and only used for numbers.
-                char        fill      = (!leftJustify && leftPad && (specifier != Specifier::c && specifier != Specifier::s && specifier != Specifier::p)) ? '0' : ' ';
-                std::size_t fillWidth = width;
-                std::size_t fractPrec = precision == -1 && type == Type::Float ? 6 : precision;
+                char        fill      = (!info.leftJustify && info.leftPad && (info.specifier != Specifier::c && info.specifier != Specifier::s && info.specifier != Specifier::p)) ? '0' : ' ';
+                std::size_t fillWidth = info.width;
+                std::size_t fractPrec = info.precision == -1 && info.type == Type::Float ? 6 : info.precision;
 
                 // Take special care if we forcing a space in-front of positive values.
-                if (forceSignWidth && !forceSign && checkNumLargerEqualToZero(arg) && (type == Type::Float || type == Type::Int))
+                if (info.forceSignWidth && !info.forceSign && checkNumLargerEqualToZero(arg) && (info.type == Type::Float || info.type == Type::Int))
                 {
                     s << ' ';
                     fillWidth = fillWidth == 0 ? 0 : fillWidth - 1;
                 }
 
                 // Set up the stream for formatting
-                auto oldFlags = s.flags(format);
+                auto oldFlags = s.flags(info.format);
                 auto oldFill  = s.fill(fill);
                 auto oldWidth = s.width(fillWidth);
                 auto oldPrec  = s.precision(fractPrec);
 
-                printToStream(s, arg, fillWidth, precision, leftJustify, leftPad, forceSign, prefixType, type == Type::Char);
+                printToStream(s, arg, fillWidth, info.precision, info.leftJustify, info.leftPad, info.forceSign, info.prefixType, info.type == Type::Char);
 
                 // reset the stream to original state
                 s.precision(oldPrec);
@@ -308,7 +309,7 @@ class Formatter
                 s.flags(oldFlags);
             }
             // Only certain combinations of Specifier and Length are supported.
-            static std::type_info const* getType(Specifier specifier, Length length, Type type)
+            static std::type_info const* getType(Length length, Type type)
             {
                 static std::map<std::pair<Type, Length>, std::type_info const*>    typeMap =
                 {
