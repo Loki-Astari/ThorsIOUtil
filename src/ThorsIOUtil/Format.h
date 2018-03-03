@@ -2,7 +2,7 @@
 #define THORSANVIL_IOUTIL_FORMAT_H
 
 #include "printToStream.h"
-#include "formatter.h"
+#include "Formatter.h"
 
 #include <ostream>
 #include <sstream>
