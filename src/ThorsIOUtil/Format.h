@@ -59,7 +59,7 @@ class Format
             std::string prefix;
             std::size_t extra = 0;
             std::size_t nextFormatter = format.find('%', pos);
-            while(nextFormatter != std::string::npos && format[nextFormatter + 1] == '%')
+            while (nextFormatter != std::string::npos && format[nextFormatter + 1] == '%')
             {
                 nextFormatter = format.find('%', nextFormatter + 2);
             }
