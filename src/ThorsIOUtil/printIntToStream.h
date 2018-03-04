@@ -18,7 +18,7 @@ inline unsigned long        absm(unsigned long arg)        {return arg;}
 inline unsigned int         absm(unsigned int arg)         {return arg;}
 
 template<typename T>
-inline void printIntToStream(std::ostream& s, T arg, std::size_t width, std::size_t precision, bool forceLeft, FormatInfo const& info)
+inline void printIntToStream(std::ostream& s, T arg, FormatInfo const& info)
 {
     static long double  const logFor16    = std::log10(16.0L);
     static long double  const logFor10    = std::log10(10.0L);
@@ -26,12 +26,15 @@ inline void printIntToStream(std::ostream& s, T arg, std::size_t width, std::siz
 
     double const&  logBase = s.flags() & std::ios_base::oct ? logFor08 : s.flags() & std::ios_base::hex ? logFor16 : logFor10;
 
-    if (width == 0 && precision == -1)
+    if (info.width == 0 && info.precision == -1)
     {
         s << arg;
     }
     else
     {
+        std::size_t width     = info.width;
+        std::size_t precision = info.precision;
+
         /*
          * When precision or Width are specified the default does not do the same as C sprintf library
          * So we are going to take care of it manually here
