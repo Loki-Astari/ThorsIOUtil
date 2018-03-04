@@ -2,6 +2,7 @@
 #define THORSANVIL_IOUTIL_FORMATTER_H
 
 #include "printToStream.h"
+#include "saveToStream.h"
 #include "FormatInfo.h"
 
 #include <ostream>
@@ -289,6 +290,9 @@ class Formatter
             }
             ++fmt;
 
+
+            info.useDynamicSize = dynamicWidthHandeled;
+
             // Now we know how much string was used to calculate the value.
             used  = fmt - formatStr;
 
@@ -391,7 +395,7 @@ class Formatter
                     {
                         throw std::invalid_argument("Dynamic Width of Precision is not an int");
                     }
-                    // TODO
+                    saveToStream(s, dynamicSize, arg);
                 }
             }
 
@@ -405,8 +409,12 @@ class Formatter
 
                 // Fill is either 0 or space and only used for numbers.
                 char        fill      = (!info.leftJustify && info.leftPad && (info.specifier != Specifier::c && info.specifier != Specifier::s && info.specifier != Specifier::p)) ? '0' : ' ';
-                std::size_t fillWidth = info.width;
-                std::size_t fractPrec = info.precision == -1 && info.type == Type::Float ? 6 : info.precision;
+                std::size_t fillWidth = (info.useDynamicSize == Dynamic::Width || info.useDynamicSize == Dynamic::Both)
+                                            ? s.iword(static_cast<int>(Dynamic::Width))
+                                            : info.width;
+                std::size_t fractPrec = (info.useDynamicSize == Dynamic::Precision || info.useDynamicSize == Dynamic::Both)
+                                            ? s.iword(static_cast<int>(Dynamic::Precision))
+                                            : info.precision == -1 && info.type == Type::Float ? 6 : info.precision;
 
                 // Take special care if we forcing a space in-front of positive values.
                 if (info.forceSignWidth && !info.forceSign && checkNumLargerEqualToZero(arg) && (info.type == Type::Float || info.type == Type::Int))
