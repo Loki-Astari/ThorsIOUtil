@@ -25,6 +25,7 @@ struct SignConversionOption
     using Alternative   = T;
     static constexpr bool allowIntConversion = false;
     static int convertToInt(T const&) {return 0;}
+    static int truncate(T const& arg, int mask) {return 0;};
 };
 
 template<>
@@ -34,6 +35,7 @@ struct SignConversionOption<char>
     using Alternative   = unsigned char;
     static constexpr bool allowIntConversion = true;
     static int convertToInt(char const& arg) {return arg;}
+    static int truncate(char const& arg, int mask) {return 0;};
 };
 template<>
 struct SignConversionOption<short>
@@ -42,6 +44,7 @@ struct SignConversionOption<short>
     using Alternative   = unsigned short;
     static constexpr bool allowIntConversion = true;
     static int convertToInt(short const& arg) {return arg;}
+    static int truncate(short const& arg, int mask) {return 0;};
 };
 template<>
 struct SignConversionOption<int>
@@ -50,6 +53,7 @@ struct SignConversionOption<int>
     using Alternative   = unsigned int;
     static constexpr bool allowIntConversion = false;
     static int convertToInt(int const&) {return 0;}
+    static int truncate(int const& arg, int mask) {return arg & mask;};
 };
 template<>
 struct SignConversionOption<long>
@@ -58,6 +62,7 @@ struct SignConversionOption<long>
     using Alternative   = unsigned long;
     static constexpr bool allowIntConversion = false;
     static int convertToInt(long const&) {return 0;}
+    static int truncate(long const& arg, int mask) {return 0;};
 };
 template<>
 struct SignConversionOption<long long>
@@ -66,6 +71,7 @@ struct SignConversionOption<long long>
     using Alternative   = unsigned long long;
     static constexpr bool allowIntConversion = false;
     static int convertToInt(long long const&) {return 0;}
+    static int truncate(long long const& arg, int mask) {return 0;};
 };
 template<>
 struct SignConversionOption<unsigned char>
@@ -74,6 +80,7 @@ struct SignConversionOption<unsigned char>
     using Alternative   = char;
     static constexpr bool allowIntConversion = true;
     static int convertToInt(unsigned char const& arg) {return arg;}
+    static int truncate(unsigned char const& arg, int mask) {return 0;};
 };
 template<>
 struct SignConversionOption<unsigned short>
@@ -82,6 +89,7 @@ struct SignConversionOption<unsigned short>
     using Alternative   = short;
     static constexpr bool allowIntConversion = true;
     static int convertToInt(unsigned short const& arg) {return arg;}
+    static int truncate(unsigned short const& arg, int mask) {return 0;};
 };
 template<>
 struct SignConversionOption<unsigned int>
@@ -90,6 +98,7 @@ struct SignConversionOption<unsigned int>
     using Alternative   = int;
     static constexpr bool allowIntConversion = false;
     static int convertToInt(unsigned int const&) {return 0;}
+    static int truncate(unsigned int const& arg, int mask) {return 0;};
 };
 template<>
 struct SignConversionOption<unsigned long>
@@ -98,6 +107,7 @@ struct SignConversionOption<unsigned long>
     using Alternative   = long;
     static constexpr bool allowIntConversion = false;
     static int convertToInt(unsigned long const&) {return 0;}
+    static int truncate(unsigned long const& arg, int mask) {return 0;};
 };
 template<>
 struct SignConversionOption<unsigned long long>
@@ -106,6 +116,7 @@ struct SignConversionOption<unsigned long long>
     using Alternative   = long long;
     static constexpr bool allowIntConversion = false;
     static int convertToInt(unsigned long long const&) {return 0;}
+    static int truncate(unsigned long long const& arg, int mask) {return 0;};
 };
 
 template<typename T>
@@ -364,11 +375,11 @@ class Formatter
                     using Actual       = typename SignConversionOption<A>::Actual;
                     using Alternative  = typename SignConversionOption<A>::Alternative;
 
-                    if (std::type_index(typeid(Actual)) == std::type_index(*info.expectedType))
+                    if (std::type_index(typeid(Actual)) == std::type_index(*info.expectedType.first))
                     {
                         applyData(s, arg);
                     }
-                    else if (std::type_index(typeid(Actual)) != std::type_index(typeid(Alternative)) && std::type_index(*info.expectedType) == std::type_index(typeid(Alternative)))
+                    else if (std::type_index(typeid(Actual)) != std::type_index(typeid(Alternative)) && std::type_index(*info.expectedType.first) == std::type_index(typeid(Alternative)))
                     {
                         applyData(s, static_cast<Alternative const&>(arg));
                     }
@@ -376,9 +387,13 @@ class Formatter
                     {
                         applyData(s, SignConversionOption<A>::convertToInt(arg));
                     }
+                    else if (std::type_index(typeid(A)) == std::type_index(typeid(int)) && info.expectedType.second)
+                    {
+                        applyData(s, SignConversionOption<A>::truncate(arg, info.expectedType.second));
+                    }
                     else
                     {
-                        throw std::invalid_argument(std::string("Actual argument does not match supplied argument (or conversions): Expected(") + info.expectedType->name() + ") Got(" + typeid(A).name() + ")");
+                        throw std::invalid_argument(std::string("Actual argument does not match supplied argument (or conversions): Expected(") + info.expectedType.first->name() + ") Got(" + typeid(A).name() + ")");
                     }
                 }
                 else
@@ -394,13 +409,8 @@ class Formatter
             template<typename A>
             void applyData(std::ostream& s, A const& arg) const
             {
-                if (std::type_index(*info.expectedType) != std::type_index(typeid(A)))
-                {
-                    throw std::invalid_argument(std::string("Actual argument does not match supplied argument: Expected(") + info.expectedType->name() + ") Got(" + typeid(A).name() + ")");
-                }
-
                 // Fill is either 0 or space and only used for numbers.
-                char        fill      = (!info.leftJustify && info.leftPad && (info.specifier != Specifier::c && info.specifier != Specifier::s && info.specifier != Specifier::p)) ? '0' : ' ';
+                char        fill      = (!info.leftJustify && info.leftPad) ? '0' : ' ';
                 std::size_t fillWidth = (info.useDynamicSize == Dynamic::Width || info.useDynamicSize == Dynamic::Both)
                                             ? std::abs(s.iword(static_cast<int>(Dynamic::Width)))
                                             : info.width;
@@ -439,43 +449,43 @@ class Formatter
                 s.flags(oldFlags);
             }
             // Only certain combinations of Specifier and Length are supported.
-            static std::type_info const* getType(Length length, Type type)
+            static AllowedType getType(Length length, Type type)
             {
-                static std::map<std::pair<Type, Length>, std::type_info const*>    typeMap =
+                static std::map<std::pair<Type, Length>, AllowedType>    typeMap =
                 {
 #pragma vera-pushoff
-                    {{Type::Int,   Length::none}, &typeid(int)},
-                    {{Type::Int,   Length::hh},   &typeid(signed char)},
-                    {{Type::Int,   Length::h},    &typeid(short int)},
-                    {{Type::Int,   Length::l},    &typeid(long int)},
-                    {{Type::Int,   Length::ll},   &typeid(long long int)},
-                    {{Type::Int,   Length::j},    &typeid(std::intmax_t)},
-                    {{Type::Int,   Length::z},    &typeid(std::size_t)},
-                    {{Type::Int,   Length::t},    &typeid(std::ptrdiff_t)},
+                    {{Type::Int,   Length::none}, {&typeid(int), 0}},
+                    {{Type::Int,   Length::hh},   {&typeid(signed char), 0xFF}},
+                    {{Type::Int,   Length::h},    {&typeid(short int), 0xFFFF}},
+                    {{Type::Int,   Length::l},    {&typeid(long int), 0}},
+                    {{Type::Int,   Length::ll},   {&typeid(long long int), 0}},
+                    {{Type::Int,   Length::j},    {&typeid(std::intmax_t), 0}},
+                    {{Type::Int,   Length::z},    {&typeid(std::size_t), 0}},
+                    {{Type::Int,   Length::t},    {&typeid(std::ptrdiff_t), 0}},
 
-                    {{Type::UInt,  Length::none}, &typeid(unsigned int)},
-                    {{Type::UInt,  Length::hh},   &typeid(unsigned char)},
-                    {{Type::UInt,  Length::h},    &typeid(unsigned short int)},
-                    {{Type::UInt,  Length::l},    &typeid(unsigned long int)},
-                    {{Type::UInt,  Length::ll},   &typeid(unsigned long long int)},
-                    {{Type::UInt,  Length::j},    &typeid(std::intmax_t)},
-                    {{Type::UInt,  Length::z},    &typeid(std::size_t)},
-                    {{Type::UInt,  Length::t},    &typeid(std::ptrdiff_t)},
+                    {{Type::UInt,  Length::none}, {&typeid(unsigned int), 0}},
+                    {{Type::UInt,  Length::hh},   {&typeid(unsigned char), 0xFF}},
+                    {{Type::UInt,  Length::h},    {&typeid(unsigned short int), 0xFFFF}},
+                    {{Type::UInt,  Length::l},    {&typeid(unsigned long int), 0}},
+                    {{Type::UInt,  Length::ll},   {&typeid(unsigned long long int), 0}},
+                    {{Type::UInt,  Length::j},    {&typeid(std::intmax_t), 0}},
+                    {{Type::UInt,  Length::z},    {&typeid(std::size_t), 0}},
+                    {{Type::UInt,  Length::t},    {&typeid(std::ptrdiff_t), 0}},
 
-                    {{Type::Float, Length::none}, &typeid(double)},       {{Type::Float, Length::l}, &typeid(double)},          {{Type::Float, Length::L}, &typeid(long double)},
-                    {{Type::Char,  Length::none}, &typeid(int)},          {{Type::Char,  Length::l}, &typeid(std::wint_t)},
-                    {{Type::String,Length::none}, &typeid(char const*)},  {{Type::String,Length::l}, &typeid(wchar_t const*)},
+                    {{Type::Float, Length::none}, {&typeid(double), 0}},       {{Type::Float, Length::l}, {&typeid(double), 0}},          {{Type::Float, Length::L}, {&typeid(long double), 0}},
+                    {{Type::Char,  Length::none}, {&typeid(int), 0}},          {{Type::Char,  Length::l}, {&typeid(std::wint_t), 0}},
+                    {{Type::String,Length::none}, {&typeid(char const*), 0}},  {{Type::String,Length::l}, {&typeid(wchar_t const*), 0}},
 
-                    {{Type::Pointer,Length::none},&typeid(void*)},
+                    {{Type::Pointer,Length::none},{&typeid(void*), 0}},
 
-                    {{Type::Count, Length::none}, &typeid(int*)},
-                    {{Type::Count, Length::hh},   &typeid(signed char*)},
-                    {{Type::Count, Length::h},    &typeid(short int*)},
-                    {{Type::Count, Length::l},    &typeid(long int*)},
-                    {{Type::Count, Length::ll},   &typeid(long long int*)},
-                    {{Type::Count, Length::j},    &typeid(std::intmax_t*)},
-                    {{Type::Count, Length::z},    &typeid(std::size_t*)},
-                    {{Type::Count, Length::t},    &typeid(std::ptrdiff_t*)}
+                    {{Type::Count, Length::none}, {&typeid(int*), 0}},
+                    {{Type::Count, Length::hh},   {&typeid(signed char*), 0}},
+                    {{Type::Count, Length::h},    {&typeid(short int*), 0}},
+                    {{Type::Count, Length::l},    {&typeid(long int*), 0}},
+                    {{Type::Count, Length::ll},   {&typeid(long long int*), 0}},
+                    {{Type::Count, Length::j},    {&typeid(std::intmax_t*), 0}},
+                    {{Type::Count, Length::z},    {&typeid(std::size_t*), 0}},
+                    {{Type::Count, Length::t},    {&typeid(std::ptrdiff_t*), 0}}
 #pragma vera-pop
                 };
                 auto find = typeMap.find({type, length});

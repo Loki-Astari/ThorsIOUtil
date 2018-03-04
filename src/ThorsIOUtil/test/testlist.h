@@ -76,8 +76,9 @@ THOR_PRINTF_TEST(47, " 42.90",                "%6.2f",         42.8952)
 # doc. "If a precision is given with a numeric
 # conversion (d,, i, o, u, x, and X), the 0 flag is ignored.
 # For other conversions, the behavior is undefined."
-# 48 "042.90"                "%06.2f"        42.8952
 #endif
+THOR_PRINTF_TEST(48, "042.90",                "%06.2f",        42.8952)
+
 THOR_PRINTF_TEST(49, "+42.90",                "%+6.2f",        42.8952)
 THOR_PRINTF_TEST(50, "42.8952000000",         "%5.10f",        42.8952)
 #if 0
@@ -98,8 +99,8 @@ THOR_PRINTF_TEST(50, "42.8952000000",         "%5.10f",        42.8952)
 
 !H 58 ?                       "%2$*s"         "Hot Pocket"
 # haskell correctly reports an error
-!H 59 "%(foo",                 "%(foo"
 #endif
+THOR_PRINTF_FAIL(59, "%(foo",                 "%(foo")
 
 THOR_PRINTF_TEST(60, " foo",                  "%*s",           4, "foo")
 THOR_PRINTF_TEST(61, "      3.14",            "%*.*f",         10, 2, 3.14159265)
@@ -108,10 +109,8 @@ THOR_PRINTF_TEST(61, "      3.14",            "%*.*f",         10, 2, 3.14159265
 # 62 "0000003.14"            "%0*.*f"        10 2 3.14159265
 #endif
 THOR_PRINTF_TEST(63, "3.14      ",            "%-*.*f",        10, 2, 3.14159265)
-#if 0
-    64 ?                       "%*s"           "foo" "bar"
-    65 ?                       "%10.*f"        42 "foo"
-#endif
+THOR_PRINTF_FAIL(64, ?,                       "%*s",           "foo", "bar")
+THOR_PRINTF_FAIL(65, ?,                       "%10.*f",        42, "foo")
 
 THOR_PRINTF_TEST(66, "+hello+",               "+%s+",          "hello")
 THOR_PRINTF_TEST(67, "+10+",                  "+%d+",          10)
@@ -119,34 +118,40 @@ THOR_PRINTF_TEST(68, "a",                     "%c",            'a')
 THOR_PRINTF_TEST(69, " ",                     "%c",            32)
 THOR_PRINTF_TEST(70, "$",                     "%c",            36)
 THOR_PRINTF_TEST(71, "10",                    "%d",            10)
+THOR_PRINTF_FAIL(72, ?,                       "%s%s",          42)
+THOR_PRINTF_FAIL(73, ?,                       "%c")
 #if 0
-    72 ?                       "%s%s"          42
-    73 ?                       "%c"
 # glibc printf fails this test, returns ""
 # Haskell fails this test claiming that "argument list ended
 # prematurely", which is not so reasonable.
 !CH 74 "%10"                   "%10"           42
 # glibc printf fails this test, returns "10 "
 # Haskell correctly throws an error
-!CH 75 "10 %"                  "%d %"          10
+#endif
+THOR_PRINTF_FAIL(75, "10 %",                  "%d %",          10)
 
+#if 0
 # Tests from MSVCRT
 # Haskell fails these tests due to different floating formatting
-!H 76 "+7.894561230000000e+08"        "%+#22.15e"     789456123.0
-!H 77 "7.894561230000000e+08 "        "%-#22.15e"     789456123.0
-!H 78 " 7.894561230000000e+08"        "%#22.15e"      789456123.0
-!H 79 "8.e+08"                        "%#1.1g"        789456123.0
-
-# The arg constant here is not legal C.
-# 80 "-8589934591"                   "%lld"         18446744065119617025LL
 #endif
+#undef  THOR_PRINTF_TEST_GROUP
+#define THOR_PRINTF_TEST_GROUP  MSVCRT
+THOR_PRINTF_TEST(76, "+7.894561230000000e+08",        "%+#22.15e",     789456123.0)
+THOR_PRINTF_TEST(77, "7.894561230000000e+08 ",        "%-#22.15e",     789456123.0)
+THOR_PRINTF_TEST(78, " 7.894561230000000e+08",        "%#22.15e",      789456123.0)
+THOR_PRINTF_TEST(79, "8.e+08",                        "%#1.1g",        789456123.0)
+
+#if 0
+# The arg constant here is not legal C.
+#endif
+THOR_PRINTF_TEST(80, "-8589934591",                   "%lld",         18446744065119617025LL)
 THOR_PRINTF_TEST(81, "    +100",                      "%+8lld",       100LL)
 THOR_PRINTF_TEST(82, "+00000100",                     "%+.8lld",      100LL)
 THOR_PRINTF_TEST(83, " +00000100",                    "%+10.8lld",    100LL)
 #if 0
 # Haskell correctly reports an error here
-!H 84 "%_1lld"                        "%_1lld"       100LL
 #endif
+THOR_PRINTF_FAIL(84, "%_1lld",                        "%_1lld",       100LL)
 THOR_PRINTF_TEST(85, "-00100",                        "%-1.5lld",     -100LL)
 THOR_PRINTF_TEST(86, "  100",                         "%5lld",        100LL)
 THOR_PRINTF_TEST(87, " -100",                         "%5lld",        -100LL)
@@ -185,18 +190,21 @@ THOR_PRINTF_TEST(118, " 0000000000000000000000000000000000000001", "% .40lld", 1
 THOR_PRINTF_TEST(119, " 0000000000000000000000000000000000000001", "% .40d", 1)
 #if 0
 #See above.
-#120 "-8589934591"                   "%lld"          18446744065119617025LL
+#endif
+THOR_PRINTF_TEST(120, "-8589934591",                   "%lld",          18446744065119617025LL)
+#if 0
 # libc fails this, with "" and return code -1 (!)
 #, Haskell correctly reports an error here
-!CH 121 "%I"                            "%I"            1
+#endif
+THOR_PRINTF_FAIL(121, "%I",                            "%I",            1)
+#if 0
 # The next two tests are locale-specific and should not be used
 #122 "1"                             "%I0d"          1
 #123 "                               1" "%I32d"         1
 # libc fails this, with "%D"
 # Haskell correctly throws an error
-!CH 124 "%llD"                          "%llD"          -1LL
 #endif
-
+THOR_PRINTF_FAIL(124, "%llD",                          "%llD",          -1LL)
 THOR_PRINTF_TEST(125, " 1",                            "% d",           1)
 THOR_PRINTF_TEST(126, "+1",                            "%+ d",          1)
 #if 0
@@ -210,7 +218,7 @@ THOR_PRINTF_TEST(131, "0x01    ",                      "%#-08.2x",      1)
 THOR_PRINTF_TEST(132, "00000001",                      "%#08o",         1)
 #if 0
 # Haskell has no pointers
-!H 133 "0x39"                          "%p"            57VLL
+#133 "0x39"                          "%p"            57VLL
 # These tests are undefined.
 #134 "  0X0000000000000039"          "%#020p"        57VLL
 #135 "0000000000000039"              "%Fp"           57VLL
@@ -221,8 +229,8 @@ THOR_PRINTF_TEST(132, "00000001",                      "%#08o",         1)
 #138 "  0X00000039"                  "%#012p"        57V
 #139 "00000039"                      "%Fp"           57V
 #140 "0X00000039  "                  "%#-012p"       57V
-#141 "0foo"                          "%04s"          "foo"
 #endif
+THOR_PRINTF_TEST(141, "0foo",                          "%04s",          "foo")
 THOR_PRINTF_TEST(142, "f",                             "%.1s",          "foo")
 THOR_PRINTF_TEST(143, "f",                             "%.*s",          1, "foo")
 THOR_PRINTF_TEST(144, "foo  ",                         "%*s",           -5, "foo")
@@ -231,35 +239,37 @@ THOR_PRINTF_TEST(145, "hello",                         "hello")
 # This test is undefined.
 #146 "not wide"                      "%Ls"           "not wide"
 # Haskell correctly throws an error
-!H 147 "%b"                            "%b"
 #endif
+THOR_PRINTF_FAIL(147, "%b",                            "%b")
 THOR_PRINTF_TEST(148, "  a",                           "%3c",           'a')
 THOR_PRINTF_TEST(149, "1234",                          "%3d",           1234)
 #if 0
 # libc fails this, with "" and return code -1
 # Haskell correctly throws an error
-!CH 150 "%3h"                           "%3h"
+#endif
+THOR_PRINTF_FAIL(150, "%3h",                           "%3h")
+#if 0
 # libc fails this, with a big mess worth sorting out later.
 # Note that the given result is clearly wrong.
-#151 "jkmqrtvyz"                     "%j%k%m%q%r%t%v%y%z"
 #endif
+THOR_PRINTF_FAIL(151, "jkmqrtvyz",                     "%j%k%m%q%r%t%v%y%z")
 THOR_PRINTF_TEST(152, "2",                             "%-1d",          2)
 THOR_PRINTF_TEST(153, "8.6000",                        "%2.4f",         8.6)
 #if 0
 # Haskell fails these because of different floating point formatting
-!H 154 "0.600000"                      "%0f"           0.6
 #endif
+THOR_PRINTF_TEST(154, "0.600000",                      "%0f",           0.6)
 THOR_PRINTF_TEST(155, "1",                             "%.0f",          0.6)
+THOR_PRINTF_TEST(156, "8.6000e+00",                    "%2.4e",         8.6)
+THOR_PRINTF_TEST(157, " 8.6000e+00",                   "% 2.4e",        8.6)
 #if 0
-!H 156 "8.6000e+00"                    "%2.4e"         8.6
-!H 157 " 8.6000e+00"                   "% 2.4e"        8.6
 # This test is undefined, due to a weird codicil in the
 # manpage re zero flag plus precision for non-integral formats.
 # 158 " 0008.6000e+00"                 "% 014.4e"      8.6
-!H 159 "-8.6000e+00"                   "% 2.4e"        -8.6
-!H 160 "+8.6000e+00"                   "%+2.4e"        8.6
-!H 161 "8.6"                           "%2.4g"         8.6
 #endif
+THOR_PRINTF_TEST(159, "-8.6000e+00",                   "% 2.4e",        -8.6)
+THOR_PRINTF_TEST(160, "+8.6000e+00",                   "%+2.4e",        8.6)
+THOR_PRINTF_TEST(161, "8.6",                           "%2.4g",         8.6)
 THOR_PRINTF_TEST(162, "-1",                            "%-i",           -1)
 THOR_PRINTF_TEST(163, "1",                             "%-i",           1)
 THOR_PRINTF_TEST(164, "+1",                            "%+i",           1)
@@ -276,25 +286,29 @@ THOR_PRINTF_TEST(169, "%%%%",                          "%s",            "%%%%")
 THOR_PRINTF_TEST(170, "4294967295",                    "%u",            -1)
 #if 0
 # Haskell correctly throws an error on these
-!H 171 "%w"                            "%w"            -1
+#endif
+THOR_PRINTF_FAIL(171, "%w",                            "%w",            -1)
+#if 0
 # libc fails these, with "" and return -1
-!CH 172 "%h"                            "%h"            -1
-!CH 173 "%z"                            "%z"            -1
-!CH 174 "%j"                            "%j"            -1
+#endif
+THOR_PRINTF_FAIL(172, "%h",                            "%h",            -1)
+THOR_PRINTF_FAIL(173, "%z",                            "%z",            -1)
+THOR_PRINTF_FAIL(174, "%j",                            "%j",            -1)
+#if 0
 # This test is undefined.
 #175 ""                              "%F"            -1
 # Haskell correctly throws an error on this.
-!H 176 "%H"                          "%H"            -1
 #endif
+THOR_PRINTF_FAIL(176, "%H",                            "%H",            -1)
 THOR_PRINTF_TEST(177, "%0",                            "%%0")
 #if 0
 # Haskell returns "12345"; this is arguably correct for Haskell.
-!H 178 "2345"                          "%hx"           74565
 #endif
+THOR_PRINTF_TEST(178, "2345",                          "%hx",           74565)
 THOR_PRINTF_TEST(179, "61",                            "%hhx",          'a')
 #if 0
 # This test seems hopeless: I don't understand it.
-#180 "2345"                          "%hhx"          74565
+# 180 "2345"                          "%hhx"          74565
 
 # Tests from libc
 #endif
