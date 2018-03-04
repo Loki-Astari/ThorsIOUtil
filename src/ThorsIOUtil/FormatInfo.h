@@ -12,6 +12,7 @@ namespace ThorsAnvil::IOUtil
 enum class Length    {none, hh, h, l, ll, j, z, t, L};
 enum class Specifier {d, i, u, o, x, X, f, F, e, E, g, G, a, A, c, s, p, n};
 enum class Type      {Int, UInt, Float, Char, String, Pointer, Count};
+enum class Dynamic   {None, Width, Precision, Both};
 #pragma vera-pop
 
 struct FormatInfo
@@ -32,6 +33,7 @@ struct FormatInfo
     bool                    prefixType;     // #    Used with o, x or X specifiers the value is preceded with 0, 0x or 0X respectively for values different than zero.
                                             //      Used with a, A, e, E, f, F, g or G it forces the written output to contain a decimal point even if no more digits follow. By default, if no digits follow, no decimal point is written.
     bool                    leftPad;        // 0    Left-pads the number with zeroes (0) instead of spaces when padding is specified (see width sub-specifier).
+    Dynamic                 useDynamicSize;
     // Width and precision of the formatter.
     std::size_t             width;
     std::size_t             precision;

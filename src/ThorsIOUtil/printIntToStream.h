@@ -18,7 +18,7 @@ inline unsigned long        absm(unsigned long arg)        {return arg;}
 inline unsigned int         absm(unsigned int arg)         {return arg;}
 
 template<typename T>
-inline void printIntToStream(std::ostream& s, T arg, int width, FormatInfo const& info)
+inline void printIntToStream(std::ostream& s, T arg, std::size_t width, std::size_t precision, bool forceLeft, FormatInfo const& info)
 {
     static long double  const logFor16    = std::log10(16.0L);
     static long double  const logFor10    = std::log10(10.0L);
@@ -26,11 +26,11 @@ inline void printIntToStream(std::ostream& s, T arg, int width, FormatInfo const
 
     double const&  logBase = s.flags() & std::ios_base::oct ? logFor08 : s.flags() & std::ios_base::hex ? logFor16 : logFor10;
 
-    if (width == 0 && info.precision == -1)
+    if (width == 0 && precision == -1)
     {
         s << arg;
     }
-    else if (info.precision == -1)
+    else if (precision == -1)
     {
         std::size_t reduceWidth = 0;
         reduceWidth += ((arg >= 0 && info.forceSign && info.type == Type::Int) || arg < 0) ? 1 : 0;
@@ -43,7 +43,7 @@ inline void printIntToStream(std::ostream& s, T arg, int width, FormatInfo const
         std::size_t padding = 0;
         if (!info.leftPad)
         {
-            std::size_t numberOfDigits = arg != 0 ? static_cast<int>((std::log10(static_cast<long double>(absm(arg))) / logBase + 1)) : ( info.precision == 0 ? 0 : 1);;
+            std::size_t numberOfDigits = arg != 0 ? static_cast<int>((std::log10(static_cast<long double>(absm(arg))) / logBase + 1)) : (precision == 0 ? 0 : 1);;
             padding        = (numberOfDigits >= width) ? 0 :  (width - numberOfDigits);
             width          -= padding;
         }
@@ -99,10 +99,10 @@ inline void printIntToStream(std::ostream& s, T arg, int width, FormatInfo const
         }
         width = extraWidth > width ? 0 : width - extraWidth;
 
-        std::size_t numberOfDigits = arg != 0 ? static_cast<int>((std::log10(static_cast<long double>(absm(arg))) / logBase + 1)) : ( info.precision == 0 ? 0 : 1);;
+        std::size_t numberOfDigits = arg != 0 ? static_cast<int>((std::log10(static_cast<long double>(absm(arg))) / logBase + 1)) : (precision == 0 ? 0 : 1);;
         numberOfDigits += extraDigits;
-        std::size_t sizeOfNumber   = numberOfDigits > info.precision ? numberOfDigits : info.precision;
-        std::size_t prefix         = info.precision == -1 ? 0 : numberOfDigits > info.precision ? 0 : (info.precision - numberOfDigits);
+        std::size_t sizeOfNumber   = numberOfDigits > precision ? numberOfDigits : precision;
+        std::size_t prefix         = precision == -1 ? 0 : numberOfDigits > precision ? 0 : (precision - numberOfDigits);
         std::size_t padding        = (sizeOfNumber >= width) ? 0 :  (width - sizeOfNumber);
         if (!info.leftJustify)
         {
@@ -134,7 +134,7 @@ inline void printIntToStream(std::ostream& s, T arg, int width, FormatInfo const
         {
             s.put('0');
         }
-        if (info.precision != 0 || arg != 0)
+        if (precision != 0 || arg != 0)
         {
             s << absm(arg);
         }

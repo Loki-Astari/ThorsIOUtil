@@ -2,6 +2,7 @@
 #define THORSANVIL_IOUTIL_FORMATTER_H
 
 #include "printToStream.h"
+#include "saveToStream.h"
 #include "FormatInfo.h"
 
 #include <ostream>
@@ -117,6 +118,7 @@ class Formatter
 {
     // The number of characters read in the formatter.
     std::size_t             used;
+    Dynamic                 dynamicSize;
 
     // Details extracted from the format string.
     FormatInfo              info;
@@ -148,8 +150,9 @@ class Formatter
         }
     };
     public:
-       Formatter(char const* formatStr)
+       Formatter(char const* formatStr, Dynamic dynamicWidthHandeled)
             : used(0)
+            , dynamicSize(Dynamic::None)
             , info()
         {
             info.precision = -1;
@@ -184,6 +187,16 @@ class Formatter
                 info.width = std::strtol(fmt, &end, 10);
                 fmt = end;
             }
+            else if (*fmt == '*')
+            {
+                if (dynamicWidthHandeled == Dynamic::None)
+                {
+                    dynamicSize         = Dynamic::Width;
+                    info                = FormatInfo();
+                    return;
+                }
+                ++fmt;
+            }
 
             // Check to see if there is a precision
             if (*fmt == '.')
@@ -194,6 +207,16 @@ class Formatter
                     char* end;
                     info.precision = std::strtol(fmt, &end, 10);
                     fmt = end;
+                }
+                else if (*fmt == '*')
+                {
+                    if (dynamicWidthHandeled == Dynamic::None || dynamicWidthHandeled == Dynamic::Width)
+                    {
+                        dynamicSize         = Dynamic::Precision;
+                        info                = FormatInfo();
+                        return;
+                    }
+                    ++fmt;
                 }
                 else
                 {
@@ -261,6 +284,9 @@ class Formatter
             }
             ++fmt;
 
+
+            info.useDynamicSize = dynamicWidthHandeled;
+
             // Now we know how much string was used to calculate the value.
             used  = fmt - formatStr;
 
@@ -321,7 +347,8 @@ class Formatter
                 info.format |= std::ios_base::showpos;
             }
         }
-        std::size_t size() const {return used;}
+        std::size_t size()          const {return used;}
+        Dynamic     isDynamicSize() const {return dynamicSize;}
 
         // We pass the formatter to the stream first
         // So we create a marker object used to print the actual argument.
@@ -334,24 +361,35 @@ class Formatter
             template<typename A>
             void apply(std::ostream& s, A const& arg) const
             {
-                using Actual       = typename SignConversionOption<A>::Actual;
-                using Alternative  = typename SignConversionOption<A>::Alternative;
+                if (dynamicSize == Dynamic::None)
+                {
+                    using Actual       = typename SignConversionOption<A>::Actual;
+                    using Alternative  = typename SignConversionOption<A>::Alternative;
 
-                if (std::type_index(typeid(Actual)) == std::type_index(*info.expectedType))
-                {
-                    applyData(s, arg);
-                }
-                else if (std::type_index(typeid(Actual)) != std::type_index(typeid(Alternative)) && std::type_index(*info.expectedType) == std::type_index(typeid(Alternative)))
-                {
-                    applyData(s, static_cast<Alternative const&>(arg));
-                }
-                else if (SignConversionOption<A>::allowIntConversion)
-                {
-                    applyData(s, SignConversionOption<A>::convertToInt(arg));
+                    if (std::type_index(typeid(Actual)) == std::type_index(*info.expectedType))
+                    {
+                        applyData(s, arg);
+                    }
+                    else if (std::type_index(typeid(Actual)) != std::type_index(typeid(Alternative)) && std::type_index(*info.expectedType) == std::type_index(typeid(Alternative)))
+                    {
+                        applyData(s, static_cast<Alternative const&>(arg));
+                    }
+                    else if (SignConversionOption<A>::allowIntConversion)
+                    {
+                        applyData(s, SignConversionOption<A>::convertToInt(arg));
+                    }
+                    else
+                    {
+                        throw std::invalid_argument(std::string("Actual argument does not match supplied argument (or conversions): Expected(") + info.expectedType->name() + ") Got(" + typeid(A).name() + ")");
+                    }
                 }
                 else
                 {
-                    throw std::invalid_argument(std::string("Actual argument does not match supplied argument (or conversions): Expected(") + info.expectedType->name() + ") Got(" + typeid(A).name() + ")");
+                    if (std::type_index(typeid(A)) != std::type_index(typeid(int)))
+                    {
+                        throw std::invalid_argument("Dynamic Width of Precision is not an int");
+                    }
+                    saveToStream(s, dynamicSize, arg);
                 }
             }
 
@@ -365,8 +403,21 @@ class Formatter
 
                 // Fill is either 0 or space and only used for numbers.
                 char        fill      = (!info.leftJustify && info.leftPad && (info.specifier != Specifier::c && info.specifier != Specifier::s && info.specifier != Specifier::p)) ? '0' : ' ';
-                std::size_t fillWidth = info.width;
-                std::size_t fractPrec = info.precision == -1 && info.type == Type::Float ? 6 : info.precision;
+                std::size_t fillWidth = (info.useDynamicSize == Dynamic::Width || info.useDynamicSize == Dynamic::Both)
+                                            ? std::abs(s.iword(static_cast<int>(Dynamic::Width)))
+                                            : info.width;
+                std::size_t fractPrec = (info.useDynamicSize == Dynamic::Precision || info.useDynamicSize == Dynamic::Both)
+                                            ? s.iword(static_cast<int>(Dynamic::Precision))
+                                            : info.precision == -1 && info.type == Type::Float ? 6 : info.precision;
+                bool                    forceLeft = info.leftJustify;
+                std::ios_base::fmtflags format    = info.format;
+                if ((info.useDynamicSize == Dynamic::Width || info.useDynamicSize == Dynamic::Both) && s.iword(static_cast<int>(Dynamic::Width)) < 0)
+                {
+                    forceLeft   = true;
+                    format  |=  std::ios_base::left;
+                    format  &=  ~std::ios_base::right;
+
+                }
 
                 // Take special care if we forcing a space in-front of positive values.
                 if (info.forceSignWidth && !info.forceSign && checkNumLargerEqualToZero(arg) && (info.type == Type::Float || info.type == Type::Int))
@@ -376,12 +427,12 @@ class Formatter
                 }
 
                 // Set up the stream for formatting
-                auto oldFlags = s.flags(info.format);
+                auto oldFlags = s.flags(format);
                 auto oldFill  = s.fill(fill);
                 auto oldWidth = s.width(fillWidth);
                 auto oldPrec  = s.precision(fractPrec);
 
-                printToStream(s, arg, fillWidth, info);
+                printToStream(s, arg, fillWidth, fractPrec, forceLeft, info);
 
                 // reset the stream to original state
                 s.precision(oldPrec);
