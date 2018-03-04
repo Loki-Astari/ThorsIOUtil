@@ -31,19 +31,28 @@ class Format
             Dynamic     dynamicSize = Dynamic::None;
             for (std::size_t loop = 0; loop < count; ++loop)
             {
+                // Find the prefix string before the next % sign (this may be empty)
                 std::pair<std::string, std::size_t> prefix = getNextPrefix(format, pos, [](std::size_t p){return p == std::string::npos;}, "not enough format");
                 pos += prefix.second;
                 prefixString.emplace_back(std::move(prefix.first));
 
+                // Now that I have found the %
+                // Convert the next part of the string into a Formatter object.
                 formater.emplace_back(format.data() + pos, dynamicSize);
                 pos         += formater.back().size();
+
+                // Take into account the Dynamic Width/Precesion prevent the format from being read.
+                // Note we can have Width/Precision or Both.
                 Dynamic     newDynamic  = formater.back().isDynamicSize();
                 dynamicSize = (newDynamic == Dynamic::Precision && dynamicSize == Dynamic::Width) ? Dynamic::Both : newDynamic;
             }
+            // After the last formatter check for a last fixed string (this may be empty)
+            // But there better not be any more % signs as we don't have any parameters left for them.
             std::pair<std::string, std::size_t> prefix = getNextPrefix(format, pos, [](std::size_t p){return p != std::string::npos;}, "too many format");
             pos += prefix.second;
             prefixString.emplace_back(std::move(prefix.first));
         }
+        // Using the operator<< is the same as calling print on the object.
         friend std::ostream& operator<<(std::ostream& s, Format const& format)
         {
             format.print(s);
@@ -54,6 +63,7 @@ class Format
             doPrint(s, std::make_index_sequence<sizeof...(Args)>());
         }
     private:
+        // This finds the next '%' taking into account that %% is a not a scan token.
         std::pair<std::string, std::size_t> getNextPrefix(std::string const&, std::size_t pos, std::function<bool(std::size_t)>&& test, char const* mes)
         {
             std::string prefix;
@@ -81,12 +91,16 @@ class Format
             }
             return {prefix, prefix.size() + extra};
         }
+        // For each argument we pass
+        // Pass a prefix string (might be empty) the formatter then the argument.
         template<std::size_t I>
         std::ostream& printValue(std::ostream& s) const
         {
             return s << prefixString[I] << formater[I] << std::get<I>(arguments);
         }
 
+        // Print all the values in order by calling printValue() on each parameter.
+        // Then print the final fixed string (might be empty)
         template<std::size_t... I>
         void doPrint(std::ostream& s, std::index_sequence<I...> const&) const
         {
