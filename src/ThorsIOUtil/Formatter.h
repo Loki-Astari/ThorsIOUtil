@@ -117,6 +117,7 @@ class Formatter
 {
     // The number of characters read in the formatter.
     std::size_t             used;
+    Dynamic                 dynamicSize;
 
     // Details extracted from the format string.
     FormatInfo              info;
@@ -148,8 +149,9 @@ class Formatter
         }
     };
     public:
-       Formatter(char const* formatStr)
+       Formatter(char const* formatStr, Dynamic dynamicWidthHandeled)
             : used(0)
+            , dynamicSize(Dynamic::None)
             , info()
         {
             info.precision = -1;
@@ -184,6 +186,16 @@ class Formatter
                 info.width = std::strtol(fmt, &end, 10);
                 fmt = end;
             }
+            else if (*fmt == '*')
+            {
+                if (dynamicWidthHandeled == Dynamic::None)
+                {
+                    dynamicSize         = Dynamic::Width;
+                    info                = FormatInfo();
+                    return;
+                }
+                ++fmt;
+            }
 
             // Check to see if there is a precision
             if (*fmt == '.')
@@ -194,6 +206,22 @@ class Formatter
                     char* end;
                     info.precision = std::strtol(fmt, &end, 10);
                     fmt = end;
+                }
+                else if (*fmt == '*')
+                {
+                    if (dynamicWidthHandeled == Dynamic::None)
+                    {
+                        dynamicSize         = Dynamic::Precision;
+                        info                = FormatInfo();
+                        return;
+                    }
+                    else if (dynamicWidthHandeled == Dynamic::Width)
+                    {
+                        dynamicSize         = Dynamic::Both;
+                        info                = FormatInfo();
+                        return;
+                    }
+                    ++fmt;
                 }
                 else
                 {
@@ -321,7 +349,8 @@ class Formatter
                 info.format |= std::ios_base::showpos;
             }
         }
-        std::size_t size() const {return used;}
+        std::size_t size()          const {return used;}
+        Dynamic     isDynamicSize() const {return dynamicSize;}
 
         // We pass the formatter to the stream first
         // So we create a marker object used to print the actual argument.
@@ -334,24 +363,35 @@ class Formatter
             template<typename A>
             void apply(std::ostream& s, A const& arg) const
             {
-                using Actual       = typename SignConversionOption<A>::Actual;
-                using Alternative  = typename SignConversionOption<A>::Alternative;
+                if (dynamicSize == Dynamic::None)
+                {
+                    using Actual       = typename SignConversionOption<A>::Actual;
+                    using Alternative  = typename SignConversionOption<A>::Alternative;
 
-                if (std::type_index(typeid(Actual)) == std::type_index(*info.expectedType))
-                {
-                    applyData(s, arg);
-                }
-                else if (std::type_index(typeid(Actual)) != std::type_index(typeid(Alternative)) && std::type_index(*info.expectedType) == std::type_index(typeid(Alternative)))
-                {
-                    applyData(s, static_cast<Alternative const&>(arg));
-                }
-                else if (SignConversionOption<A>::allowIntConversion)
-                {
-                    applyData(s, SignConversionOption<A>::convertToInt(arg));
+                    if (std::type_index(typeid(Actual)) == std::type_index(*info.expectedType))
+                    {
+                        applyData(s, arg);
+                    }
+                    else if (std::type_index(typeid(Actual)) != std::type_index(typeid(Alternative)) && std::type_index(*info.expectedType) == std::type_index(typeid(Alternative)))
+                    {
+                        applyData(s, static_cast<Alternative const&>(arg));
+                    }
+                    else if (SignConversionOption<A>::allowIntConversion)
+                    {
+                        applyData(s, SignConversionOption<A>::convertToInt(arg));
+                    }
+                    else
+                    {
+                        throw std::invalid_argument(std::string("Actual argument does not match supplied argument (or conversions): Expected(") + info.expectedType->name() + ") Got(" + typeid(A).name() + ")");
+                    }
                 }
                 else
                 {
-                    throw std::invalid_argument(std::string("Actual argument does not match supplied argument (or conversions): Expected(") + info.expectedType->name() + ") Got(" + typeid(A).name() + ")");
+                    if (std::type_index(typeid(A)) != std::type_index(typeid(int)))
+                    {
+                        throw std::invalid_argument("Dynamic Width of Precision is not an int");
+                    }
+                    // TODO
                 }
             }
 

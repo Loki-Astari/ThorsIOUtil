@@ -26,21 +26,27 @@ class Format
             : format(fmt)
             , arguments(args...)
         {
-            std::size_t count = sizeof...(args);
-            std::size_t pos   = 0;
+            std::size_t count       = sizeof...(args);
+            std::size_t pos         = 0;
+            Dynamic     dynamicSize = Dynamic::None;
             for (std::size_t loop = 0; loop < count; ++loop)
             {
-                // Not dealing with '\%' yet just trying to get it working.
                 std::pair<std::string, std::size_t> prefix = getNextPrefix(format, pos, [](std::size_t p){return p == std::string::npos;}, "not enough format");
                 pos += prefix.second;
                 prefixString.emplace_back(std::move(prefix.first));
 
-                formater.emplace_back(format.data() + pos);
-                pos += formater.back().size();
+                formater.emplace_back(format.data() + pos, dynamicSize);
+                pos         += formater.back().size();
+                dynamicSize = formater.back().isDynamicSize();
             }
             std::pair<std::string, std::size_t> prefix = getNextPrefix(format, pos, [](std::size_t p){return p != std::string::npos;}, "too many format");
             pos += prefix.second;
             prefixString.emplace_back(std::move(prefix.first));
+        }
+        friend std::ostream& operator<<(std::ostream& s, Format const& format)
+        {
+            format.print(s);
+            return s;
         }
         void print(std::ostream& s) const
         {
@@ -87,11 +93,6 @@ class Format
             s << prefixString.back();
         }
 
-        friend std::ostream& operator<<(std::ostream& s, Format const& format)
-        {
-            format.print(s);
-            return s;
-        }
 };
 
 template<typename... Args>
