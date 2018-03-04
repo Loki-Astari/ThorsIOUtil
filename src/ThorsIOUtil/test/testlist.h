@@ -167,6 +167,7 @@ THOR_PRINTF_TEST(101, "-00100",                        "% .5lld",      -100LL)
 THOR_PRINTF_TEST(102, "   00100",                      "% 8.5lld",     100LL)
 THOR_PRINTF_TEST(103, "  -00100",                      "% 8.5lld",     -100LL)
 THOR_PRINTF_TEST(104, "",                              "%.0lld",       0LL)
+// C++ exception with description "Actual argument does not match supplied argument: Expected(unsigned long long) Got(long long)" thrown in the test body.
 THOR_PRINTF_TEST(105, " 0x00ffffffffffffff9c",         "%#+21.18llx",  -100LL)
 THOR_PRINTF_TEST(106, "0001777777777777777777634",     "%#.25llo",     -100LL)
 THOR_PRINTF_TEST(107, " 01777777777777777777634",      "%#+24.20llo",  -100LL)
