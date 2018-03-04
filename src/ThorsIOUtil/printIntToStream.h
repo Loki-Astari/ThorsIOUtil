@@ -18,7 +18,7 @@ inline unsigned long        absm(unsigned long arg)        {return arg;}
 inline unsigned int         absm(unsigned int arg)         {return arg;}
 
 template<typename T>
-inline void printIntToStream(std::ostream& s, T arg, std::size_t width, std::size_t precision, bool forceLeft, FormatInfo const& info)
+inline void printIntToStream(std::ostream& s, T arg, FormatInfo const& info)
 {
     static long double  const logFor16    = std::log10(16.0L);
     static long double  const logFor10    = std::log10(10.0L);
@@ -26,84 +26,52 @@ inline void printIntToStream(std::ostream& s, T arg, std::size_t width, std::siz
 
     double const&  logBase = s.flags() & std::ios_base::oct ? logFor08 : s.flags() & std::ios_base::hex ? logFor16 : logFor10;
 
-    if (width == 0 && precision == -1)
+    if (info.width == 0 && info.precision == -1)
     {
         s << arg;
-    }
-    else if (precision == -1)
-    {
-        std::size_t reduceWidth = 0;
-        reduceWidth += ((arg >= 0 && info.forceSign && info.type == Type::Int) || arg < 0) ? 1 : 0;
-        reduceWidth += (info.prefixType && (s.flags() & std::ios_base::oct)) ? 1 : 0;
-        reduceWidth += (info.prefixType && (s.flags() & std::ios_base::hex)) ? 2 : 0;
-        width        = reduceWidth > width ? 0 : width - reduceWidth;
-
-        s.width(0);
-        s.unsetf(std::ios_base::showpos | std::ios_base::showbase);
-        std::size_t padding = 0;
-        if (!info.leftPad)
-        {
-            std::size_t numberOfDigits = arg != 0 ? static_cast<int>((std::log10(static_cast<long double>(absm(arg))) / logBase + 1)) : (precision == 0 ? 0 : 1);;
-            padding        = (numberOfDigits >= width) ? 0 :  (width - numberOfDigits);
-            width          -= padding;
-        }
-        if (!info.leftJustify)
-        {
-            for (std::size_t loop = 0; loop < padding; ++loop)
-            {
-                s.put(' ');
-            }
-        }
-        if ((arg >= 0 && info.forceSign && info.type == Type::Int) || arg < 0 )
-        {
-            s.put(arg < 0 ? '-' : '+');
-
-            arg = absm(arg);
-        }
-        if (info.prefixType)
-        {
-            if (s.flags() & (std::ios_base::hex | std::ios_base::oct))
-            {
-                s.put('0');
-            }
-            if (s.flags() & std::ios_base::hex)
-            {
-                s.put(s.flags() & std::ios_base::uppercase ? 'X' : 'x');
-            }
-        }
-        s.width(width);
-        s << arg;
-        if (info.leftJustify)
-        {
-            s.width(0);
-            for (std::size_t loop = 0; loop < padding; ++loop)
-            {
-                s.put(' ');
-            }
-        }
     }
     else
     {
+        std::size_t width     = info.width;
+        std::size_t precision = info.precision;
+
+        /*
+         * When precision or Width are specified the default does not do the same as C sprintf library
+         * So we are going to take care of it manually here
+         * So turn off the standard printing functions
+         */
         s.width(0);
         s.unsetf(std::ios_base::showpos | std::ios_base::showbase);
-        std::size_t extraWidth      = (arg < 0) || (arg >=0 && info.forceSign && info.type == Type::Int) ? 1 : 0;
+
+        // extraChar    extra charters we are forced to print.  +- 0x
+        // extraDigits  extra digits we are forced to print prefix 0 for octal numbers
+        std::size_t extraChar       = (arg < 0) || (arg >=0 && info.forceSign && info.type == Type::Int) ? 1 : 0;
         std::size_t extraDigits     = 0;
 
         if (info.prefixType)
         {
             switch (s.flags() & std::ios_base::basefield)
             {
-                case std::ios_base::hex:    extraWidth  += 2;break;
+                case std::ios_base::hex:    extraChar   += 2;break;
                 case std::ios_base::oct:    extraDigits += 1;break;
             }
         }
-        width = extraWidth > width ? 0 : width - extraWidth;
-
-        std::size_t numberOfDigits = arg != 0 ? static_cast<int>((std::log10(static_cast<long double>(absm(arg))) / logBase + 1)) : (precision == 0 ? 0 : 1);;
-        numberOfDigits += extraDigits;
-        std::size_t sizeOfNumber   = numberOfDigits > precision ? numberOfDigits : precision;
-        std::size_t prefix         = precision == -1 ? 0 : numberOfDigits > precision ? 0 : (precision - numberOfDigits);
+        /*
+         * Number of digits to print
+         * If arg is not zero use logs to calculate the number of digits.
+         * If it is zero then the size is 1 unless the precision is zero (a zero value with zero precision prints nothing)
+         */
+        width                      = extraChar  > width ? 0 : width - extraChar;
+        std::size_t numberOfDigits = (arg != 0 ? static_cast<int>((std::log10(static_cast<long double>(absm(arg))) / logBase + 1)) : (precision == 0 ? 0 : 1)) + extraDigits;
+        std::size_t sizeOfNumber   = precision == -1 || numberOfDigits > precision ? numberOfDigits : precision;
+        std::size_t prefix         = precision == -1 || numberOfDigits > precision ? 0 : (precision - numberOfDigits);
         std::size_t padding        = (sizeOfNumber >= width) ? 0 :  (width - sizeOfNumber);
+        if (precision == -1 && info.leftPad && !info.leftJustify)
+        {
+            std::swap(prefix, padding);
+        }
+
+        // Add spaces before number to make it fit in width.
         if (!info.leftJustify)
         {
             for (std::size_t loop = 0; loop < padding; ++loop)
@@ -111,6 +79,7 @@ inline void printIntToStream(std::ostream& s, T arg, std::size_t width, std::siz
                 s.put(' ');
             }
         }
+        // Add the - or + sign if required.
         if (arg < 0)
         {
             s.put('-');
@@ -119,6 +88,8 @@ inline void printIntToStream(std::ostream& s, T arg, std::size_t width, std::siz
         {
             s.put('+');
         }
+
+        // Add the Octal or Hex prefix
         if (info.prefixType)
         {
             if (s.flags() & (std::ios_base::hex | std::ios_base::oct))
@@ -130,14 +101,20 @@ inline void printIntToStream(std::ostream& s, T arg, std::size_t width, std::siz
                 s.put(s.flags() & std::ios_base::uppercase ? 'X' : 'x');
             }
         }
+
+        // Add any prefix 0 needed.
         for (std::size_t loop = 0; loop < prefix; ++loop)
         {
             s.put('0');
         }
+
+        // Print out the absolute value (we have already printed the sign)
+        // Don't print anything if precision is 0 and value is 0
         if (precision != 0 || arg != 0)
         {
             s << absm(arg);
         }
+        // Add spaces after number to make it fit in width.
         if (info.leftJustify)
         {
             for (std::size_t loop = 0; loop < padding; ++loop)

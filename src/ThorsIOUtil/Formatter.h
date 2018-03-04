@@ -4,6 +4,7 @@
 #include "printToStream.h"
 #include "saveToStream.h"
 #include "FormatInfo.h"
+#include "SignConversionOption.h"
 
 #include <ostream>
 #include <string>
@@ -18,106 +19,6 @@
 namespace ThorsAnvil::IOUtil
 {
 
-template<typename T>
-struct SignConversionOption
-{
-    using Actual        = T;
-    using Alternative   = T;
-    static constexpr bool allowIntConversion = false;
-    static int convertToInt(T const&) {return 0;}
-    static int truncate(T const& arg, int mask) {return 0;};
-};
-
-template<>
-struct SignConversionOption<char>
-{
-    using Actual        = char;
-    using Alternative   = unsigned char;
-    static constexpr bool allowIntConversion = true;
-    static int convertToInt(char const& arg) {return arg;}
-    static int truncate(char const& arg, int mask) {return 0;};
-};
-template<>
-struct SignConversionOption<short>
-{
-    using Actual        = short;
-    using Alternative   = unsigned short;
-    static constexpr bool allowIntConversion = true;
-    static int convertToInt(short const& arg) {return arg;}
-    static int truncate(short const& arg, int mask) {return 0;};
-};
-template<>
-struct SignConversionOption<int>
-{
-    using Actual        = int;
-    using Alternative   = unsigned int;
-    static constexpr bool allowIntConversion = false;
-    static int convertToInt(int const&) {return 0;}
-    static int truncate(int const& arg, int mask) {return arg & mask;};
-};
-template<>
-struct SignConversionOption<long>
-{
-    using Actual        = long;
-    using Alternative   = unsigned long;
-    static constexpr bool allowIntConversion = false;
-    static int convertToInt(long const&) {return 0;}
-    static int truncate(long const& arg, int mask) {return 0;};
-};
-template<>
-struct SignConversionOption<long long>
-{
-    using Actual        = long long;
-    using Alternative   = unsigned long long;
-    static constexpr bool allowIntConversion = false;
-    static int convertToInt(long long const&) {return 0;}
-    static int truncate(long long const& arg, int mask) {return 0;};
-};
-template<>
-struct SignConversionOption<unsigned char>
-{
-    using Actual        = unsigned char;
-    using Alternative   = char;
-    static constexpr bool allowIntConversion = true;
-    static int convertToInt(unsigned char const& arg) {return arg;}
-    static int truncate(unsigned char const& arg, int mask) {return 0;};
-};
-template<>
-struct SignConversionOption<unsigned short>
-{
-    using Actual        = unsigned short;
-    using Alternative   = short;
-    static constexpr bool allowIntConversion = true;
-    static int convertToInt(unsigned short const& arg) {return arg;}
-    static int truncate(unsigned short const& arg, int mask) {return 0;};
-};
-template<>
-struct SignConversionOption<unsigned int>
-{
-    using Actual        = unsigned int;
-    using Alternative   = int;
-    static constexpr bool allowIntConversion = false;
-    static int convertToInt(unsigned int const&) {return 0;}
-    static int truncate(unsigned int const& arg, int mask) {return 0;};
-};
-template<>
-struct SignConversionOption<unsigned long>
-{
-    using Actual        = unsigned long;
-    using Alternative   = long;
-    static constexpr bool allowIntConversion = false;
-    static int convertToInt(unsigned long const&) {return 0;}
-    static int truncate(unsigned long const& arg, int mask) {return 0;};
-};
-template<>
-struct SignConversionOption<unsigned long long>
-{
-    using Actual        = unsigned long long;
-    using Alternative   = long long;
-    static constexpr bool allowIntConversion = false;
-    static int convertToInt(unsigned long long const&) {return 0;}
-    static int truncate(unsigned long long const& arg, int mask) {return 0;};
-};
 
 template<typename T>
 inline bool checkNumLargerEqualToZero(T const& value)      {return value >= 0;}
@@ -127,6 +28,8 @@ class Formatter
 {
     // The number of characters read in the formatter.
     std::size_t             used;
+    // If this object reads the width/precision from the next parameter
+    // If this value is Dynamic::Width or Dynamic::Precision then  info is not used.
     Dynamic                 dynamicSize;
 
     // Details extracted from the format string.
@@ -159,12 +62,21 @@ class Formatter
         }
     };
     public:
+        /* The constructor reads a string
+         * and sets up all the data into info
+         * Unless we find a Dynamic Width/Precision
+         * then dynamicSize is updated and we return immediately indicating zero size.
+         * The Format constructor will then call again to get the actual formatter object.
+         */
        Formatter(char const* formatStr, Dynamic dynamicWidthHandeled)
             : used(0)
             , dynamicSize(Dynamic::None)
             , info()
         {
+            // precision of 0 is a special case.
+            // We need to know if the precision has not been specified at all.
             info.precision = -1;
+
             // Scan the format string to set up all the
             // the member variables.
             char const* fmt = formatStr;
@@ -198,12 +110,17 @@ class Formatter
             }
             else if (*fmt == '*')
             {
+                // Dynamic Width
                 if (dynamicWidthHandeled == Dynamic::None)
                 {
+                    // We have not previously processed it.
+                    // So this object becomes the Formatter to handle
+                    // the dynamic Width and we return immediately.
                     dynamicSize         = Dynamic::Width;
                     info                = FormatInfo();
                     return;
                 }
+                // If we get here then the have previously handled this field.
                 ++fmt;
             }
 
@@ -219,12 +136,16 @@ class Formatter
                 }
                 else if (*fmt == '*')
                 {
+                    // We have not previously processed it.
+                    // So this object becomes the Formatter to handle
+                    // the dynamic Width and we return immediately.
                     if (dynamicWidthHandeled == Dynamic::None || dynamicWidthHandeled == Dynamic::Width)
                     {
                         dynamicSize         = Dynamic::Precision;
                         info                = FormatInfo();
                         return;
                     }
+                    // If we get here then the have previously handled this field.
                     ++fmt;
                 }
                 else
@@ -293,12 +214,12 @@ class Formatter
             }
             ++fmt;
 
-
-            info.useDynamicSize = dynamicWidthHandeled;
-
+            // Feedback for the calling routine.
             // Now we know how much string was used to calculate the value.
+            info.useDynamicSize = dynamicWidthHandeled;
             used  = fmt - formatStr;
 
+            // Now we processes the information and set the formatter fields used by streams.
             // Pre-calculate the type information of the next argument.
             info.expectedType = getType(info.length, info.type);
 
@@ -345,13 +266,13 @@ class Formatter
             }
 
             // Show the floating point even if there is no fraction.
-            if (info.prefixType && (info.specifier == Specifier::a || info.specifier == Specifier::A || info.specifier == Specifier::e || info.specifier == Specifier::E || info.specifier == Specifier::f || info.specifier == Specifier::F || info.specifier == Specifier::g || info.specifier == Specifier::G))
+            if (info.prefixType && info.type == Type::Float)
             {
                 info.format |= std::ios_base::showpoint;
             }
 
             // Show the '+' sign for positive values.
-            if (info.forceSign && (info.specifier != Specifier::c && info.specifier != Specifier::s && info.specifier != Specifier::p))
+            if (info.forceSign && (info.type == Type::Float || info.type == Type::Int))
             {
                 info.format |= std::ios_base::showpos;
             }
@@ -440,7 +361,11 @@ class Formatter
                 auto oldWidth = s.width(fillWidth);
                 auto oldPrec  = s.precision(fractPrec);
 
-                printToStream(s, arg, fillWidth, fractPrec, forceLeft, info);
+                FormatInfo  formatInfo  = info;
+                formatInfo.width        = fillWidth;
+                formatInfo.precision    = fractPrec;
+                formatInfo.leftJustify  = forceLeft;
+                printToStream(s, arg, formatInfo);
 
                 // reset the stream to original state
                 s.precision(oldPrec);
