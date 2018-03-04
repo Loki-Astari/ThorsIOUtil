@@ -57,7 +57,7 @@ struct CharIntConverter<unsigned char>
 
 
 template<typename T>
-inline 
+inline
 typename std::enable_if<std::is_integral<T>::value>::type
 printToStream(std::ostream& s, T const& arg, std::size_t width, std::size_t precision, bool forceLeft, FormatInfo const& info)
 {

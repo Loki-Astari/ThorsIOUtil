@@ -108,8 +108,6 @@ struct SignConversionOption<unsigned long long>
     static int convertToInt(unsigned long long const&) {return 0;}
 };
 
-
-
 template<typename T>
 inline bool checkNumLargerEqualToZero(T const& value)      {return value >= 0;}
 inline bool checkNumLargerEqualToZero(char const*)         {return false;}

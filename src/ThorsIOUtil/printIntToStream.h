@@ -49,7 +49,7 @@ inline void printIntToStream(std::ostream& s, T arg, std::size_t width, std::siz
         }
         if (!info.leftJustify)
         {
-            for(std::size_t loop = 0; loop < padding; ++loop)
+            for (std::size_t loop = 0; loop < padding; ++loop)
             {
                 s.put(' ');
             }
@@ -76,7 +76,7 @@ inline void printIntToStream(std::ostream& s, T arg, std::size_t width, std::siz
         if (info.leftJustify)
         {
             s.width(0);
-            for(std::size_t loop = 0; loop < padding; ++loop)
+            for (std::size_t loop = 0; loop < padding; ++loop)
             {
                 s.put(' ');
             }
@@ -106,7 +106,7 @@ inline void printIntToStream(std::ostream& s, T arg, std::size_t width, std::siz
         std::size_t padding        = (sizeOfNumber >= width) ? 0 :  (width - sizeOfNumber);
         if (!info.leftJustify)
         {
-            for(std::size_t loop = 0; loop < padding; ++loop)
+            for (std::size_t loop = 0; loop < padding; ++loop)
             {
                 s.put(' ');
             }
@@ -130,7 +130,7 @@ inline void printIntToStream(std::ostream& s, T arg, std::size_t width, std::siz
                 s.put(s.flags() & std::ios_base::uppercase ? 'X' : 'x');
             }
         }
-        for(std::size_t loop = 0; loop < prefix; ++loop)
+        for (std::size_t loop = 0; loop < prefix; ++loop)
         {
             s.put('0');
         }
@@ -140,7 +140,7 @@ inline void printIntToStream(std::ostream& s, T arg, std::size_t width, std::siz
         }
         if (info.leftJustify)
         {
-            for(std::size_t loop = 0; loop < padding; ++loop)
+            for (std::size_t loop = 0; loop < padding; ++loop)
             {
                 s.put(' ');
             }

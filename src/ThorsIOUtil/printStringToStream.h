@@ -19,18 +19,18 @@ inline void printStringToStream(std::ostream& s, char const* const& arg, std::si
         std::size_t     padding = (precision >= width) ? 0 :  (width - precision);
         if (!forceLeft)
         {
-            for(std::size_t loop = 0; loop < padding; ++loop)
+            for (std::size_t loop = 0; loop < padding; ++loop)
             {
                 s.put(' ');
             }
         }
-        for(std::size_t loop = 0; arg[loop] != '\0' && loop < precision; ++loop)
+        for (std::size_t loop = 0; arg[loop] != '\0' && loop < precision; ++loop)
         {
             s.put(arg[loop]);
         }
         if (forceLeft)
         {
-            for(std::size_t loop = 0; loop < padding; ++loop)
+            for (std::size_t loop = 0; loop < padding; ++loop)
             {
                 s.put(' ');
             }
