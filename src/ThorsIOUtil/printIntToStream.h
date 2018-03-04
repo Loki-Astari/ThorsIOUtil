@@ -30,62 +30,12 @@ inline void printIntToStream(std::ostream& s, T arg, std::size_t width, std::siz
     {
         s << arg;
     }
-    else if (precision == -1)
-    {
-        std::size_t reduceWidth = 0;
-        reduceWidth += ((arg >= 0 && info.forceSign && info.type == Type::Int) || arg < 0) ? 1 : 0;
-        reduceWidth += (info.prefixType && (s.flags() & std::ios_base::oct)) ? 1 : 0;
-        reduceWidth += (info.prefixType && (s.flags() & std::ios_base::hex)) ? 2 : 0;
-        width        = reduceWidth > width ? 0 : width - reduceWidth;
-
-        s.width(0);
-        s.unsetf(std::ios_base::showpos | std::ios_base::showbase);
-        std::size_t padding = 0;
-        if (!info.leftPad)
-        {
-            std::size_t numberOfDigits = arg != 0 ? static_cast<int>((std::log10(static_cast<long double>(absm(arg))) / logBase + 1)) : (precision == 0 ? 0 : 1);;
-            padding        = (numberOfDigits >= width) ? 0 :  (width - numberOfDigits);
-            width          -= padding;
-        }
-        if (!info.leftJustify)
-        {
-            for (std::size_t loop = 0; loop < padding; ++loop)
-            {
-                s.put(' ');
-            }
-        }
-        if ((arg >= 0 && info.forceSign && info.type == Type::Int) || arg < 0 )
-        {
-            s.put(arg < 0 ? '-' : '+');
-
-            arg = absm(arg);
-        }
-        if (info.prefixType)
-        {
-            if (s.flags() & (std::ios_base::hex | std::ios_base::oct))
-            {
-                s.put('0');
-            }
-            if (s.flags() & std::ios_base::hex)
-            {
-                s.put(s.flags() & std::ios_base::uppercase ? 'X' : 'x');
-            }
-        }
-        s.width(width);
-        s << arg;
-        if (info.leftJustify)
-        {
-            s.width(0);
-            for (std::size_t loop = 0; loop < padding; ++loop)
-            {
-                s.put(' ');
-            }
-        }
-    }
     else
     {
         s.width(0);
         s.unsetf(std::ios_base::showpos | std::ios_base::showbase);
+
+
         std::size_t extraWidth      = (arg < 0) || (arg >=0 && info.forceSign && info.type == Type::Int) ? 1 : 0;
         std::size_t extraDigits     = 0;
 
@@ -101,9 +51,15 @@ inline void printIntToStream(std::ostream& s, T arg, std::size_t width, std::siz
 
         std::size_t numberOfDigits = arg != 0 ? static_cast<int>((std::log10(static_cast<long double>(absm(arg))) / logBase + 1)) : (precision == 0 ? 0 : 1);;
         numberOfDigits += extraDigits;
-        std::size_t sizeOfNumber   = numberOfDigits > precision ? numberOfDigits : precision;
-        std::size_t prefix         = precision == -1 ? 0 : numberOfDigits > precision ? 0 : (precision - numberOfDigits);
+        std::size_t sizeOfNumber   = precision == -1 || numberOfDigits > precision ? numberOfDigits : precision;
+        std::size_t prefix         = precision == -1 || numberOfDigits > precision ? 0 : (precision - numberOfDigits);
         std::size_t padding        = (sizeOfNumber >= width) ? 0 :  (width - sizeOfNumber);
+        if (precision == -1 && info.leftPad && !info.leftJustify)
+        {
+            std::swap(prefix, padding);
+        }
+
+        // Add spaces before number to make it fit in width.
         if (!info.leftJustify)
         {
             for (std::size_t loop = 0; loop < padding; ++loop)
