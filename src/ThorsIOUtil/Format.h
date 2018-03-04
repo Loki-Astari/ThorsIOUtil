@@ -37,7 +37,8 @@ class Format
 
                 formater.emplace_back(format.data() + pos, dynamicSize);
                 pos         += formater.back().size();
-                dynamicSize = formater.back().isDynamicSize();
+                Dynamic     newDynamic  = formater.back().isDynamicSize();
+                dynamicSize = (newDynamic == Dynamic::Precision && dynamicSize == Dynamic::Width) ? Dynamic::Both : newDynamic;
             }
             std::pair<std::string, std::size_t> prefix = getNextPrefix(format, pos, [](std::size_t p){return p != std::string::npos;}, "too many format");
             pos += prefix.second;

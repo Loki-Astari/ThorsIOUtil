@@ -210,15 +210,9 @@ class Formatter
                 }
                 else if (*fmt == '*')
                 {
-                    if (dynamicWidthHandeled == Dynamic::None)
+                    if (dynamicWidthHandeled == Dynamic::None || dynamicWidthHandeled == Dynamic::Width)
                     {
                         dynamicSize         = Dynamic::Precision;
-                        info                = FormatInfo();
-                        return;
-                    }
-                    else if (dynamicWidthHandeled == Dynamic::Width)
-                    {
-                        dynamicSize         = Dynamic::Both;
                         info                = FormatInfo();
                         return;
                     }
@@ -410,11 +404,20 @@ class Formatter
                 // Fill is either 0 or space and only used for numbers.
                 char        fill      = (!info.leftJustify && info.leftPad && (info.specifier != Specifier::c && info.specifier != Specifier::s && info.specifier != Specifier::p)) ? '0' : ' ';
                 std::size_t fillWidth = (info.useDynamicSize == Dynamic::Width || info.useDynamicSize == Dynamic::Both)
-                                            ? s.iword(static_cast<int>(Dynamic::Width))
+                                            ? std::abs(s.iword(static_cast<int>(Dynamic::Width)))
                                             : info.width;
                 std::size_t fractPrec = (info.useDynamicSize == Dynamic::Precision || info.useDynamicSize == Dynamic::Both)
                                             ? s.iword(static_cast<int>(Dynamic::Precision))
                                             : info.precision == -1 && info.type == Type::Float ? 6 : info.precision;
+                bool                    forceLeft = info.leftJustify;
+                std::ios_base::fmtflags format    = info.format;
+                if ((info.useDynamicSize == Dynamic::Width || info.useDynamicSize == Dynamic::Both) && s.iword(static_cast<int>(Dynamic::Width)) < 0)
+                {
+                    forceLeft   = true;
+                    format  |=  std::ios_base::left;
+                    format  &=  ~std::ios_base::right;
+
+                }
 
                 // Take special care if we forcing a space in-front of positive values.
                 if (info.forceSignWidth && !info.forceSign && checkNumLargerEqualToZero(arg) && (info.type == Type::Float || info.type == Type::Int))
@@ -424,12 +427,12 @@ class Formatter
                 }
 
                 // Set up the stream for formatting
-                auto oldFlags = s.flags(info.format);
+                auto oldFlags = s.flags(format);
                 auto oldFill  = s.fill(fill);
                 auto oldWidth = s.width(fillWidth);
                 auto oldPrec  = s.precision(fractPrec);
 
-                printToStream(s, arg, fillWidth, info);
+                printToStream(s, arg, fillWidth, fractPrec, forceLeft, info);
 
                 // reset the stream to original state
                 s.precision(oldPrec);

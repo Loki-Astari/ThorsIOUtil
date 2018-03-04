@@ -11,7 +11,7 @@ namespace ThorsAnvil::IOUtil
 {
 
 template<typename T>
-inline void printToStreamDefault(std::ostream& s, T const& arg, int, FormatInfo const&)
+inline void printToStreamDefault(std::ostream& s, T const& arg, std::size_t, std::size_t, bool, FormatInfo const&)
 {
     s << arg;
 }
@@ -19,9 +19,9 @@ inline void printToStreamDefault(std::ostream& s, T const& arg, int, FormatInfo 
 template<typename T>
 inline
 typename std::enable_if<!std::is_integral<T>::value>::type
-printToStream(std::ostream& s, T const& arg, int width, FormatInfo const& info)
+printToStream(std::ostream& s, T const& arg, std::size_t width, std::size_t precision, bool forceLeft, FormatInfo const& info)
 {
-    printToStreamDefault(s, arg, width, info);
+    printToStreamDefault(s, arg, width, precision, forceLeft, info);
 }
 
 template<typename T>
@@ -59,22 +59,22 @@ struct CharIntConverter<unsigned char>
 template<typename T>
 inline 
 typename std::enable_if<std::is_integral<T>::value>::type
-printToStream(std::ostream& s, T const& arg, int width, FormatInfo const& info)
+printToStream(std::ostream& s, T const& arg, std::size_t width, std::size_t precision, bool forceLeft, FormatInfo const& info)
 {
     if (info.type == Type::Char)
     {
-        printToStreamDefault(s, static_cast<typename CharIntConverter<T>::Character>(arg), width, info);
+        printToStreamDefault(s, static_cast<typename CharIntConverter<T>::Character>(arg), width, precision, forceLeft, info);
     }
     else
     {
-        printIntToStream(s, static_cast<typename CharIntConverter<T>::Integer>(arg), width, info);
+        printIntToStream(s, static_cast<typename CharIntConverter<T>::Integer>(arg), width, precision, forceLeft, info);
     }
 }
 
 // C-String
-inline void printToStream(std::ostream& s, char const* const& arg, int width, FormatInfo const& info)
+inline void printToStream(std::ostream& s, char const* const& arg, std::size_t width, std::size_t precision, bool forceLeft, FormatInfo const& info)
 {
-    printStringToStream(s, arg, width, info);
+    printStringToStream(s, arg, width, precision, forceLeft, info);
 }
 
 
