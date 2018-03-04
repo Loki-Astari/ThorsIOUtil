@@ -15,6 +15,8 @@ enum class Type      {Int, UInt, Float, Char, String, Pointer, Count};
 enum class Dynamic   {None, Width, Precision, Both};
 #pragma vera-pop
 
+using AllowedType = std::pair<std::type_info const*, int>;
+
 struct FormatInfo
 {
     // Formatter has the text representation:
@@ -42,7 +44,7 @@ struct FormatInfo
     Type                    type;
 
     // Pre-calculate a some values based on the format string
-    std::type_info const*   expectedType;   // Type info we expect the next argument to be based on length/specifier
+    AllowedType             expectedType;   // Type info we expect the next argument to be based on length/specifier
     std::ios_base::fmtflags format;         // The format flags that will be applied to stream before the next argument
 
 };

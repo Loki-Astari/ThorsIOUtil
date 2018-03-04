@@ -37,7 +37,16 @@ std::string doPrint(char const* format, Args... args)
         EXPECT_EQ(Result, doPrint( __VA_ARGS__ ));                                  \
     }
 
-#define XTHOR_PRINTF_TEST(Number, Result, Format, ...)   THOR_TEST_EXPAND(THOR_PRINTF_TEST_GROUP)
+#define THOR_PRINTF_FAIL(Number, Result, ...)                                       \
+    TEST(THOR_TEST_EXPAND(THOR_PRINTF_TEST_GROUP), THOR_TEST_CAT(Test_, Number))    \
+    {                                                                               \
+        auto action = [](){doPrint( __VA_ARGS__ );};                                \
+                                                                                    \
+        EXPECT_THROW(                                                               \
+            action(),                                                               \
+            std::invalid_argument                                                   \
+        );                                                                          \
+    }
 
 #include "testlist.h"
 
