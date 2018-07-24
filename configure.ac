@@ -1,4 +1,5 @@
-AC_INIT([ThorsIOUtil], [0.1], [YourName@Email.com])
+
+AC_INIT([ThorsIOUtil], [0.1], [Loki.Astari+ThorsAnvil@gmail.com])
 AC_PREREQ([2.65])
 
 # Set up the build system
@@ -16,6 +17,7 @@ AC_CONFIG_SRCDIR([src/ThorsIOUtil/format.h])
 # Find the C++ Copiler
 # The minimumm requirements.
 AC_PROG_CXX
+
 AX_CHECK_COMPILE_FLAG([-ansi], [AC_SUBST([CXXFLAGS], [" -ansi"])])
 # Check what version of the C++ language is supported
 AX_THOR_FUNC_LANG_FLAG(17)
@@ -38,7 +40,7 @@ LT_INIT
 # Used by ThorMaker
 # Note: you can push the config file to sub directories in the AC_CONFIG_HEADERS macro (see example)
 # Note: Local Make variables should be placed in Makefile.config.in
-AM_INIT_AUTOMAKE([foreign])
-AC_CONFIG_HEADERS([config.h src/ThorsIOUtil/ThorsIOUtilConfig.h:config.h.in])
+AM_INIT_AUTOMAKE([foreign -Wall -Werror])
+AC_CONFIG_HEADERS([ src/ThorsIOUtil/ThorsIOUtilConfig.h ])
 AC_CONFIG_FILES([Makefile.extra Makefile.config:build/autotools/build/Makefile.config.in:Makefile.config.in])
 AC_OUTPUT

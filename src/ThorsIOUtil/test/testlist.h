@@ -1,4 +1,8 @@
 #if 0
+# Note: This file is a modified version of "Bart" orginal file from the project:
+#       https://github.com/BartMassey/printf-tests
+#       The reference to COPYING/README see the above project.
+#
 # Various printf tests compiled from various sources
 # Copyright © 2013 Bart Massey
 # This program is licensed under the GPL version 2 or later.
