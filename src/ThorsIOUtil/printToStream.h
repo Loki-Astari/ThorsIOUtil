@@ -6,6 +6,7 @@
 #include "printStringToStream.h"
 
 #include <ostream>
+#include <type_traits>
 
 namespace ThorsAnvil::IOUtil
 {

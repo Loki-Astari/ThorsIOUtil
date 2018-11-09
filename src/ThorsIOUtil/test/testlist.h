@@ -77,9 +77,9 @@ THOR_PRINTF_TEST(46, "42.90",                 "%1.2f",         42.8952)
 THOR_PRINTF_TEST(47, " 42.90",                "%6.2f",         42.8952)
 #if 0
 # Technically, this test is undefined according to the
-# doc. "If a precision is given with a numeric
+# doc. If a precision is given with a numeric
 # conversion (d,, i, o, u, x, and X), the 0 flag is ignored.
-# For other conversions, the behavior is undefined."
+# For other conversions, the behavior is undefined.
 #endif
 THOR_PRINTF_TEST(48, "042.90",                "%06.2f",        42.8952)
 
@@ -126,8 +126,8 @@ THOR_PRINTF_FAIL(72, ?,                       "%s%s",          42)
 THOR_PRINTF_FAIL(73, ?,                       "%c")
 #if 0
 # glibc printf fails this test, returns ""
-# Haskell fails this test claiming that "argument list ended
-# prematurely", which is not so reasonable.
+# Haskell fails this test claiming that argument list ended
+# prematurely, which is not so reasonable.
 !CH 74 "%10"                   "%10"           42
 # glibc printf fails this test, returns "10 "
 # Haskell correctly throws an error
@@ -148,7 +148,9 @@ THOR_PRINTF_TEST(79, "8.e+08",                        "%#1.1g",        789456123
 #if 0
 # The arg constant here is not legal C.
 #endif
+#if defined(SUPPORT_SIGNED_INTEGER_LITERAL_THAT_IS_HUGE)
 THOR_PRINTF_TEST(80, "-8589934591",                   "%lld",         18446744065119617025LL)
+#endif
 THOR_PRINTF_TEST(81, "    +100",                      "%+8lld",       100LL)
 THOR_PRINTF_TEST(82, "+00000100",                     "%+.8lld",      100LL)
 THOR_PRINTF_TEST(83, " +00000100",                    "%+10.8lld",    100LL)
@@ -195,7 +197,9 @@ THOR_PRINTF_TEST(119, " 0000000000000000000000000000000000000001", "% .40d", 1)
 #if 0
 #See above.
 #endif
+#if defined(SUPPORT_SIGNED_INTEGER_LITERAL_THAT_IS_HUGE)
 THOR_PRINTF_TEST(120, "-8589934591",                   "%lld",          18446744065119617025LL)
+#endif
 #if 0
 # libc fails this, with "" and return code -1 (!)
 #, Haskell correctly reports an error here
@@ -311,7 +315,7 @@ THOR_PRINTF_TEST(177, "%0",                            "%%0")
 THOR_PRINTF_TEST(178, "2345",                          "%hx",           74565)
 THOR_PRINTF_TEST(179, "61",                            "%hhx",          'a')
 #if 0
-# This test seems hopeless: I don't understand it.
+# This test seems hopeless: I dont understand it.
 # 180 "2345"                          "%hhx"          74565
 
 # Tests from libc

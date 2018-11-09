@@ -15,7 +15,7 @@ install:
     - sudo ./b2 --with-system --with-context --with-coroutine install | awk 'NR == 1 || NR % 25 == 0'
     - cd ..
 script:
-    - ./configure --with-boost=/tmp/extra --disable-binary
-    - export PATH=${PATH}:$(pwd)/build/bin;make 
+    - ./configure --with-boost=/tmp/extra
+    - export PATH=${PATH}:$(pwd)/build/bin;make
 after_success:
     - bash <(curl -s https://codecov.io/bash)

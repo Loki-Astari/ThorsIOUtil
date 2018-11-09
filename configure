@@ -595,7 +595,7 @@ PACKAGE_STRING='ThorsIOUtil 0.1'
 PACKAGE_BUGREPORT='Loki.Astari+ThorsAnvil@gmail.com'
 PACKAGE_URL=''
 
-ac_unique_file="src/ThorsIOUtil/format.h"
+ac_unique_file="src/ThorsIOUtil/Format.h"
 # Factoring default headers for most tests.
 ac_includes_default="\
 #include <stdio.h>
@@ -5551,6 +5551,22 @@ The coverage tool \"${COV}\" does not seem to be working.
 
 
 fi
+
+
+cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+/* end confdefs.h.  */
+int main(){auto value = 18446744065119617025LL;}
+_ACEOF
+if ac_fn_cxx_try_compile "$LINENO"; then :
+
+$as_echo "#define SUPPORT_SIGNED_INTEGER_LITERAL_THAT_IS_HUGE 1" >>confdefs.h
+
+fi
+rm -f core conftest.err conftest.$ac_objext conftest.$ac_ext
+
+#
+# Add your defintions in here.
+# Note there are some predefined macros in build/autotools/m4/
 
 
 # Add support for shared libraries.
@@ -16906,12 +16922,6 @@ ac_compiler_gnu=$ac_cv_cxx_compiler_gnu
 
 # Only expand once:
 
-
-
-
-#
-# Add your defintions in here.
-# Note there are some predefined macros in build/autotools/m4/
 
 
 
