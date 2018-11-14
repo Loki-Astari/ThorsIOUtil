@@ -18,6 +18,7 @@ enum class Dynamic   {None, Width, Precision, Both};                            
 
 using AllowedType = std::pair<std::type_info const*, int>;
 
+// @class
 struct FormatInfo
 {
     // Formatter has the text representation:

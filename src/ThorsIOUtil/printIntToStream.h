@@ -18,6 +18,7 @@ inline unsigned long        absm(unsigned long arg)        {return arg;}
 inline unsigned int         absm(unsigned int arg)         {return arg;}
 
 template<typename T>
+// @function
 inline void printIntToStream(std::ostream& s, T arg, FormatInfo const& info)
 {
     static long double  const logFor16    = std::log10(16.0L);

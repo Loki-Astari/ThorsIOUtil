@@ -12,6 +12,7 @@ namespace ThorsAnvil::IOUtil
  * It is used by Formatter::apply()
  */
 template<typename T>
+// @class
 struct SignConversionOption
 {
     using Actual        = T;                                    // The Current Type
@@ -23,6 +24,7 @@ struct SignConversionOption
 };
 
 template<>
+// @class
 struct SignConversionOption<char>
 {
     using Actual        = char;
@@ -32,6 +34,7 @@ struct SignConversionOption<char>
     static int truncate(char const& arg, int mask) {return 0;};
 };
 template<>
+// @class
 struct SignConversionOption<short>
 {
     using Actual        = short;
@@ -41,6 +44,7 @@ struct SignConversionOption<short>
     static int truncate(short const& arg, int mask) {return 0;};
 };
 template<>
+// @class
 struct SignConversionOption<int>
 {
     using Actual        = int;
@@ -50,6 +54,7 @@ struct SignConversionOption<int>
     static int truncate(int const& arg, int mask) {return arg & mask;};
 };
 template<>
+// @class
 struct SignConversionOption<long>
 {
     using Actual        = long;
@@ -59,6 +64,7 @@ struct SignConversionOption<long>
     static int truncate(long const& arg, int mask) {return 0;};
 };
 template<>
+// @class
 struct SignConversionOption<long long>
 {
     using Actual        = long long;
@@ -68,6 +74,7 @@ struct SignConversionOption<long long>
     static int truncate(long long const& arg, int mask) {return 0;};
 };
 template<>
+// @class
 struct SignConversionOption<unsigned char>
 {
     using Actual        = unsigned char;
@@ -77,6 +84,7 @@ struct SignConversionOption<unsigned char>
     static int truncate(unsigned char const& arg, int mask) {return 0;};
 };
 template<>
+// @class
 struct SignConversionOption<unsigned short>
 {
     using Actual        = unsigned short;
@@ -86,6 +94,7 @@ struct SignConversionOption<unsigned short>
     static int truncate(unsigned short const& arg, int mask) {return 0;};
 };
 template<>
+// @class
 struct SignConversionOption<unsigned int>
 {
     using Actual        = unsigned int;
@@ -95,6 +104,7 @@ struct SignConversionOption<unsigned int>
     static int truncate(unsigned int const& arg, int mask) {return 0;};
 };
 template<>
+// @class
 struct SignConversionOption<unsigned long>
 {
     using Actual        = unsigned long;
@@ -104,6 +114,7 @@ struct SignConversionOption<unsigned long>
     static int truncate(unsigned long const& arg, int mask) {return 0;};
 };
 template<>
+// @class
 struct SignConversionOption<unsigned long long>
 {
     using Actual        = unsigned long long;
