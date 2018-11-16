@@ -31,47 +31,127 @@
     </li>
 
     <li>
-        <a href="#thorsioutil" class="toc-h1 toc-link" data-title="ThorsIOUtil">ThorsIOUtil</a>
+        <a href="#api docs" class="toc-h1 toc-link" data-title="API Docs">API Docs</a>
     
                 <ul class="toc-list-h2">
                     
     <li>
-        <a href="#format" class="toc-h2 toc-link" data-title="ThorsIOUtil">Format</a>
+        <a href="#format" class="toc-h2 toc-link" data-title="API Docs">Format</a>
+    
+                <ul class="toc-list-h3">
+                    
+
+
+                </ul>
     
     </li>
 
     <li>
-        <a href="#formatter" class="toc-h2 toc-link" data-title="ThorsIOUtil">Formatter</a>
+        <a href="#formatinfo" class="toc-h2 toc-link" data-title="API Docs">FormatInfo</a>
+    
+                <ul class="toc-list-h3">
+                    
+
+
+                </ul>
     
     </li>
 
     <li>
-        <a href="#format info" class="toc-h2 toc-link" data-title="ThorsIOUtil">Format Info</a>
+        <a href="#formatter" class="toc-h2 toc-link" data-title="API Docs">Formatter</a>
+    
+                <ul class="toc-list-h3">
+                    
+
+
+                </ul>
+    
+    </li>
+
+
+
+                </ul>
     
     </li>
 
     <li>
-        <a href="#save to stream" class="toc-h2 toc-link" data-title="ThorsIOUtil">Save To Stream</a>
+        <a href="#internal" class="toc-h1 toc-link" data-title="Internal">Internal</a>
+    
+                <ul class="toc-list-h2">
+                    
+    <li>
+        <a href="#save to stream" class="toc-h2 toc-link" data-title="Internal">Save To Stream</a>
     
     </li>
 
     <li>
-        <a href="#print to stream" class="toc-h2 toc-link" data-title="ThorsIOUtil">Print To Stream</a>
+        <a href="#print to stream" class="toc-h2 toc-link" data-title="Internal">Print To Stream</a>
     
     </li>
 
     <li>
-        <a href="#print int to stream" class="toc-h2 toc-link" data-title="ThorsIOUtil">Print Int To Stream</a>
+        <a href="#print int to stream" class="toc-h2 toc-link" data-title="Internal">Print Int To Stream</a>
     
     </li>
 
     <li>
-        <a href="#print string to stream" class="toc-h2 toc-link" data-title="ThorsIOUtil">Print String To Stream</a>
+        <a href="#print string to stream" class="toc-h2 toc-link" data-title="Internal">Print String To Stream</a>
     
     </li>
 
     <li>
-        <a href="#sign conversion option" class="toc-h2 toc-link" data-title="ThorsIOUtil">Sign Conversion Option</a>
+        <a href="#sign conversion option" class="toc-h2 toc-link" data-title="Internal">Sign Conversion Option</a>
+    
+    </li>
+
+
+
+                </ul>
+    
+    </li>
+
+    <li>
+        <a href="#everything" class="toc-h1 toc-link" data-title="Everything">Everything</a>
+    
+                <ul class="toc-list-h2">
+                    
+    <li>
+        <a href="#format" class="toc-h2 toc-link" data-title="Everything">Format</a>
+    
+    </li>
+
+    <li>
+        <a href="#formatter" class="toc-h2 toc-link" data-title="Everything">Formatter</a>
+    
+    </li>
+
+    <li>
+        <a href="#format info" class="toc-h2 toc-link" data-title="Everything">Format Info</a>
+    
+    </li>
+
+    <li>
+        <a href="#save to stream" class="toc-h2 toc-link" data-title="Everything">Save To Stream</a>
+    
+    </li>
+
+    <li>
+        <a href="#print to stream" class="toc-h2 toc-link" data-title="Everything">Print To Stream</a>
+    
+    </li>
+
+    <li>
+        <a href="#print int to stream" class="toc-h2 toc-link" data-title="Everything">Print Int To Stream</a>
+    
+    </li>
+
+    <li>
+        <a href="#print string to stream" class="toc-h2 toc-link" data-title="Everything">Print String To Stream</a>
+    
+    </li>
+
+    <li>
+        <a href="#sign conversion option" class="toc-h2 toc-link" data-title="Everything">Sign Conversion Option</a>
     
     </li>
 
@@ -98,13 +178,176 @@
     
     <h1 id="introduction">Introduction</h1>
     
-        <p><a href="https://github.com/Loki-Astari/ThorsIOUtil">ThorsIOUtil</a> A C++ IO type sage stream formatting like <code>printf()</code>.</p>
+        <p><a href="https://github.com/Loki-Astari/ThorsIOUtil">ThorsIOUtil</a> A C++ IO type stream formatting like <code>printf()</code>.</p>
+<pre><code class="c++ language-c++">    #include "ThorsIOUtil/Format.h"
+
+    int main()
+    {
+        namespace tio = ThorsAnvil::IOUtil;
+        std::cout &lt;&lt; tio::make_format("A standard printf format string "%d : %20s", 15, "Text") &lt;&lt; "\n";
+    }</code></pre>
+<p>This library has been tested using the test suite used by GNU.</p>
 
     
     
 
     
-    <h1 id="thorsioutil">ThorsIOUtil</h1>
+    <h1 id="api docs">API Docs</h1>
+    
+        <p>The API used</p>
+<dl>
+<dt>NameSpace:</dt><dd>XX</dd>
+<dt>Headers:</dt><dd>ThorsIOUtil</dd>
+
+    <dt>Format.h</dt><dd>
+        <ul>
+        
+            <li>Format </li>
+        
+        
+        </ul>
+    </dd>
+
+    <dt>FormatInfo.h</dt><dd>
+        <ul>
+        
+            <li>FormatInfo </li>
+        
+        
+        </ul>
+    </dd>
+
+    <dt>Formatter.h</dt><dd>
+        <ul>
+        
+            <li>Formatter </li>
+        
+        
+        </ul>
+    </dd>
+
+</dl>
+
+
+    
+    
+        
+    
+    <h2 id="format">Format</h2>
+    
+        <div class="classTable">
+    <div class="classLayout">
+        <div class="classBlock">
+            <div class="classRow"><div class="classItem">Header:   </div><div class="classValue">ThorsIOUtil/Format.h</div><div></div></div>
+            <div class="classRow"><div class="classItem">NameSpace:</div><div class="classValue">ThorsAnvil::IOUtil</div><div></div></div>
+            <div class="classRow"><div class="classItem">Class:    </div><div class="classValue">Format</div><div></div></div>
+            
+        
+        
+        
+        </div>
+    </div>
+</div>
+<p></p>
+
+
+    
+    
+        
+
+    
+
+    
+    <h2 id="formatinfo">FormatInfo</h2>
+    
+        <div class="classTable">
+    <div class="classLayout">
+        <div class="classBlock">
+            <div class="classRow"><div class="classItem">Header:   </div><div class="classValue">ThorsIOUtil/FormatInfo.h</div><div></div></div>
+            <div class="classRow"><div class="classItem">NameSpace:</div><div class="classValue">ThorsAnvil::IOUtil</div><div></div></div>
+            <div class="classRow"><div class="classItem">Class:    </div><div class="classValue">FormatInfo</div><div></div></div>
+            
+        
+        
+        
+        </div>
+    </div>
+</div>
+<p></p>
+
+
+    
+    
+        
+
+    
+
+    
+    <h2 id="formatter">Formatter</h2>
+    
+        <div class="classTable">
+    <div class="classLayout">
+        <div class="classBlock">
+            <div class="classRow"><div class="classItem">Header:   </div><div class="classValue">ThorsIOUtil/Formatter.h</div><div></div></div>
+            <div class="classRow"><div class="classItem">NameSpace:</div><div class="classValue">ThorsAnvil::IOUtil</div><div></div></div>
+            <div class="classRow"><div class="classItem">Class:    </div><div class="classValue">Formatter</div><div></div></div>
+            
+        
+        
+        
+        </div>
+    </div>
+</div>
+<p></p>
+
+
+    
+    
+        
+
+    
+
+
+    
+
+    
+    <h1 id="internal">Internal</h1>
+    
+        <p>The Deep internal classes.</p>
+
+    
+    
+        
+    
+    <h2 id="save to stream">Save To Stream</h2>
+    
+    
+
+    
+    <h2 id="print to stream">Print To Stream</h2>
+    
+    
+
+    
+    <h2 id="print int to stream">Print Int To Stream</h2>
+    
+    
+
+    
+    <h2 id="print string to stream">Print String To Stream</h2>
+    
+    
+
+    
+    <h2 id="sign conversion option">Sign Conversion Option</h2>
+    
+    
+
+
+    
+
+    
+    <h1 id="everything">Everything</h1>
     
         
 
