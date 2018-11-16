@@ -2,7 +2,7 @@
 layout: class
 generate: false
 typeInfo:
-    namespace: 
+    namespace: ThorsAnvil::IOUtil
     header:    ThorsIOUtil/SignConversionOption.h
     classname: SignConversionOption_char
     parent:    

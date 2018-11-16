@@ -2,7 +2,7 @@
 layout: function
 generate: false
 typeInfo:
-    namespace: 
+    namespace: ThorsAnvil::IOUtil
     header:    ThorsIOUtil/saveToStream.h
     function:  saveToStream
     description: 

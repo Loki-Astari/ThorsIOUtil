@@ -2,7 +2,7 @@
 layout: function
 generate: false
 typeInfo:
-    namespace: 
+    namespace: ThorsAnvil::IOUtil
     header:    ThorsIOUtil/printIntToStream.h
     function:  printIntToStream
     description: 

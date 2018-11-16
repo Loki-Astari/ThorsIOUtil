@@ -1,7 +1,7 @@
 ---
 layout: package
 generate: false
-nameSpace:  
+nameSpace:  ThorsAnvil::IOUtil
 headers:
     base: ThorsIOUtil
     files:
