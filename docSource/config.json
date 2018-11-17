@@ -6,7 +6,7 @@
     "themeGit": "git@github.com:Loki-Astari/andvari-theme-documentation.git",
     "toc": [
         {"name": "Introduction", "value": "intro.md"},
-        {"name": "API Docs",     "value": "api.md"},
+        {"name": "APIDocs",      "value": "api.md"},
         {"name": "Internal",     "value": "internal.md"},
         {"name": "Everything",   "value": "ThorsIOUtil.md"}
     ]
