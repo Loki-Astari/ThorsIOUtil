@@ -40,19 +40,19 @@ printToStream(std::ostream& s, T const& arg, FormatInfo const& info)
  * an integer.
  */
 template<typename T>
-// @class
+// @class-internal
 struct CharIntConverter
 {
     using Integer   = T;
 };
 template<>
-// @class
+// @class-internal
 struct CharIntConverter<char>
 {
     using Integer   = int;
 };
 template<>
-// @class
+// @class-internal
 struct CharIntConverter<unsigned char>
 {
     using Integer   = unsigned int;
@@ -62,7 +62,7 @@ struct CharIntConverter<unsigned char>
 template<typename T>
 inline
 typename std::enable_if<std::is_integral<T>::value>::type
-// @function
+// @function-internal
 printToStream(std::ostream& s, T const& arg, FormatInfo const& info)
 {
     if (info.type == Type::Char)
@@ -77,7 +77,7 @@ printToStream(std::ostream& s, T const& arg, FormatInfo const& info)
 
 // C-String
 inline
-// @function
+// @function-internal
 void printToStream(std::ostream& s, char const* const& arg, FormatInfo const& info)
 {
     printStringToStream(s, arg, info);

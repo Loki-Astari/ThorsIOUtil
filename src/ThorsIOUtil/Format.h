@@ -15,7 +15,7 @@ namespace ThorsAnvil::IOUtil
 {
 
 template<typename... Args>
-// @class
+// @class-api
 class Format
 {
     std::string                     format;
@@ -112,7 +112,7 @@ class Format
 };
 
 template<typename... Args>
-// @class
+// @function-api
 Format<Args...> make_format(char const* fmt, Args const&... args)
 {
     return Format<Args...>(fmt, args...);

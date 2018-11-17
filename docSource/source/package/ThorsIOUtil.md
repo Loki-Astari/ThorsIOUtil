@@ -6,7 +6,10 @@ headers:
     base: ThorsIOUtil
     files:
         - name:   Format.h
-          functions: []
+          functions:
+            - return: Format<Args...>
+              name:   make_format
+              param:  [   char const* fmt,  Args const&... args  ]
           classes:
             - name:   Format
               parent: 
@@ -88,6 +91,8 @@ headers:
               param:  [   std::ostream&,  Dynamic,  T const& void,  std::ostream& s,  Dynamic pos,  int const& size  ]
           classes: []
 children:
+    - name: make_format
+      value: ThorsIOUtil.Format.make_format.md
     - name: Format
       value: ThorsIOUtil.Format.Format.md
     - name: FormatInfo

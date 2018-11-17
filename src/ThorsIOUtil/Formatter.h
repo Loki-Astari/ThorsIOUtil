@@ -24,7 +24,7 @@ template<typename T>
 inline bool checkNumLargerEqualToZero(T const& value)      {return value >= 0;}
 inline bool checkNumLargerEqualToZero(char const*)         {return false;}
 
-// @class
+// @class-api
 class Formatter
 {
     // The number of characters read in the formatter.

@@ -8,7 +8,7 @@ namespace ThorsAnvil::IOUtil
 {
 
 inline
-// @function
+// @function-internal
 void printStringToStream(std::ostream& s, char const* const& arg, FormatInfo const& info)
 {
     if (info.precision == -1)
