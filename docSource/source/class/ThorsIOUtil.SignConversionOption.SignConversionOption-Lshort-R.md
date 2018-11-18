@@ -6,6 +6,7 @@ typeInfo:
     header:    ThorsIOUtil/SignConversionOption.h
     classname: SignConversionOption-Lshort-R
     parent:    
+    template:  template<>
     description: 
     methods: []
     protected: []

@@ -9,27 +9,27 @@ headers:
           functions: []
           classes:
             - name:   SignConversionOption
-              parent: 
+              parent:  
             - name:   SignConversionOption-Lchar-R
-              parent: 
+              parent:  
             - name:   SignConversionOption-Lshort-R
-              parent: 
+              parent:  
             - name:   SignConversionOption-Lint-R
-              parent: 
+              parent:  
             - name:   SignConversionOption-Llong-R
-              parent: 
+              parent:  
             - name:   SignConversionOption-Llong-long-R
-              parent: 
+              parent:  
             - name:   SignConversionOption-Lunsigned-char-R
-              parent: 
+              parent:  
             - name:   SignConversionOption-Lunsigned-short-R
-              parent: 
+              parent:  
             - name:   SignConversionOption-Lunsigned-int-R
-              parent: 
+              parent:  
             - name:   SignConversionOption-Lunsigned-long-R
-              parent: 
+              parent:  
             - name:   SignConversionOption-Lunsigned-long-long-R
-              parent: 
+              parent:  
         - name:   printIntToStream.h
           functions:
             - return: void
@@ -52,11 +52,11 @@ headers:
               param:  [   std::ostream& s,  char const* const& arg,  FormatInfo const& info  ]
           classes:
             - name:   CharIntConverter
-              parent: 
+              parent:  
             - name:   CharIntConverter-Lchar-R
-              parent: 
+              parent:  
             - name:   CharIntConverter-Lunsigned-char-R
-              parent: 
+              parent:  
         - name:   saveToStream.h
           functions:
             - return: void

@@ -6,6 +6,7 @@ typeInfo:
     header:    ThorsIOUtil/FormatInfo.h
     classname: FormatInfo
     parent:    
+    template:  
     description: 
     methods: []
     protected: []

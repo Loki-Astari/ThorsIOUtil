@@ -12,17 +12,17 @@ headers:
               param:  [   char const* fmt,  Args const&... args  ]
           classes:
             - name:   Format
-              parent: 
+              parent:  
         - name:   FormatInfo.h
           functions: []
           classes:
             - name:   FormatInfo
-              parent: 
+              parent:  
         - name:   Formatter.h
           functions: []
           classes:
             - name:   Formatter
-              parent: 
+              parent:  
 children:
     - name: make_format
       value: ThorsIOUtil.Format.make_format.md

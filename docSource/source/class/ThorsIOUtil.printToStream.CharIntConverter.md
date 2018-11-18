@@ -6,6 +6,7 @@ typeInfo:
     header:    ThorsIOUtil/printToStream.h
     classname: CharIntConverter
     parent:    
+    template:  template<typename T>
     description: 
     methods: []
     protected: []
