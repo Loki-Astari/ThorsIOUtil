@@ -11,8 +11,8 @@ namespace ThorsAnvil::IOUtil
  * This type handles these conversions.
  * It is used by Formatter::apply()
  */
-template<typename T>
 // @class-internal
+template<typename T>
 struct SignConversionOption
 {
     using Actual        = T;                                    // The Current Type
@@ -23,8 +23,8 @@ struct SignConversionOption
                                                                 // The mask is retrieved from Formatter::getType()
 };
 
-template<>
 // @class-internal
+template<>
 struct SignConversionOption<char>
 {
     using Actual        = char;
@@ -33,8 +33,9 @@ struct SignConversionOption<char>
     static int convertToInt(char const& arg) {return arg;}
     static int truncate(char const& arg, int mask) {return 0;};
 };
-template<>
+
 // @class-internal
+template<>
 struct SignConversionOption<short>
 {
     using Actual        = short;
@@ -43,8 +44,9 @@ struct SignConversionOption<short>
     static int convertToInt(short const& arg) {return arg;}
     static int truncate(short const& arg, int mask) {return 0;};
 };
-template<>
+
 // @class-internal
+template<>
 struct SignConversionOption<int>
 {
     using Actual        = int;
@@ -53,8 +55,9 @@ struct SignConversionOption<int>
     static int convertToInt(int const&) {return 0;}
     static int truncate(int const& arg, int mask) {return arg & mask;};
 };
-template<>
+
 // @class-internal
+template<>
 struct SignConversionOption<long>
 {
     using Actual        = long;
@@ -63,8 +66,9 @@ struct SignConversionOption<long>
     static int convertToInt(long const&) {return 0;}
     static int truncate(long const& arg, int mask) {return 0;};
 };
-template<>
+
 // @class-internal
+template<>
 struct SignConversionOption<long long>
 {
     using Actual        = long long;
@@ -73,8 +77,9 @@ struct SignConversionOption<long long>
     static int convertToInt(long long const&) {return 0;}
     static int truncate(long long const& arg, int mask) {return 0;};
 };
-template<>
+
 // @class-internal
+template<>
 struct SignConversionOption<unsigned char>
 {
     using Actual        = unsigned char;
@@ -83,8 +88,9 @@ struct SignConversionOption<unsigned char>
     static int convertToInt(unsigned char const& arg) {return arg;}
     static int truncate(unsigned char const& arg, int mask) {return 0;};
 };
-template<>
+
 // @class-internal
+template<>
 struct SignConversionOption<unsigned short>
 {
     using Actual        = unsigned short;
@@ -93,8 +99,9 @@ struct SignConversionOption<unsigned short>
     static int convertToInt(unsigned short const& arg) {return arg;}
     static int truncate(unsigned short const& arg, int mask) {return 0;};
 };
-template<>
+
 // @class-internal
+template<>
 // Must have some description
 struct SignConversionOption<unsigned int>
 {
@@ -108,8 +115,9 @@ struct SignConversionOption<unsigned int>
     static int convertToInt(unsigned int const&) {return 0;}
     static int truncate(unsigned int const& arg, int mask) {return 0;};
 };
-template<>
+
 // @class-internal
+template<>
 struct SignConversionOption<unsigned long>
 {
     using Actual        = unsigned long;
@@ -118,8 +126,9 @@ struct SignConversionOption<unsigned long>
     static int convertToInt(unsigned long const&) {return 0;}
     static int truncate(unsigned long const& arg, int mask) {return 0;};
 };
-template<>
+
 // @class-internal
+template<>
 struct SignConversionOption<unsigned long long>
 {
     using Actual        = unsigned long long;

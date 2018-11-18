@@ -14,8 +14,8 @@
 namespace ThorsAnvil::IOUtil
 {
 
-template<typename... Args>
 // @class-api
+template<typename... Args>
 class Format
 {
     std::string                     format;

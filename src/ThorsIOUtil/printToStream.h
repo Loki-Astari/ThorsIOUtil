@@ -39,20 +39,22 @@ printToStream(std::ostream& s, T const& arg, FormatInfo const& info)
  * before we can print it. Below are helper functions to convert Char to Int when printing a char as an
  * an integer.
  */
-template<typename T>
 // @class-internal
+template<typename T>
 struct CharIntConverter
 {
     using Integer   = T;
 };
-template<>
+
 // @class-internal
+template<>
 struct CharIntConverter<char>
 {
     using Integer   = int;
 };
-template<>
+
 // @class-internal
+template<>
 struct CharIntConverter<unsigned char>
 {
     using Integer   = unsigned int;
