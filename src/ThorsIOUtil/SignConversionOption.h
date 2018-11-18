@@ -95,11 +95,16 @@ struct SignConversionOption<unsigned short>
 };
 template<>
 // @class-internal
+// Must have some description
 struct SignConversionOption<unsigned int>
 {
     using Actual        = unsigned int;
     using Alternative   = int;
     static constexpr bool allowIntConversion = false;
+    // @method
+    // @return  Bla
+    // @param   value unused
+    // Some Stuff
     static int convertToInt(unsigned int const&) {return 0;}
     static int truncate(unsigned int const& arg, int mask) {return 0;};
 };

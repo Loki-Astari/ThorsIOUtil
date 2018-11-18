@@ -3,8 +3,8 @@ layout: class
 generate: false
 typeInfo:
     namespace: ThorsAnvil::IOUtil
-    header:    ThorsIOUtil/SignConversionOption.h
-    classname: SignConversionOption_short
+    header:    ThorsIOUtil/printToStream.h
+    classname: CharIntConverter-Lchar-R
     parent:    
     description: 
     methods: []

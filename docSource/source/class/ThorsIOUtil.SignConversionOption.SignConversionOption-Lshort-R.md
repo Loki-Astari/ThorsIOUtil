@@ -4,7 +4,7 @@ generate: false
 typeInfo:
     namespace: ThorsAnvil::IOUtil
     header:    ThorsIOUtil/SignConversionOption.h
-    classname: SignConversionOption_int
+    classname: SignConversionOption-Lshort-R
     parent:    
     description: 
     methods: []
