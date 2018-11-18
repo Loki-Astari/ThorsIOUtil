@@ -17,9 +17,10 @@ inline unsigned long long   absm(unsigned long long arg)   {return arg;}
 inline unsigned long        absm(unsigned long arg)        {return arg;}
 inline unsigned int         absm(unsigned int arg)         {return arg;}
 
-template<typename T>
 // @function-internal
-inline void printIntToStream(std::ostream& s, T arg, FormatInfo const& info)
+template<typename T>
+inline
+void printIntToStream(std::ostream& s, T arg, FormatInfo const& info)
 {
     static long double  const logFor16    = std::log10(16.0L);
     static long double  const logFor10    = std::log10(10.0L);

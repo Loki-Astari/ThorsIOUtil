@@ -61,10 +61,10 @@ headers:
           functions:
             - return: void
               name:   saveToStream
-              param:  [   std::ostream&,  Dynamic,  T const& void,  std::ostream& s,  Dynamic pos,  int const& size  ]
+              param:  [   std::ostream&,  Dynamic,  T const&  ]
             - return: void
               name:   saveToStream
-              param:  [   std::ostream&,  Dynamic,  T const& void,  std::ostream& s,  Dynamic pos,  int const& size  ]
+              param:  [   std::ostream&,  Dynamic,  T const&  ]
           classes: []
 children:
     - name: SignConversionOption

@@ -5,6 +5,8 @@ typeInfo:
     namespace: ThorsAnvil::IOUtil
     header:    ThorsIOUtil/printToStream.h
     function:  printToStream
-    description: 
+    description:  |
+        C-String
+    template:  template<typename T> 
 children: []
 ---

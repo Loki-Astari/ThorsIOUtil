@@ -111,8 +111,8 @@ class Format
 
 };
 
-template<typename... Args>
 // @function-api
+template<typename... Args>
 Format<Args...> make_format(char const* fmt, Args const&... args)
 {
     return Format<Args...>(fmt, args...);

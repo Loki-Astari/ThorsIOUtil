@@ -6,5 +6,6 @@ typeInfo:
     header:    ThorsIOUtil/Format.h
     function:  make_format
     description: 
+    template:  template<typename... Args> 
 children: []
 ---

@@ -6,5 +6,6 @@ typeInfo:
     header:    ThorsIOUtil/saveToStream.h
     function:  saveToStream
     description: 
+    template:  template<typename T> 
 children: []
 ---

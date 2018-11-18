@@ -6,5 +6,6 @@ typeInfo:
     header:    ThorsIOUtil/printStringToStream.h
     function:  printStringToStream
     description: 
+    template:   
 children: []
 ---
