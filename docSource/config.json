@@ -8,6 +8,6 @@
         {"name": "Introduction", "value": "intro.md"},
         {"name": "Normal",       "value": "ThorsIOUtil.md"},
         {"name": "APIDocs",      "value": "ThorsIOUtil-api.md"},
-        {"name": "Internal",     "value": "ThorsIOUtil.md-internal.md"}
+        {"name": "Internal",     "value": "ThorsIOUtil-internal.md"}
     ]
 }
