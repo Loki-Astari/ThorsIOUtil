@@ -10,25 +10,25 @@ headers:
           classes:
             - name:   SignConversionOption
               parent: 
-            - name:   SignConversionOption_char
+            - name:   SignConversionOption-Lchar-R
               parent: 
-            - name:   SignConversionOption_short
+            - name:   SignConversionOption-Lshort-R
               parent: 
-            - name:   SignConversionOption_int
+            - name:   SignConversionOption-Lint-R
               parent: 
-            - name:   SignConversionOption_long
+            - name:   SignConversionOption-Llong-R
               parent: 
-            - name:   SignConversionOption_long
+            - name:   SignConversionOption-Llong-long-R
               parent: 
-            - name:   SignConversionOption_unsigned
+            - name:   SignConversionOption-Lunsigned-char-R
               parent: 
-            - name:   SignConversionOption_unsigned
+            - name:   SignConversionOption-Lunsigned-short-R
               parent: 
-            - name:   SignConversionOption_unsigned
+            - name:   SignConversionOption-Lunsigned-int-R
               parent: 
-            - name:   SignConversionOption_unsigned
+            - name:   SignConversionOption-Lunsigned-long-R
               parent: 
-            - name:   SignConversionOption_unsigned
+            - name:   SignConversionOption-Lunsigned-long-long-R
               parent: 
         - name:   printIntToStream.h
           functions:
@@ -53,9 +53,9 @@ headers:
           classes:
             - name:   CharIntConverter
               parent: 
-            - name:   CharIntConverter_char
+            - name:   CharIntConverter-Lchar-R
               parent: 
-            - name:   CharIntConverter_unsigned
+            - name:   CharIntConverter-Lunsigned-char-R
               parent: 
         - name:   saveToStream.h
           functions:
@@ -69,26 +69,26 @@ headers:
 children:
     - name: SignConversionOption
       value: ThorsIOUtil.SignConversionOption.SignConversionOption.md
-    - name: SignConversionOption_char
-      value: ThorsIOUtil.SignConversionOption.SignConversionOption_char.md
-    - name: SignConversionOption_short
-      value: ThorsIOUtil.SignConversionOption.SignConversionOption_short.md
-    - name: SignConversionOption_int
-      value: ThorsIOUtil.SignConversionOption.SignConversionOption_int.md
-    - name: SignConversionOption_long
-      value: ThorsIOUtil.SignConversionOption.SignConversionOption_long.md
-    - name: SignConversionOption_long
-      value: ThorsIOUtil.SignConversionOption.SignConversionOption_long.md
-    - name: SignConversionOption_unsigned
-      value: ThorsIOUtil.SignConversionOption.SignConversionOption_unsigned.md
-    - name: SignConversionOption_unsigned
-      value: ThorsIOUtil.SignConversionOption.SignConversionOption_unsigned.md
-    - name: SignConversionOption_unsigned
-      value: ThorsIOUtil.SignConversionOption.SignConversionOption_unsigned.md
-    - name: SignConversionOption_unsigned
-      value: ThorsIOUtil.SignConversionOption.SignConversionOption_unsigned.md
-    - name: SignConversionOption_unsigned
-      value: ThorsIOUtil.SignConversionOption.SignConversionOption_unsigned.md
+    - name: SignConversionOption-Lchar-R
+      value: ThorsIOUtil.SignConversionOption.SignConversionOption-Lchar-R.md
+    - name: SignConversionOption-Lshort-R
+      value: ThorsIOUtil.SignConversionOption.SignConversionOption-Lshort-R.md
+    - name: SignConversionOption-Lint-R
+      value: ThorsIOUtil.SignConversionOption.SignConversionOption-Lint-R.md
+    - name: SignConversionOption-Llong-R
+      value: ThorsIOUtil.SignConversionOption.SignConversionOption-Llong-R.md
+    - name: SignConversionOption-Llong-long-R
+      value: ThorsIOUtil.SignConversionOption.SignConversionOption-Llong-long-R.md
+    - name: SignConversionOption-Lunsigned-char-R
+      value: ThorsIOUtil.SignConversionOption.SignConversionOption-Lunsigned-char-R.md
+    - name: SignConversionOption-Lunsigned-short-R
+      value: ThorsIOUtil.SignConversionOption.SignConversionOption-Lunsigned-short-R.md
+    - name: SignConversionOption-Lunsigned-int-R
+      value: ThorsIOUtil.SignConversionOption.SignConversionOption-Lunsigned-int-R.md
+    - name: SignConversionOption-Lunsigned-long-R
+      value: ThorsIOUtil.SignConversionOption.SignConversionOption-Lunsigned-long-R.md
+    - name: SignConversionOption-Lunsigned-long-long-R
+      value: ThorsIOUtil.SignConversionOption.SignConversionOption-Lunsigned-long-long-R.md
     - name: printIntToStream
       value: ThorsIOUtil.printIntToStream.printIntToStream.md
     - name: printStringToStream
@@ -99,10 +99,10 @@ children:
       value: ThorsIOUtil.printToStream.printToStream.md
     - name: CharIntConverter
       value: ThorsIOUtil.printToStream.CharIntConverter.md
-    - name: CharIntConverter_char
-      value: ThorsIOUtil.printToStream.CharIntConverter_char.md
-    - name: CharIntConverter_unsigned
-      value: ThorsIOUtil.printToStream.CharIntConverter_unsigned.md
+    - name: CharIntConverter-Lchar-R
+      value: ThorsIOUtil.printToStream.CharIntConverter-Lchar-R.md
+    - name: CharIntConverter-Lunsigned-char-R
+      value: ThorsIOUtil.printToStream.CharIntConverter-Lunsigned-char-R.md
     - name: saveToStream
       value: ThorsIOUtil.saveToStream.saveToStream.md
     - name: saveToStream
