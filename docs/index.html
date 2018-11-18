@@ -31,12 +31,12 @@
     </li>
 
     <li>
-        <a href="#api docs" class="toc-h1 toc-link" data-title="API Docs">API Docs</a>
+        <a href="#normal" class="toc-h1 toc-link" data-title="Normal">Normal</a>
     
                 <ul class="toc-list-h2">
                     
     <li>
-        <a href="#format" class="toc-h2 toc-link" data-title="API Docs">Format</a>
+        <a href="#printtostreamdefault" class="toc-h2 toc-link" data-title="Normal">printToStreamDefault</a>
     
                 <ul class="toc-list-h3">
                     
@@ -47,7 +47,29 @@
     </li>
 
     <li>
-        <a href="#formatinfo" class="toc-h2 toc-link" data-title="API Docs">FormatInfo</a>
+        <a href="#printtostream" class="toc-h2 toc-link" data-title="Normal">printToStream</a>
+    
+                <ul class="toc-list-h3">
+                    
+
+
+                </ul>
+    
+    </li>
+
+
+
+                </ul>
+    
+    </li>
+
+    <li>
+        <a href="#apidocs" class="toc-h1 toc-link" data-title="APIDocs">APIDocs</a>
+    
+                <ul class="toc-list-h2">
+                    
+    <li>
+        <a href="#make_format" class="toc-h2 toc-link" data-title="APIDocs">make_format</a>
     
                 <ul class="toc-list-h3">
                     
@@ -58,7 +80,29 @@
     </li>
 
     <li>
-        <a href="#formatter" class="toc-h2 toc-link" data-title="API Docs">Formatter</a>
+        <a href="#format" class="toc-h2 toc-link" data-title="APIDocs">Format</a>
+    
+                <ul class="toc-list-h3">
+                    
+
+
+                </ul>
+    
+    </li>
+
+    <li>
+        <a href="#formatinfo" class="toc-h2 toc-link" data-title="APIDocs">FormatInfo</a>
+    
+                <ul class="toc-list-h3">
+                    
+
+
+                </ul>
+    
+    </li>
+
+    <li>
+        <a href="#formatter" class="toc-h2 toc-link" data-title="APIDocs">Formatter</a>
     
                 <ul class="toc-list-h3">
                     
@@ -76,88 +120,6 @@
 
     <li>
         <a href="#internal" class="toc-h1 toc-link" data-title="Internal">Internal</a>
-    
-                <ul class="toc-list-h2">
-                    
-    <li>
-        <a href="#save to stream" class="toc-h2 toc-link" data-title="Internal">Save To Stream</a>
-    
-    </li>
-
-    <li>
-        <a href="#print to stream" class="toc-h2 toc-link" data-title="Internal">Print To Stream</a>
-    
-    </li>
-
-    <li>
-        <a href="#print int to stream" class="toc-h2 toc-link" data-title="Internal">Print Int To Stream</a>
-    
-    </li>
-
-    <li>
-        <a href="#print string to stream" class="toc-h2 toc-link" data-title="Internal">Print String To Stream</a>
-    
-    </li>
-
-    <li>
-        <a href="#sign conversion option" class="toc-h2 toc-link" data-title="Internal">Sign Conversion Option</a>
-    
-    </li>
-
-
-
-                </ul>
-    
-    </li>
-
-    <li>
-        <a href="#everything" class="toc-h1 toc-link" data-title="Everything">Everything</a>
-    
-                <ul class="toc-list-h2">
-                    
-    <li>
-        <a href="#format" class="toc-h2 toc-link" data-title="Everything">Format</a>
-    
-    </li>
-
-    <li>
-        <a href="#formatter" class="toc-h2 toc-link" data-title="Everything">Formatter</a>
-    
-    </li>
-
-    <li>
-        <a href="#format info" class="toc-h2 toc-link" data-title="Everything">Format Info</a>
-    
-    </li>
-
-    <li>
-        <a href="#save to stream" class="toc-h2 toc-link" data-title="Everything">Save To Stream</a>
-    
-    </li>
-
-    <li>
-        <a href="#print to stream" class="toc-h2 toc-link" data-title="Everything">Print To Stream</a>
-    
-    </li>
-
-    <li>
-        <a href="#print int to stream" class="toc-h2 toc-link" data-title="Everything">Print Int To Stream</a>
-    
-    </li>
-
-    <li>
-        <a href="#print string to stream" class="toc-h2 toc-link" data-title="Everything">Print String To Stream</a>
-    
-    </li>
-
-    <li>
-        <a href="#sign conversion option" class="toc-h2 toc-link" data-title="Everything">Sign Conversion Option</a>
-    
-    </li>
-
-
-
-                </ul>
     
     </li>
 
@@ -178,25 +140,84 @@
     
     <h1 id="introduction">Introduction</h1>
     
-        <p><a href="https://github.com/Loki-Astari/ThorsIOUtil">ThorsIOUtil</a> A C++ IO type stream formatting like <code>printf()</code>.</p>
-<pre><code class="c++ language-c++">    #include "ThorsIOUtil/Format.h"
-
-    int main()
-    {
-        namespace tio = ThorsAnvil::IOUtil;
-        std::cout &lt;&lt; tio::make_format("A standard printf format string "%d : %20s", 15, "Text") &lt;&lt; "\n";
-    }</code></pre>
-<p>This library has been tested using the test suite used by GNU.</p>
-
-    
     
 
     
-    <h1 id="api docs">API Docs</h1>
+    <h1 id="normal">Normal</h1>
     
-        <p>The API used</p>
+        
 <dl>
-<dt>NameSpace:</dt><dd>XX</dd>
+<dt>NameSpace:</dt><dd>ThorsAnvil::IOUtil</dd>
+<dt>Headers:</dt><dd>ThorsIOUtil</dd>
+
+    <dt>printToStream.h</dt><dd>
+        <ul>
+        
+        
+            <li>void printToStreamDefault()</li>
+        
+            <li>void printToStream()</li>
+        
+        </ul>
+    </dd>
+
+</dl>
+
+
+    
+    
+        
+    
+    <h2 id="printtostreamdefault">printToStreamDefault</h2>
+    
+        <div class="classTable">
+    <div class="classLayout">
+        <div class="classBlock">
+            <div class="classRow"><div class="classItem">Header:   </div><div class="classValue">ThorsIOUtil/printToStream.h</div><div></div></div>
+            <div class="classRow"><div class="classItem">NameSpace:</div><div class="classValue">ThorsAnvil::IOUtil</div><div></div></div>
+            <div class="classRow"><div class="classItem">Class:    </div><div class="classValue"></div><div></div></div>
+        </div>
+    </div>
+</div>
+<p></p>
+
+
+    
+    
+        
+
+    
+
+    
+    <h2 id="printtostream">printToStream</h2>
+    
+        <div class="classTable">
+    <div class="classLayout">
+        <div class="classBlock">
+            <div class="classRow"><div class="classItem">Header:   </div><div class="classValue">ThorsIOUtil/printToStream.h</div><div></div></div>
+            <div class="classRow"><div class="classItem">NameSpace:</div><div class="classValue">ThorsAnvil::IOUtil</div><div></div></div>
+            <div class="classRow"><div class="classItem">Class:    </div><div class="classValue"></div><div></div></div>
+        </div>
+    </div>
+</div>
+<p></p>
+
+
+    
+    
+        
+
+    
+
+
+    
+
+    
+    <h1 id="apidocs">APIDocs</h1>
+    
+        
+<dl>
+<dt>NameSpace:</dt><dd>ThorsAnvil::IOUtil</dd>
 <dt>Headers:</dt><dd>ThorsIOUtil</dd>
 
     <dt>Format.h</dt><dd>
@@ -204,6 +225,8 @@
         
             <li>Format </li>
         
+        
+            <li>Format<Args...> make_format()</li>
         
         </ul>
     </dd>
@@ -232,6 +255,27 @@
     
     
         
+    
+    <h2 id="make_format">make_format</h2>
+    
+        <div class="classTable">
+    <div class="classLayout">
+        <div class="classBlock">
+            <div class="classRow"><div class="classItem">Header:   </div><div class="classValue">ThorsIOUtil/Format.h</div><div></div></div>
+            <div class="classRow"><div class="classItem">NameSpace:</div><div class="classValue">ThorsAnvil::IOUtil</div><div></div></div>
+            <div class="classRow"><div class="classItem">Class:    </div><div class="classValue"></div><div></div></div>
+        </div>
+    </div>
+</div>
+<p></p>
+
+
+    
+    
+        
+
+    
+
     
     <h2 id="format">Format</h2>
     
@@ -313,88 +357,6 @@
     
     <h1 id="internal">Internal</h1>
     
-        <p>The Deep internal classes.</p>
-
-    
-    
-        
-    
-    <h2 id="save to stream">Save To Stream</h2>
-    
-    
-
-    
-    <h2 id="print to stream">Print To Stream</h2>
-    
-    
-
-    
-    <h2 id="print int to stream">Print Int To Stream</h2>
-    
-    
-
-    
-    <h2 id="print string to stream">Print String To Stream</h2>
-    
-    
-
-    
-    <h2 id="sign conversion option">Sign Conversion Option</h2>
-    
-    
-
-
-    
-
-    
-    <h1 id="everything">Everything</h1>
-    
-        
-
-    
-    
-        
-    
-    <h2 id="format">Format</h2>
-    
-    
-
-    
-    <h2 id="formatter">Formatter</h2>
-    
-    
-
-    
-    <h2 id="format info">Format Info</h2>
-    
-    
-
-    
-    <h2 id="save to stream">Save To Stream</h2>
-    
-    
-
-    
-    <h2 id="print to stream">Print To Stream</h2>
-    
-    
-
-    
-    <h2 id="print int to stream">Print Int To Stream</h2>
-    
-    
-
-    
-    <h2 id="print string to stream">Print String To Stream</h2>
-    
-    
-
-    
-    <h2 id="sign conversion option">Sign Conversion Option</h2>
-    
-    
-
-
     
 
 
