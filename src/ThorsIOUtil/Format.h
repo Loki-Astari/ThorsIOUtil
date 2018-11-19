@@ -11,8 +11,10 @@
 #include <exception>
 #include <stdexcept>
 
-namespace ThorsAnvil::IOUtil
+namespace ThorsAnvil
 {
+    namespace IOUtil
+    {
 
 // @class-api
 template<typename... Args>
@@ -118,6 +120,7 @@ Format<Args...> make_format(char const* fmt, Args const&... args)
     return Format<Args...>(fmt, args...);
 }
 
+    }
 }
 
 #endif
