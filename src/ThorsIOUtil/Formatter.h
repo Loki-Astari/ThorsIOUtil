@@ -24,6 +24,7 @@ template<typename T>
 inline bool checkNumLargerEqualToZero(T const& value)      {return value >= 0;}
 inline bool checkNumLargerEqualToZero(char const*)         {return false;}
 
+// @class-api
 class Formatter
 {
     // The number of characters read in the formatter.
@@ -337,7 +338,7 @@ class Formatter
                                             : info.width;
                 std::size_t fractPrec = (info.useDynamicSize == Dynamic::Precision || info.useDynamicSize == Dynamic::Both)
                                             ? s.iword(static_cast<int>(Dynamic::Precision))
-                                            : info.precision == -1 && info.type == Type::Float ? 6 : info.precision;
+                                            : info.precision == -1UL && info.type == Type::Float ? 6 : info.precision;
                 bool                    forceLeft = info.leftJustify;
                 std::ios_base::fmtflags format    = info.format;
                 if ((info.useDynamicSize == Dynamic::Width || info.useDynamicSize == Dynamic::Both) && s.iword(static_cast<int>(Dynamic::Width)) < 0)

@@ -6,17 +6,21 @@
 #include "printStringToStream.h"
 
 #include <ostream>
+#include <type_traits>
 
 namespace ThorsAnvil::IOUtil
 {
 
+// @function
 template<typename T>
-inline void printToStreamDefault(std::ostream& s, T const& arg, FormatInfo const&)
+inline
+void printToStreamDefault(std::ostream& s, T const& arg, FormatInfo const&)
 {
     s << arg;
 }
 
-/* Template method for everything apart from integers */
+// @function
+// Template method for everything apart from integers
 template<typename T>
 inline
 typename std::enable_if<!std::is_integral<T>::value>::type
@@ -35,16 +39,21 @@ printToStream(std::ostream& s, T const& arg, FormatInfo const& info)
  * before we can print it. Below are helper functions to convert Char to Int when printing a char as an
  * an integer.
  */
+// @class-internal
 template<typename T>
 struct CharIntConverter
 {
     using Integer   = T;
 };
+
+// @class-internal
 template<>
 struct CharIntConverter<char>
 {
     using Integer   = int;
 };
+
+// @class-internal
 template<>
 struct CharIntConverter<unsigned char>
 {
@@ -52,6 +61,7 @@ struct CharIntConverter<unsigned char>
 };
 
 
+// @function-internal
 template<typename T>
 inline
 typename std::enable_if<std::is_integral<T>::value>::type
@@ -67,8 +77,10 @@ printToStream(std::ostream& s, T const& arg, FormatInfo const& info)
     }
 }
 
+// @function-internal
 // C-String
-inline void printToStream(std::ostream& s, char const* const& arg, FormatInfo const& info)
+inline
+void printToStream(std::ostream& s, char const* const& arg, FormatInfo const& info)
 {
     printStringToStream(s, arg, info);
 }

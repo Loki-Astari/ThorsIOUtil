@@ -17,8 +17,10 @@ inline unsigned long long   absm(unsigned long long arg)   {return arg;}
 inline unsigned long        absm(unsigned long arg)        {return arg;}
 inline unsigned int         absm(unsigned int arg)         {return arg;}
 
+// @function-internal
 template<typename T>
-inline void printIntToStream(std::ostream& s, T arg, FormatInfo const& info)
+inline
+void printIntToStream(std::ostream& s, T arg, FormatInfo const& info)
 {
     static long double  const logFor16    = std::log10(16.0L);
     static long double  const logFor10    = std::log10(10.0L);
@@ -26,7 +28,7 @@ inline void printIntToStream(std::ostream& s, T arg, FormatInfo const& info)
 
     double const&  logBase = s.flags() & std::ios_base::oct ? logFor08 : s.flags() & std::ios_base::hex ? logFor16 : logFor10;
 
-    if (info.width == 0 && info.precision == -1)
+    if (info.width == 0 && info.precision == -1UL)
     {
         s << arg;
     }
@@ -63,10 +65,10 @@ inline void printIntToStream(std::ostream& s, T arg, FormatInfo const& info)
          */
         width                      = extraChar  > width ? 0 : width - extraChar;
         std::size_t numberOfDigits = (arg != 0 ? static_cast<int>((std::log10(static_cast<long double>(absm(arg))) / logBase + 1)) : (precision == 0 ? 0 : 1)) + extraDigits;
-        std::size_t sizeOfNumber   = precision == -1 || numberOfDigits > precision ? numberOfDigits : precision;
-        std::size_t prefix         = precision == -1 || numberOfDigits > precision ? 0 : (precision - numberOfDigits);
+        std::size_t sizeOfNumber   = precision == -1UL || numberOfDigits > precision ? numberOfDigits : precision;
+        std::size_t prefix         = precision == -1UL || numberOfDigits > precision ? 0 : (precision - numberOfDigits);
         std::size_t padding        = (sizeOfNumber >= width) ? 0 :  (width - sizeOfNumber);
-        if (precision == -1 && info.leftPad && !info.leftJustify)
+        if (precision == -1UL && info.leftPad && !info.leftJustify)
         {
             std::swap(prefix, padding);
         }

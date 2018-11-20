@@ -1,0 +1,13 @@
+{
+    "author": "ThorsIOUtil",
+    "title": "ThorsIOUtil",
+    "description": "C++ type sage output stream formatting like ",
+    "theme": "documentation",
+    "themeGit": "git@github.com:Loki-Astari/andvari-theme-documentation.git",
+    "toc": [
+        {"name": "Introduction", "value": "intro.md"},
+        {"name": "Normal",       "value": "ThorsIOUtil.md"},
+        {"name": "APIDocs",      "value": "ThorsIOUtil-api.md"},
+        {"name": "Internal",     "value": "ThorsIOUtil-internal.md"}
+    ]
+}

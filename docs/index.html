@@ -1,0 +1,1159 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <meta charset="utf-8">
+    <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>API Reference</title>
+
+    <link href="stylesheet/style.css" rel="stylesheet" />
+    <link href="stylesheet/screen.css" rel="stylesheet" media="screen" />
+    <link href="stylesheet/print.css" rel="stylesheet" media="print" />
+    <script src="javascripts/all_nosearch.js"></script>
+</head>
+
+
+    <body class="index" data-languages="[]">
+    <a href="#" id="nav-button">
+    <span>
+        NAV
+        <img src="images/navbar.png" alt="Navbar" />
+    </span>
+</a>
+
+    <div class="toc-wrapper">
+    <img src="images/logo.png" class="logo" alt="Logo" />
+    <div id="toc" class="toc-list-h1">
+        
+    <li>
+        <a href="#introduction" class="toc-h1 toc-link" data-title="Introduction">Introduction</a>
+    
+    </li>
+
+    <li>
+        <a href="#normal" class="toc-h1 toc-link" data-title="Normal">Normal</a>
+    
+                <ul class="toc-list-h2">
+                    
+    <li>
+        <a href="#printtostreamdefault" class="toc-h2 toc-link" data-title="Normal">printToStreamDefault</a>
+    
+                <ul class="toc-list-h3">
+                    
+
+
+                </ul>
+    
+    </li>
+
+    <li>
+        <a href="#printtostream" class="toc-h2 toc-link" data-title="Normal">printToStream</a>
+    
+                <ul class="toc-list-h3">
+                    
+
+
+                </ul>
+    
+    </li>
+
+
+
+                </ul>
+    
+    </li>
+
+    <li>
+        <a href="#apidocs" class="toc-h1 toc-link" data-title="APIDocs">APIDocs</a>
+    
+                <ul class="toc-list-h2">
+                    
+    <li>
+        <a href="#make_format" class="toc-h2 toc-link" data-title="APIDocs">make_format</a>
+    
+                <ul class="toc-list-h3">
+                    
+
+
+                </ul>
+    
+    </li>
+
+    <li>
+        <a href="#format" class="toc-h2 toc-link" data-title="APIDocs">Format</a>
+    
+                <ul class="toc-list-h3">
+                    
+
+
+                </ul>
+    
+    </li>
+
+    <li>
+        <a href="#formatinfo" class="toc-h2 toc-link" data-title="APIDocs">FormatInfo</a>
+    
+                <ul class="toc-list-h3">
+                    
+
+
+                </ul>
+    
+    </li>
+
+    <li>
+        <a href="#formatter" class="toc-h2 toc-link" data-title="APIDocs">Formatter</a>
+    
+                <ul class="toc-list-h3">
+                    
+
+
+                </ul>
+    
+    </li>
+
+
+
+                </ul>
+    
+    </li>
+
+    <li>
+        <a href="#internal" class="toc-h1 toc-link" data-title="Internal">Internal</a>
+    
+                <ul class="toc-list-h2">
+                    
+    <li>
+        <a href="#signconversionoption" class="toc-h2 toc-link" data-title="Internal">SignConversionOption</a>
+    
+                <ul class="toc-list-h3">
+                    
+
+
+                </ul>
+    
+    </li>
+
+    <li>
+        <a href="#signconversionoption_char" class="toc-h2 toc-link" data-title="Internal">SignConversionOption_char</a>
+    
+                <ul class="toc-list-h3">
+                    
+
+
+                </ul>
+    
+    </li>
+
+    <li>
+        <a href="#signconversionoption_short" class="toc-h2 toc-link" data-title="Internal">SignConversionOption_short</a>
+    
+                <ul class="toc-list-h3">
+                    
+
+
+                </ul>
+    
+    </li>
+
+    <li>
+        <a href="#signconversionoption_int" class="toc-h2 toc-link" data-title="Internal">SignConversionOption_int</a>
+    
+                <ul class="toc-list-h3">
+                    
+
+
+                </ul>
+    
+    </li>
+
+    <li>
+        <a href="#signconversionoption_long" class="toc-h2 toc-link" data-title="Internal">SignConversionOption_long</a>
+    
+                <ul class="toc-list-h3">
+                    
+
+
+                </ul>
+    
+    </li>
+
+    <li>
+        <a href="#signconversionoption_long" class="toc-h2 toc-link" data-title="Internal">SignConversionOption_long</a>
+    
+                <ul class="toc-list-h3">
+                    
+
+
+                </ul>
+    
+    </li>
+
+    <li>
+        <a href="#signconversionoption_unsigned" class="toc-h2 toc-link" data-title="Internal">SignConversionOption_unsigned</a>
+    
+                <ul class="toc-list-h3">
+                    
+
+
+                </ul>
+    
+    </li>
+
+    <li>
+        <a href="#signconversionoption_unsigned" class="toc-h2 toc-link" data-title="Internal">SignConversionOption_unsigned</a>
+    
+                <ul class="toc-list-h3">
+                    
+
+
+                </ul>
+    
+    </li>
+
+    <li>
+        <a href="#signconversionoption_unsigned" class="toc-h2 toc-link" data-title="Internal">SignConversionOption_unsigned</a>
+    
+                <ul class="toc-list-h3">
+                    
+
+
+                </ul>
+    
+    </li>
+
+    <li>
+        <a href="#signconversionoption_unsigned" class="toc-h2 toc-link" data-title="Internal">SignConversionOption_unsigned</a>
+    
+                <ul class="toc-list-h3">
+                    
+
+
+                </ul>
+    
+    </li>
+
+    <li>
+        <a href="#signconversionoption_unsigned" class="toc-h2 toc-link" data-title="Internal">SignConversionOption_unsigned</a>
+    
+                <ul class="toc-list-h3">
+                    
+
+
+                </ul>
+    
+    </li>
+
+    <li>
+        <a href="#printinttostream" class="toc-h2 toc-link" data-title="Internal">printIntToStream</a>
+    
+                <ul class="toc-list-h3">
+                    
+
+
+                </ul>
+    
+    </li>
+
+    <li>
+        <a href="#printstringtostream" class="toc-h2 toc-link" data-title="Internal">printStringToStream</a>
+    
+                <ul class="toc-list-h3">
+                    
+
+
+                </ul>
+    
+    </li>
+
+    <li>
+        <a href="#printtostream" class="toc-h2 toc-link" data-title="Internal">printToStream</a>
+    
+                <ul class="toc-list-h3">
+                    
+
+
+                </ul>
+    
+    </li>
+
+    <li>
+        <a href="#printtostream" class="toc-h2 toc-link" data-title="Internal">printToStream</a>
+    
+                <ul class="toc-list-h3">
+                    
+
+
+                </ul>
+    
+    </li>
+
+    <li>
+        <a href="#charintconverter" class="toc-h2 toc-link" data-title="Internal">CharIntConverter</a>
+    
+                <ul class="toc-list-h3">
+                    
+
+
+                </ul>
+    
+    </li>
+
+    <li>
+        <a href="#charintconverter_char" class="toc-h2 toc-link" data-title="Internal">CharIntConverter_char</a>
+    
+                <ul class="toc-list-h3">
+                    
+
+
+                </ul>
+    
+    </li>
+
+    <li>
+        <a href="#charintconverter_unsigned" class="toc-h2 toc-link" data-title="Internal">CharIntConverter_unsigned</a>
+    
+                <ul class="toc-list-h3">
+                    
+
+
+                </ul>
+    
+    </li>
+
+    <li>
+        <a href="#savetostream" class="toc-h2 toc-link" data-title="Internal">saveToStream</a>
+    
+                <ul class="toc-list-h3">
+                    
+
+
+                </ul>
+    
+    </li>
+
+    <li>
+        <a href="#savetostream" class="toc-h2 toc-link" data-title="Internal">saveToStream</a>
+    
+                <ul class="toc-list-h3">
+                    
+
+
+                </ul>
+    
+    </li>
+
+
+
+                </ul>
+    
+    </li>
+
+
+
+    </div>
+    <ul class="toc-footer">
+        <li><a href="">Generated by Andvari</a><br>
+            <a href="https://github.com/Loki-Astari/andvari-theme-documentation">using andvari-theme-documentation</a>
+        </li>
+    </ul>
+</div>
+
+    <div class="page-wrapper">
+    <div class="dark-box"></div>
+    <div class="content">
+        
+    
+    <h1 id="introduction">Introduction</h1>
+    
+    
+
+    
+    <h1 id="normal">Normal</h1>
+    
+        
+<dl>
+<dt>NameSpace:</dt><dd>ThorsAnvil::IOUtil</dd>
+<dt>Headers:</dt><dd>ThorsIOUtil</dd>
+
+    <dt>printToStream.h</dt><dd>
+        <ul>
+        
+        
+            <li>void printToStreamDefault()</li>
+        
+            <li>void printToStream()</li>
+        
+        </ul>
+    </dd>
+
+</dl>
+
+
+    
+    
+        
+    
+    <h2 id="printtostreamdefault">printToStreamDefault</h2>
+    
+        <div class="classTable">
+    <div class="classLayout">
+        <div class="classBlock">
+            <div class="classRow"><div class="classItem">Header:   </div><div class="classValue">ThorsIOUtil/printToStream.h</div><div></div></div>
+            <div class="classRow"><div class="classItem">NameSpace:</div><div class="classValue">ThorsAnvil::IOUtil</div><div></div></div>
+            <div class="classRow"><div class="classItem">Class:    </div><div class="classValue"></div><div></div></div>
+        </div>
+    </div>
+</div>
+<p></p>
+
+
+    
+    
+        
+
+    
+
+    
+    <h2 id="printtostream">printToStream</h2>
+    
+        <div class="classTable">
+    <div class="classLayout">
+        <div class="classBlock">
+            <div class="classRow"><div class="classItem">Header:   </div><div class="classValue">ThorsIOUtil/printToStream.h</div><div></div></div>
+            <div class="classRow"><div class="classItem">NameSpace:</div><div class="classValue">ThorsAnvil::IOUtil</div><div></div></div>
+            <div class="classRow"><div class="classItem">Class:    </div><div class="classValue"></div><div></div></div>
+        </div>
+    </div>
+</div>
+<p></p>
+
+
+    
+    
+        
+
+    
+
+
+    
+
+    
+    <h1 id="apidocs">APIDocs</h1>
+    
+        
+<dl>
+<dt>NameSpace:</dt><dd>ThorsAnvil::IOUtil</dd>
+<dt>Headers:</dt><dd>ThorsIOUtil</dd>
+
+    <dt>Format.h</dt><dd>
+        <ul>
+        
+            <li>Format </li>
+        
+        
+            <li>Format<Args...> make_format()</li>
+        
+        </ul>
+    </dd>
+
+    <dt>FormatInfo.h</dt><dd>
+        <ul>
+        
+            <li>FormatInfo </li>
+        
+        
+        </ul>
+    </dd>
+
+    <dt>Formatter.h</dt><dd>
+        <ul>
+        
+            <li>Formatter </li>
+        
+        
+        </ul>
+    </dd>
+
+</dl>
+
+
+    
+    
+        
+    
+    <h2 id="make_format">make_format</h2>
+    
+        <div class="classTable">
+    <div class="classLayout">
+        <div class="classBlock">
+            <div class="classRow"><div class="classItem">Header:   </div><div class="classValue">ThorsIOUtil/Format.h</div><div></div></div>
+            <div class="classRow"><div class="classItem">NameSpace:</div><div class="classValue">ThorsAnvil::IOUtil</div><div></div></div>
+            <div class="classRow"><div class="classItem">Class:    </div><div class="classValue"></div><div></div></div>
+        </div>
+    </div>
+</div>
+<p></p>
+
+
+    
+    
+        
+
+    
+
+    
+    <h2 id="format">Format</h2>
+    
+        <div class="classTable">
+    <div class="classLayout">
+        <div class="classBlock">
+            <div class="classRow"><div class="classItem">Header:   </div><div class="classValue">ThorsIOUtil/Format.h</div><div></div></div>
+            <div class="classRow"><div class="classItem">NameSpace:</div><div class="classValue">ThorsAnvil::IOUtil</div><div></div></div>
+            <div class="classRow"><div class="classItem">Class:    </div><div class="classValue">Format</div><div></div></div>
+            
+        
+        
+        
+        </div>
+    </div>
+</div>
+<p></p>
+
+
+    
+    
+        
+
+    
+
+    
+    <h2 id="formatinfo">FormatInfo</h2>
+    
+        <div class="classTable">
+    <div class="classLayout">
+        <div class="classBlock">
+            <div class="classRow"><div class="classItem">Header:   </div><div class="classValue">ThorsIOUtil/FormatInfo.h</div><div></div></div>
+            <div class="classRow"><div class="classItem">NameSpace:</div><div class="classValue">ThorsAnvil::IOUtil</div><div></div></div>
+            <div class="classRow"><div class="classItem">Class:    </div><div class="classValue">FormatInfo</div><div></div></div>
+            
+        
+        
+        
+        </div>
+    </div>
+</div>
+<p></p>
+
+
+    
+    
+        
+
+    
+
+    
+    <h2 id="formatter">Formatter</h2>
+    
+        <div class="classTable">
+    <div class="classLayout">
+        <div class="classBlock">
+            <div class="classRow"><div class="classItem">Header:   </div><div class="classValue">ThorsIOUtil/Formatter.h</div><div></div></div>
+            <div class="classRow"><div class="classItem">NameSpace:</div><div class="classValue">ThorsAnvil::IOUtil</div><div></div></div>
+            <div class="classRow"><div class="classItem">Class:    </div><div class="classValue">Formatter</div><div></div></div>
+            
+        
+        
+        
+        </div>
+    </div>
+</div>
+<p></p>
+
+
+    
+    
+        
+
+    
+
+
+    
+
+    
+    <h1 id="internal">Internal</h1>
+    
+        
+<dl>
+<dt>NameSpace:</dt><dd>ThorsAnvil::IOUtil</dd>
+<dt>Headers:</dt><dd>ThorsIOUtil</dd>
+
+    <dt>SignConversionOption.h</dt><dd>
+        <ul>
+        
+            <li>SignConversionOption </li>
+        
+            <li>SignConversionOption_char </li>
+        
+            <li>SignConversionOption_short </li>
+        
+            <li>SignConversionOption_int </li>
+        
+            <li>SignConversionOption_long </li>
+        
+            <li>SignConversionOption_long </li>
+        
+            <li>SignConversionOption_unsigned </li>
+        
+            <li>SignConversionOption_unsigned </li>
+        
+            <li>SignConversionOption_unsigned </li>
+        
+            <li>SignConversionOption_unsigned </li>
+        
+            <li>SignConversionOption_unsigned </li>
+        
+        
+        </ul>
+    </dd>
+
+    <dt>printIntToStream.h</dt><dd>
+        <ul>
+        
+        
+            <li>void printIntToStream()</li>
+        
+        </ul>
+    </dd>
+
+    <dt>printStringToStream.h</dt><dd>
+        <ul>
+        
+        
+            <li>void printStringToStream()</li>
+        
+        </ul>
+    </dd>
+
+    <dt>printToStream.h</dt><dd>
+        <ul>
+        
+            <li>CharIntConverter </li>
+        
+            <li>CharIntConverter_char </li>
+        
+            <li>CharIntConverter_unsigned </li>
+        
+        
+            <li>void printToStream()</li>
+        
+            <li>void printToStream()</li>
+        
+        </ul>
+    </dd>
+
+    <dt>saveToStream.h</dt><dd>
+        <ul>
+        
+        
+            <li>void saveToStream()</li>
+        
+            <li>void saveToStream()</li>
+        
+        </ul>
+    </dd>
+
+</dl>
+
+
+    
+    
+        
+    
+    <h2 id="signconversionoption">SignConversionOption</h2>
+    
+        <div class="classTable">
+    <div class="classLayout">
+        <div class="classBlock">
+            <div class="classRow"><div class="classItem">Header:   </div><div class="classValue">ThorsIOUtil/SignConversionOption.h</div><div></div></div>
+            <div class="classRow"><div class="classItem">NameSpace:</div><div class="classValue">ThorsAnvil::IOUtil</div><div></div></div>
+            <div class="classRow"><div class="classItem">Class:    </div><div class="classValue">SignConversionOption</div><div></div></div>
+            
+        
+        
+        
+        </div>
+    </div>
+</div>
+<p></p>
+
+
+    
+    
+        
+
+    
+
+    
+    <h2 id="signconversionoption_char">SignConversionOption_char</h2>
+    
+        <div class="classTable">
+    <div class="classLayout">
+        <div class="classBlock">
+            <div class="classRow"><div class="classItem">Header:   </div><div class="classValue">ThorsIOUtil/SignConversionOption.h</div><div></div></div>
+            <div class="classRow"><div class="classItem">NameSpace:</div><div class="classValue">ThorsAnvil::IOUtil</div><div></div></div>
+            <div class="classRow"><div class="classItem">Class:    </div><div class="classValue">SignConversionOption_char</div><div></div></div>
+            
+        
+        
+        
+        </div>
+    </div>
+</div>
+<p></p>
+
+
+    
+    
+        
+
+    
+
+    
+    <h2 id="signconversionoption_short">SignConversionOption_short</h2>
+    
+        <div class="classTable">
+    <div class="classLayout">
+        <div class="classBlock">
+            <div class="classRow"><div class="classItem">Header:   </div><div class="classValue">ThorsIOUtil/SignConversionOption.h</div><div></div></div>
+            <div class="classRow"><div class="classItem">NameSpace:</div><div class="classValue">ThorsAnvil::IOUtil</div><div></div></div>
+            <div class="classRow"><div class="classItem">Class:    </div><div class="classValue">SignConversionOption_short</div><div></div></div>
+            
+        
+        
+        
+        </div>
+    </div>
+</div>
+<p></p>
+
+
+    
+    
+        
+
+    
+
+    
+    <h2 id="signconversionoption_int">SignConversionOption_int</h2>
+    
+        <div class="classTable">
+    <div class="classLayout">
+        <div class="classBlock">
+            <div class="classRow"><div class="classItem">Header:   </div><div class="classValue">ThorsIOUtil/SignConversionOption.h</div><div></div></div>
+            <div class="classRow"><div class="classItem">NameSpace:</div><div class="classValue">ThorsAnvil::IOUtil</div><div></div></div>
+            <div class="classRow"><div class="classItem">Class:    </div><div class="classValue">SignConversionOption_int</div><div></div></div>
+            
+        
+        
+        
+        </div>
+    </div>
+</div>
+<p></p>
+
+
+    
+    
+        
+
+    
+
+    
+    <h2 id="signconversionoption_long">SignConversionOption_long</h2>
+    
+        <div class="classTable">
+    <div class="classLayout">
+        <div class="classBlock">
+            <div class="classRow"><div class="classItem">Header:   </div><div class="classValue">ThorsIOUtil/SignConversionOption.h</div><div></div></div>
+            <div class="classRow"><div class="classItem">NameSpace:</div><div class="classValue">ThorsAnvil::IOUtil</div><div></div></div>
+            <div class="classRow"><div class="classItem">Class:    </div><div class="classValue">SignConversionOption_long</div><div></div></div>
+            
+        
+        
+        
+        </div>
+    </div>
+</div>
+<p></p>
+
+
+    
+    
+        
+
+    
+
+    
+    <h2 id="signconversionoption_long">SignConversionOption_long</h2>
+    
+        <div class="classTable">
+    <div class="classLayout">
+        <div class="classBlock">
+            <div class="classRow"><div class="classItem">Header:   </div><div class="classValue">ThorsIOUtil/SignConversionOption.h</div><div></div></div>
+            <div class="classRow"><div class="classItem">NameSpace:</div><div class="classValue">ThorsAnvil::IOUtil</div><div></div></div>
+            <div class="classRow"><div class="classItem">Class:    </div><div class="classValue">SignConversionOption_long</div><div></div></div>
+            
+        
+        
+        
+        </div>
+    </div>
+</div>
+<p></p>
+
+
+    
+    
+        
+
+    
+
+    
+    <h2 id="signconversionoption_unsigned">SignConversionOption_unsigned</h2>
+    
+        <div class="classTable">
+    <div class="classLayout">
+        <div class="classBlock">
+            <div class="classRow"><div class="classItem">Header:   </div><div class="classValue">ThorsIOUtil/SignConversionOption.h</div><div></div></div>
+            <div class="classRow"><div class="classItem">NameSpace:</div><div class="classValue">ThorsAnvil::IOUtil</div><div></div></div>
+            <div class="classRow"><div class="classItem">Class:    </div><div class="classValue">SignConversionOption_unsigned</div><div></div></div>
+            
+        
+        
+        
+        </div>
+    </div>
+</div>
+<p></p>
+
+
+    
+    
+        
+
+    
+
+    
+    <h2 id="signconversionoption_unsigned">SignConversionOption_unsigned</h2>
+    
+        <div class="classTable">
+    <div class="classLayout">
+        <div class="classBlock">
+            <div class="classRow"><div class="classItem">Header:   </div><div class="classValue">ThorsIOUtil/SignConversionOption.h</div><div></div></div>
+            <div class="classRow"><div class="classItem">NameSpace:</div><div class="classValue">ThorsAnvil::IOUtil</div><div></div></div>
+            <div class="classRow"><div class="classItem">Class:    </div><div class="classValue">SignConversionOption_unsigned</div><div></div></div>
+            
+        
+        
+        
+        </div>
+    </div>
+</div>
+<p></p>
+
+
+    
+    
+        
+
+    
+
+    
+    <h2 id="signconversionoption_unsigned">SignConversionOption_unsigned</h2>
+    
+        <div class="classTable">
+    <div class="classLayout">
+        <div class="classBlock">
+            <div class="classRow"><div class="classItem">Header:   </div><div class="classValue">ThorsIOUtil/SignConversionOption.h</div><div></div></div>
+            <div class="classRow"><div class="classItem">NameSpace:</div><div class="classValue">ThorsAnvil::IOUtil</div><div></div></div>
+            <div class="classRow"><div class="classItem">Class:    </div><div class="classValue">SignConversionOption_unsigned</div><div></div></div>
+            
+        
+        
+        
+        </div>
+    </div>
+</div>
+<p></p>
+
+
+    
+    
+        
+
+    
+
+    
+    <h2 id="signconversionoption_unsigned">SignConversionOption_unsigned</h2>
+    
+        <div class="classTable">
+    <div class="classLayout">
+        <div class="classBlock">
+            <div class="classRow"><div class="classItem">Header:   </div><div class="classValue">ThorsIOUtil/SignConversionOption.h</div><div></div></div>
+            <div class="classRow"><div class="classItem">NameSpace:</div><div class="classValue">ThorsAnvil::IOUtil</div><div></div></div>
+            <div class="classRow"><div class="classItem">Class:    </div><div class="classValue">SignConversionOption_unsigned</div><div></div></div>
+            
+        
+        
+        
+        </div>
+    </div>
+</div>
+<p></p>
+
+
+    
+    
+        
+
+    
+
+    
+    <h2 id="signconversionoption_unsigned">SignConversionOption_unsigned</h2>
+    
+        <div class="classTable">
+    <div class="classLayout">
+        <div class="classBlock">
+            <div class="classRow"><div class="classItem">Header:   </div><div class="classValue">ThorsIOUtil/SignConversionOption.h</div><div></div></div>
+            <div class="classRow"><div class="classItem">NameSpace:</div><div class="classValue">ThorsAnvil::IOUtil</div><div></div></div>
+            <div class="classRow"><div class="classItem">Class:    </div><div class="classValue">SignConversionOption_unsigned</div><div></div></div>
+            
+        
+        
+        
+        </div>
+    </div>
+</div>
+<p></p>
+
+
+    
+    
+        
+
+    
+
+    
+    <h2 id="printinttostream">printIntToStream</h2>
+    
+        <div class="classTable">
+    <div class="classLayout">
+        <div class="classBlock">
+            <div class="classRow"><div class="classItem">Header:   </div><div class="classValue">ThorsIOUtil/printIntToStream.h</div><div></div></div>
+            <div class="classRow"><div class="classItem">NameSpace:</div><div class="classValue">ThorsAnvil::IOUtil</div><div></div></div>
+            <div class="classRow"><div class="classItem">Class:    </div><div class="classValue"></div><div></div></div>
+        </div>
+    </div>
+</div>
+<p></p>
+
+
+    
+    
+        
+
+    
+
+    
+    <h2 id="printstringtostream">printStringToStream</h2>
+    
+        <div class="classTable">
+    <div class="classLayout">
+        <div class="classBlock">
+            <div class="classRow"><div class="classItem">Header:   </div><div class="classValue">ThorsIOUtil/printStringToStream.h</div><div></div></div>
+            <div class="classRow"><div class="classItem">NameSpace:</div><div class="classValue">ThorsAnvil::IOUtil</div><div></div></div>
+            <div class="classRow"><div class="classItem">Class:    </div><div class="classValue"></div><div></div></div>
+        </div>
+    </div>
+</div>
+<p></p>
+
+
+    
+    
+        
+
+    
+
+    
+    <h2 id="printtostream">printToStream</h2>
+    
+        <div class="classTable">
+    <div class="classLayout">
+        <div class="classBlock">
+            <div class="classRow"><div class="classItem">Header:   </div><div class="classValue">ThorsIOUtil/printToStream.h</div><div></div></div>
+            <div class="classRow"><div class="classItem">NameSpace:</div><div class="classValue">ThorsAnvil::IOUtil</div><div></div></div>
+            <div class="classRow"><div class="classItem">Class:    </div><div class="classValue"></div><div></div></div>
+        </div>
+    </div>
+</div>
+<p></p>
+
+
+    
+    
+        
+
+    
+
+    
+    <h2 id="printtostream">printToStream</h2>
+    
+        <div class="classTable">
+    <div class="classLayout">
+        <div class="classBlock">
+            <div class="classRow"><div class="classItem">Header:   </div><div class="classValue">ThorsIOUtil/printToStream.h</div><div></div></div>
+            <div class="classRow"><div class="classItem">NameSpace:</div><div class="classValue">ThorsAnvil::IOUtil</div><div></div></div>
+            <div class="classRow"><div class="classItem">Class:    </div><div class="classValue"></div><div></div></div>
+        </div>
+    </div>
+</div>
+<p></p>
+
+
+    
+    
+        
+
+    
+
+    
+    <h2 id="charintconverter">CharIntConverter</h2>
+    
+        <div class="classTable">
+    <div class="classLayout">
+        <div class="classBlock">
+            <div class="classRow"><div class="classItem">Header:   </div><div class="classValue">ThorsIOUtil/printToStream.h</div><div></div></div>
+            <div class="classRow"><div class="classItem">NameSpace:</div><div class="classValue">ThorsAnvil::IOUtil</div><div></div></div>
+            <div class="classRow"><div class="classItem">Class:    </div><div class="classValue">CharIntConverter</div><div></div></div>
+            
+        
+        
+        
+        </div>
+    </div>
+</div>
+<p></p>
+
+
+    
+    
+        
+
+    
+
+    
+    <h2 id="charintconverter_char">CharIntConverter_char</h2>
+    
+        <div class="classTable">
+    <div class="classLayout">
+        <div class="classBlock">
+            <div class="classRow"><div class="classItem">Header:   </div><div class="classValue">ThorsIOUtil/printToStream.h</div><div></div></div>
+            <div class="classRow"><div class="classItem">NameSpace:</div><div class="classValue">ThorsAnvil::IOUtil</div><div></div></div>
+            <div class="classRow"><div class="classItem">Class:    </div><div class="classValue">CharIntConverter_char</div><div></div></div>
+            
+        
+        
+        
+        </div>
+    </div>
+</div>
+<p></p>
+
+
+    
+    
+        
+
+    
+
+    
+    <h2 id="charintconverter_unsigned">CharIntConverter_unsigned</h2>
+    
+        <div class="classTable">
+    <div class="classLayout">
+        <div class="classBlock">
+            <div class="classRow"><div class="classItem">Header:   </div><div class="classValue">ThorsIOUtil/printToStream.h</div><div></div></div>
+            <div class="classRow"><div class="classItem">NameSpace:</div><div class="classValue">ThorsAnvil::IOUtil</div><div></div></div>
+            <div class="classRow"><div class="classItem">Class:    </div><div class="classValue">CharIntConverter_unsigned</div><div></div></div>
+            
+        
+        
+        
+        </div>
+    </div>
+</div>
+<p></p>
+
+
+    
+    
+        
+
+    
+
+    
+    <h2 id="savetostream">saveToStream</h2>
+    
+        <div class="classTable">
+    <div class="classLayout">
+        <div class="classBlock">
+            <div class="classRow"><div class="classItem">Header:   </div><div class="classValue">ThorsIOUtil/saveToStream.h</div><div></div></div>
+            <div class="classRow"><div class="classItem">NameSpace:</div><div class="classValue">ThorsAnvil::IOUtil</div><div></div></div>
+            <div class="classRow"><div class="classItem">Class:    </div><div class="classValue"></div><div></div></div>
+        </div>
+    </div>
+</div>
+<p></p>
+
+
+    
+    
+        
+
+    
+
+    
+    <h2 id="savetostream">saveToStream</h2>
+    
+        <div class="classTable">
+    <div class="classLayout">
+        <div class="classBlock">
+            <div class="classRow"><div class="classItem">Header:   </div><div class="classValue">ThorsIOUtil/saveToStream.h</div><div></div></div>
+            <div class="classRow"><div class="classItem">NameSpace:</div><div class="classValue">ThorsAnvil::IOUtil</div><div></div></div>
+            <div class="classRow"><div class="classItem">Class:    </div><div class="classValue"></div><div></div></div>
+        </div>
+    </div>
+</div>
+<p></p>
+
+
+    
+    
+        
+
+    
+
+
+    
+
+
+    </div>
+    <div class="dark-box"></div>
+</div>
+
+</body>
+
+
+</html>

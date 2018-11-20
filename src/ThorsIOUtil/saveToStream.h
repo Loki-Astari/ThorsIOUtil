@@ -7,12 +7,16 @@
 namespace ThorsAnvil::IOUtil
 {
 
+// @function-internal
 template<typename T>
-inline void saveToStream(std::ostream&, Dynamic, T const&)
+inline
+void saveToStream(std::ostream&, Dynamic, T const&)
 {}
 
+// @function-internal
 template<>
-inline void saveToStream(std::ostream& s, Dynamic pos, int const& size)
+inline
+void saveToStream(std::ostream& s, Dynamic pos, int const& size)
 {
     s.iword(static_cast<int>(pos)) = size;
 }
