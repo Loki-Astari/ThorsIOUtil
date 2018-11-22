@@ -8,6 +8,7 @@ Provides IO string formatting functionality that matches that provided by `print
 
 This library also uses the same set of tests as used by GNU to test the functionality.
 
+[Full Documentation](https://lokiastari.com/ThorsIOUtil/#introduction)
 
 ### Example.cpp
 ````
