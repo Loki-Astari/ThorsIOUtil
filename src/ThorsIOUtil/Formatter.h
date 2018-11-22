@@ -38,6 +38,7 @@ struct NormalizeChar<signed char>
 // @class-api
 class Formatter
 {
+    Strictness              strict;
     // The number of characters read in the formatter.
     std::size_t             used;
     // If this object reads the width/precision from the next parameter
@@ -80,8 +81,9 @@ class Formatter
          * then dynamicSize is updated and we return immediately indicating zero size.
          * The Format constructor will then call again to get the actual formatter object.
          */
-       Formatter(char const* formatStr, Dynamic dynamicWidthHandeled)
-            : used(0)
+       Formatter(Strictness strict, char const* formatStr, Dynamic dynamicWidthHandeled)
+            : strict(strict)
+            , used(0)
             , dynamicSize(Dynamic::None)
             , info()
         {
@@ -317,11 +319,11 @@ class Formatter
                     {
                         applyData(s, static_cast<Alternative const&>(arg));
                     }
-                    else if (SignConversionOption<A>::allowIntConversion)
+                    else if (strict == Strictness::CTypeCompat && SignConversionOption<A>::allowIntConversion)
                     {
                         applyData(s, SignConversionOption<A>::convertToInt(arg));
                     }
-                    else if (std::type_index(typeid(A)) == std::type_index(typeid(int)) && info.expectedType.second)
+                    else if (strict == Strictness::CTypeCompat && std::type_index(typeid(A)) == std::type_index(typeid(int)) && info.expectedType.second)
                     {
                         applyData(s, SignConversionOption<A>::truncate(arg, info.expectedType.second));
                     }

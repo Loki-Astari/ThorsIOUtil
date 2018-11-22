@@ -20,13 +20,15 @@ namespace ThorsAnvil
 template<typename... Args>
 class Format
 {
+    Strictness                      strict;
     std::string                     format;
     std::tuple<Args const&...>      arguments;
     std::vector<std::string>        prefixString;
     std::vector<Formatter>          formater;
     public:
-        Format(char const* fmt, Args const&... args)
-            : format(fmt)
+        Format(Strictness strict, char const* fmt, Args const&... args)
+            : strict(strict)
+            , format(fmt)
             , arguments(args...)
         {
             std::size_t count       = sizeof...(args);
@@ -41,7 +43,7 @@ class Format
 
                 // Now that I have found the %
                 // Convert the next part of the string into a Formatter object.
-                formater.emplace_back(format.data() + pos, dynamicSize);
+                formater.emplace_back(strict, format.data() + pos, dynamicSize);
                 pos         += formater.back().size();
 
                 // Take into account the Dynamic Width/Precesion prevent the format from being read.
@@ -118,7 +120,14 @@ class Format
 template<typename... Args>
 Format<Args...> make_format(char const* fmt, Args const&... args)
 {
-    return Format<Args...>(fmt, args...);
+    return Format<Args...>(Strictness::CTypeCompat, fmt, args...);
+}
+
+// @function-api
+template<typename... Args>
+Format<Args...> make_cppformat(char const* fmt, Args const&... args)
+{
+    return Format<Args...>(Strictness::CPPTypeStrict, fmt, args...);
 }
 
     }
