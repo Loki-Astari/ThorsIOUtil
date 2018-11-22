@@ -24,6 +24,17 @@ template<typename T>
 inline bool checkNumLargerEqualToZero(T const& value)      {return value >= 0;}
 inline bool checkNumLargerEqualToZero(char const*)         {return false;}
 
+template<typename T>
+struct NormalizeChar
+{
+    using Type = T;
+};
+template<>
+struct NormalizeChar<signed char>
+{
+    using Type = char;
+};
+
 // @class-api
 class Formatter
 {
@@ -290,10 +301,11 @@ class Formatter
         }
         private:
             template<typename A>
-            void apply(std::ostream& s, A const& arg) const
+            void apply(std::ostream& s, A const& argInput) const
             {
                 if (dynamicSize == Dynamic::None)
                 {
+                    typename NormalizeChar<A>::Type arg = argInput;
                     using Actual       = typename SignConversionOption<A>::Actual;
                     using Alternative  = typename SignConversionOption<A>::Alternative;
 
@@ -324,7 +336,7 @@ class Formatter
                     {
                         throw std::invalid_argument("Dynamic Width of Precision is not an int");
                     }
-                    saveToStream(s, dynamicSize, arg);
+                    saveToStream(s, dynamicSize, argInput);
                 }
             }
 
@@ -381,7 +393,7 @@ class Formatter
                 {
 #pragma vera-pushoff
                     {{Type::Int,   Length::none}, {&typeid(int), 0}},
-                    {{Type::Int,   Length::hh},   {&typeid(signed char), 0xFF}},
+                    {{Type::Int,   Length::hh},   {&typeid(char), 0xFF}},
                     {{Type::Int,   Length::h},    {&typeid(short int), 0xFFFF}},
                     {{Type::Int,   Length::l},    {&typeid(long int), 0}},
                     {{Type::Int,   Length::ll},   {&typeid(long long int), 0}},
