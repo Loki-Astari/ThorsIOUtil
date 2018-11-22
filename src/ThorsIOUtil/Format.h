@@ -107,7 +107,8 @@ class Format
         template<std::size_t... I>
         void doPrint(std::ostream& s, std::index_sequence<I...> const&) const
         {
-            std::ostream* ignore[] = {&printValue<I>(s)...};
+            std::ostream* ignore[] = {nullptr, &printValue<I>(s)...};
+            (void)ignore;
             s << prefixString.back();
         }
 
