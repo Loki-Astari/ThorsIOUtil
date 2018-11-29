@@ -11,7 +11,7 @@
 namespace ThorsAnvil::IOUtil
 {
 
-// @function
+// @function-internal
 template<typename T>
 inline
 void printToStreamDefault(std::ostream& s, T const& arg, FormatInfo const&)
@@ -19,7 +19,7 @@ void printToStreamDefault(std::ostream& s, T const& arg, FormatInfo const&)
     s << arg;
 }
 
-// @function
+// @function-internal
 // Template method for everything apart from integers
 template<typename T>
 inline
