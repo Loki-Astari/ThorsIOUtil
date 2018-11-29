@@ -18,6 +18,10 @@ inline unsigned long        absm(unsigned long arg)        {return arg;}
 inline unsigned int         absm(unsigned int arg)         {return arg;}
 
 // @function-internal
+// Given an argument `arg` (which is one of the int types) and a format `info` serialize it to the stream `s`
+// @param s             stream to serialize onto
+// @param arg           the integer argument we want to serialize
+// @param info          formatInfo object that defines how to serialize arg
 template<typename T>
 inline
 void printIntToStream(std::ostream& s, T arg, FormatInfo const& info)

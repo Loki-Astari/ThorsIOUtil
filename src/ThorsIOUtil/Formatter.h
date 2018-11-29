@@ -24,6 +24,12 @@ template<typename T>
 inline bool checkNumLargerEqualToZero(T const& value)      {return value >= 0;}
 inline bool checkNumLargerEqualToZero(char const*)         {return false;}
 
+// @class-internal
+// Char is a very special class.
+//
+// The type `char` can be either `signed char` or `unsigned char` and is its own specif type (unlike int).
+// To make things easier we want to simplify our code and we want `char` to behave like `int`. The `NormalizeChar` will return the template
+// type for all classes except `signed char` which is converted to `char`.
 template<typename T>
 struct NormalizeChar
 {
@@ -36,6 +42,11 @@ struct NormalizeChar<signed char>
 };
 
 // @class-internal
+// Parses a string segment.
+//
+// It saves the static prefix before a conversion specifier.
+// Then it saves a conversion specifier into the `info` member.
+// It keeps track of the number of characters parsed in `used`.
 class Formatter
 {
     Strictness              strict;

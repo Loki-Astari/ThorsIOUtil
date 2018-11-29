@@ -7,7 +7,8 @@ typeInfo:
     classname: FormatInfo
     parent:    
     template:  
-    description: 
+    description:  |
+        Each conversion specifier in the format string is parsed and converted into an object of this type.
     methods: []
     protected: []
     virtual: []

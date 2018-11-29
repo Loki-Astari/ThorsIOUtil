@@ -12,23 +12,15 @@ namespace ThorsAnvil::IOUtil
 {
 
 // @function-internal
-template<typename T>
-inline
-void printToStreamDefault(std::ostream& s, T const& arg, FormatInfo const&)
-{
-    s << arg;
-}
-
-// @function-internal
 // Template method for everything apart from integers
 template<typename T>
 inline
 typename std::enable_if<!std::is_integral<T>::value>::type
-printToStream(std::ostream& s, T const& arg, FormatInfo const& info)
+printToStream(std::ostream& s, T const& arg, FormatInfo const&)
 {
     // Just use the standard stream printing methods.
     // Below we special case Int and string handling (floats work as expected).
-    printToStreamDefault(s, arg, info);
+    s << arg;
 }
 
 /*
@@ -62,6 +54,7 @@ struct CharIntConverter<unsigned char>
 
 
 // @function-internal
+// Template method for integers
 template<typename T>
 inline
 typename std::enable_if<std::is_integral<T>::value>::type
@@ -69,7 +62,7 @@ printToStream(std::ostream& s, T const& arg, FormatInfo const& info)
 {
     if (info.type == Type::Char)
     {
-        printToStreamDefault(s, static_cast<char>(arg), info);
+        s << static_cast<char>(arg);
     }
     else
     {
@@ -78,7 +71,7 @@ printToStream(std::ostream& s, T const& arg, FormatInfo const& info)
 }
 
 // @function-internal
-// C-String
+// Template method for strings
 inline
 void printToStream(std::ostream& s, char const* const& arg, FormatInfo const& info)
 {

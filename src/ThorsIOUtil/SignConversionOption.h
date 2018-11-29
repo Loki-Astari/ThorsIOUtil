@@ -4,14 +4,12 @@
 namespace ThorsAnvil::IOUtil
 {
 
-/*
- * When handling integer types some
- * automatic conversions are allowed.
- *
- * This type handles these conversions.
- * It is used by Formatter::apply()
- */
 // @class-internal
+// When handling integer types some
+// automatic conversions are allowed.
+//
+// This type handles these conversions.
+// It is used by Formatter::apply()
 template<typename T>
 struct SignConversionOption
 {
@@ -24,6 +22,7 @@ struct SignConversionOption
 };
 
 // @class-internal
+// Specialization of SignConversionOption
 template<>
 struct SignConversionOption<char>
 {
@@ -35,6 +34,7 @@ struct SignConversionOption<char>
 };
 
 // @class-internal
+// Specialization of SignConversionOption
 template<>
 struct SignConversionOption<short>
 {
@@ -46,6 +46,7 @@ struct SignConversionOption<short>
 };
 
 // @class-internal
+// Specialization of SignConversionOption
 template<>
 struct SignConversionOption<int>
 {
@@ -57,6 +58,7 @@ struct SignConversionOption<int>
 };
 
 // @class-internal
+// Specialization of SignConversionOption
 template<>
 struct SignConversionOption<long>
 {
@@ -68,6 +70,7 @@ struct SignConversionOption<long>
 };
 
 // @class-internal
+// Specialization of SignConversionOption
 template<>
 struct SignConversionOption<long long>
 {
@@ -79,6 +82,7 @@ struct SignConversionOption<long long>
 };
 
 // @class-internal
+// Specialization of SignConversionOption
 template<>
 struct SignConversionOption<unsigned char>
 {
@@ -90,6 +94,7 @@ struct SignConversionOption<unsigned char>
 };
 
 // @class-internal
+// Specialization of SignConversionOption
 template<>
 struct SignConversionOption<unsigned short>
 {
@@ -101,8 +106,8 @@ struct SignConversionOption<unsigned short>
 };
 
 // @class-internal
+// Specialization of SignConversionOption
 template<>
-// Must have some description
 struct SignConversionOption<unsigned int>
 {
     using Actual        = unsigned int;
@@ -117,6 +122,7 @@ struct SignConversionOption<unsigned int>
 };
 
 // @class-internal
+// Must have some description
 template<>
 struct SignConversionOption<unsigned long>
 {
@@ -128,6 +134,7 @@ struct SignConversionOption<unsigned long>
 };
 
 // @class-internal
+// Must have some description
 template<>
 struct SignConversionOption<unsigned long long>
 {
