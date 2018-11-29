@@ -6,7 +6,7 @@ typeInfo:
     header:    ThorsIOUtil/Formatter.h
     classname: Formatter
     parent:    
-    template:  template<typename T>
+    template:  template<>
     description: 
     methods: []
     protected: []
