@@ -3,12 +3,11 @@ layout: class
 generate: false
 typeInfo:
     namespace: ThorsAnvil::IOUtil
-    header:    ThorsIOUtil/SignConversionOption.h
+    header:    ThorsIOUtil/1.h
     classname: SignConversionOption-Lunsigned-long-R
     parent:    
-    template:  template<>
-    description:  |
-        Must have some description
+    template:  
+    description: 
     methods: []
     protected: []
     virtual: []

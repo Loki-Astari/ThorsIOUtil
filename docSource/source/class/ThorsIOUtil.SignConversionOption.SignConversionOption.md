@@ -7,7 +7,12 @@ typeInfo:
     classname: SignConversionOption
     parent:    
     template:  template<typename T>
-    description: 
+    description:  |
+        When handling integer types some
+        automatic conversions are allowed.
+        
+        This type handles these conversions.
+        It is used by Formatter::apply()
     methods: []
     protected: []
     virtual: []

@@ -20,6 +20,7 @@ enum class Dynamic   {None, Width, Precision, Both};                            
 using AllowedType = std::pair<std::type_info const*, int>;
 
 // @class-internal
+// Each conversion specifier in the format string is parsed and converted into an object of this type.
 struct FormatInfo
 {
     // Formatter has the text representation:

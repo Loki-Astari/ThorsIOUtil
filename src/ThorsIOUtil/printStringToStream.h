@@ -8,6 +8,10 @@ namespace ThorsAnvil::IOUtil
 {
 
 // @function-internal
+// Given an argument `arg` and a format `info` serialize it to the stream `s`
+// @param s             stream to serialize onto
+// @param arg           the string argument we want to serialize
+// @param info          formatInfo object that defines how to serialize arg
 inline
 void printStringToStream(std::ostream& s, char const* const& arg, FormatInfo const& info)
 {

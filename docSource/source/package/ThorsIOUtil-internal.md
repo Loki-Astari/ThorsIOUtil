@@ -18,6 +18,8 @@ headers:
         - name:   Formatter.h
           functions: []
           classes:
+            - name:   NormalizeChar
+              parent:  
             - name:   Formatter
               parent:  
         - name:   SignConversionOption.h
@@ -60,9 +62,6 @@ headers:
         - name:   printToStream.h
           functions:
             - return: void
-              name:   printToStreamDefault
-              param:  [   std::ostream& s,  T const& arg,  FormatInfo const&  ]
-            - return: void
               name:   printToStream
               param:  [   std::ostream& s,  char const* const& arg,  FormatInfo const& info  ]
             - return: void
@@ -92,6 +91,8 @@ children:
       value: ThorsIOUtil.Format.Format.md
     - name: FormatInfo
       value: ThorsIOUtil.FormatInfo.FormatInfo.md
+    - name: NormalizeChar
+      value: ThorsIOUtil.Formatter.NormalizeChar.md
     - name: Formatter
       value: ThorsIOUtil.Formatter.Formatter.md
     - name: SignConversionOption
@@ -120,8 +121,6 @@ children:
       value: ThorsIOUtil.printIntToStream.printIntToStream.md
     - name: printStringToStream
       value: ThorsIOUtil.printStringToStream.printStringToStream.md
-    - name: printToStreamDefault
-      value: ThorsIOUtil.printToStream.printToStreamDefault.md
     - name: printToStream
       value: ThorsIOUtil.printToStream.printToStream.md
     - name: printToStream
