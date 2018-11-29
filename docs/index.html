@@ -9,6 +9,7 @@
     <link href="stylesheet/style.css" rel="stylesheet" />
     <link href="stylesheet/screen.css" rel="stylesheet" media="screen" />
     <link href="stylesheet/print.css" rel="stylesheet" media="print" />
+    <link href="stylesheet/prism.css" rel="stylesheet" />
     <script src="javascripts/all_nosearch.js"></script>
 </head>
 
@@ -26,20 +27,71 @@
     <div id="toc" class="toc-list-h1">
         
     <li>
-        <a href="#introduction" class="toc-h1 toc-link" data-title="Introduction">Introduction</a>
-    
-    </li>
-
-    <li>
-        <a href="#normal" class="toc-h1 toc-link" data-title="Normal">Normal</a>
+        <a href="#Introduction" class="toc-h1 toc-link" data-title="Introduction">Introduction</a>
     
                 <ul class="toc-list-h2">
                     
     <li>
-        <a href="#printtostreamdefault" class="toc-h2 toc-link" data-title="Normal">printToStreamDefault</a>
+        <a href="#Description" class="toc-h2 toc-link" data-title="Introduction">Description</a>
+    
+    </li>
+
+    <li>
+        <a href="#Create&nbsp;Format" class="toc-h2 toc-link" data-title="Introduction">Create&nbsp;Format</a>
+    
+    </li>
+
+    <li>
+        <a href="#Testing" class="toc-h2 toc-link" data-title="Introduction">Testing</a>
+    
+    </li>
+
+    <li>
+        <a href="#Conversion&nbsp;Specifications" class="toc-h2 toc-link" data-title="Introduction">Conversion&nbsp;Specifications</a>
     
                 <ul class="toc-list-h3">
                     
+    <li>
+        <a href="#ConversionSpecifierFormat" class="toc-h3 toc-link" data-title="Introduction">Format</a>
+    
+    </li>
+
+    <li>
+        <a href="#Specifier" class="toc-h3 toc-link" data-title="Introduction">Specifier</a>
+    
+    </li>
+
+    <li>
+        <a href="#Flag" class="toc-h3 toc-link" data-title="Introduction">Flag</a>
+    
+    </li>
+
+    <li>
+        <a href="#Width" class="toc-h3 toc-link" data-title="Introduction">Width</a>
+    
+    </li>
+
+    <li>
+        <a href="#Precision" class="toc-h3 toc-link" data-title="Introduction">Precision</a>
+    
+    </li>
+
+    <li>
+        <a href="#Length" class="toc-h3 toc-link" data-title="Introduction">Length</a>
+    
+    </li>
+
+    <li>
+        <a href="#Notes" class="toc-h3 toc-link" data-title="Introduction">Notes</a>
+    
+    </li>
+
+
+
+                </ul>
+    
+    </li>
+
 
 
                 </ul>
@@ -47,24 +99,7 @@
     </li>
 
     <li>
-        <a href="#printtostream" class="toc-h2 toc-link" data-title="Normal">printToStream</a>
-    
-                <ul class="toc-list-h3">
-                    
-
-
-                </ul>
-    
-    </li>
-
-
-
-                </ul>
-    
-    </li>
-
-    <li>
-        <a href="#apidocs" class="toc-h1 toc-link" data-title="APIDocs">APIDocs</a>
+        <a href="#APIDocs" class="toc-h1 toc-link" data-title="APIDocs">APIDocs</a>
     
                 <ul class="toc-list-h2">
                     
@@ -80,29 +115,7 @@
     </li>
 
     <li>
-        <a href="#format" class="toc-h2 toc-link" data-title="APIDocs">Format</a>
-    
-                <ul class="toc-list-h3">
-                    
-
-
-                </ul>
-    
-    </li>
-
-    <li>
-        <a href="#formatinfo" class="toc-h2 toc-link" data-title="APIDocs">FormatInfo</a>
-    
-                <ul class="toc-list-h3">
-                    
-
-
-                </ul>
-    
-    </li>
-
-    <li>
-        <a href="#formatter" class="toc-h2 toc-link" data-title="APIDocs">Formatter</a>
+        <a href="#make_cppformat" class="toc-h2 toc-link" data-title="APIDocs">make_cppformat</a>
     
                 <ul class="toc-list-h3">
                     
@@ -119,12 +132,12 @@
     </li>
 
     <li>
-        <a href="#internal" class="toc-h1 toc-link" data-title="Internal">Internal</a>
+        <a href="#Internal" class="toc-h1 toc-link" data-title="Internal">Internal</a>
     
                 <ul class="toc-list-h2">
                     
     <li>
-        <a href="#signconversionoption" class="toc-h2 toc-link" data-title="Internal">SignConversionOption</a>
+        <a href="#Format" class="toc-h2 toc-link" data-title="Internal">Format</a>
     
                 <ul class="toc-list-h3">
                     
@@ -135,7 +148,7 @@
     </li>
 
     <li>
-        <a href="#signconversionoption_char" class="toc-h2 toc-link" data-title="Internal">SignConversionOption_char</a>
+        <a href="#FormatInfo" class="toc-h2 toc-link" data-title="Internal">FormatInfo</a>
     
                 <ul class="toc-list-h3">
                     
@@ -146,7 +159,7 @@
     </li>
 
     <li>
-        <a href="#signconversionoption_short" class="toc-h2 toc-link" data-title="Internal">SignConversionOption_short</a>
+        <a href="#NormalizeChar" class="toc-h2 toc-link" data-title="Internal">NormalizeChar</a>
     
                 <ul class="toc-list-h3">
                     
@@ -157,7 +170,7 @@
     </li>
 
     <li>
-        <a href="#signconversionoption_int" class="toc-h2 toc-link" data-title="Internal">SignConversionOption_int</a>
+        <a href="#Formatter" class="toc-h2 toc-link" data-title="Internal">Formatter</a>
     
                 <ul class="toc-list-h3">
                     
@@ -168,7 +181,7 @@
     </li>
 
     <li>
-        <a href="#signconversionoption_long" class="toc-h2 toc-link" data-title="Internal">SignConversionOption_long</a>
+        <a href="#SignConversionOption" class="toc-h2 toc-link" data-title="Internal">SignConversionOption</a>
     
                 <ul class="toc-list-h3">
                     
@@ -179,7 +192,7 @@
     </li>
 
     <li>
-        <a href="#signconversionoption_long" class="toc-h2 toc-link" data-title="Internal">SignConversionOption_long</a>
+        <a href="#SignConversionOption-Lchar-R" class="toc-h2 toc-link" data-title="Internal">SignConversionOption&lt;char&gt;</a>
     
                 <ul class="toc-list-h3">
                     
@@ -190,7 +203,7 @@
     </li>
 
     <li>
-        <a href="#signconversionoption_unsigned" class="toc-h2 toc-link" data-title="Internal">SignConversionOption_unsigned</a>
+        <a href="#SignConversionOption-Lshort-R" class="toc-h2 toc-link" data-title="Internal">SignConversionOption&lt;short&gt;</a>
     
                 <ul class="toc-list-h3">
                     
@@ -201,7 +214,7 @@
     </li>
 
     <li>
-        <a href="#signconversionoption_unsigned" class="toc-h2 toc-link" data-title="Internal">SignConversionOption_unsigned</a>
+        <a href="#SignConversionOption-Lint-R" class="toc-h2 toc-link" data-title="Internal">SignConversionOption&lt;int&gt;</a>
     
                 <ul class="toc-list-h3">
                     
@@ -212,7 +225,7 @@
     </li>
 
     <li>
-        <a href="#signconversionoption_unsigned" class="toc-h2 toc-link" data-title="Internal">SignConversionOption_unsigned</a>
+        <a href="#SignConversionOption-Llong-R" class="toc-h2 toc-link" data-title="Internal">SignConversionOption&lt;long&gt;</a>
     
                 <ul class="toc-list-h3">
                     
@@ -223,7 +236,7 @@
     </li>
 
     <li>
-        <a href="#signconversionoption_unsigned" class="toc-h2 toc-link" data-title="Internal">SignConversionOption_unsigned</a>
+        <a href="#SignConversionOption-Llong-long-R" class="toc-h2 toc-link" data-title="Internal">SignConversionOption&lt;long long&gt;</a>
     
                 <ul class="toc-list-h3">
                     
@@ -234,7 +247,7 @@
     </li>
 
     <li>
-        <a href="#signconversionoption_unsigned" class="toc-h2 toc-link" data-title="Internal">SignConversionOption_unsigned</a>
+        <a href="#SignConversionOption-Lunsigned-char-R" class="toc-h2 toc-link" data-title="Internal">SignConversionOption&lt;unsigned char&gt;</a>
     
                 <ul class="toc-list-h3">
                     
@@ -245,7 +258,7 @@
     </li>
 
     <li>
-        <a href="#printinttostream" class="toc-h2 toc-link" data-title="Internal">printIntToStream</a>
+        <a href="#SignConversionOption-Lunsigned-short-R" class="toc-h2 toc-link" data-title="Internal">SignConversionOption&lt;unsigned short&gt;</a>
     
                 <ul class="toc-list-h3">
                     
@@ -256,7 +269,7 @@
     </li>
 
     <li>
-        <a href="#printstringtostream" class="toc-h2 toc-link" data-title="Internal">printStringToStream</a>
+        <a href="#SignConversionOption-Lunsigned-int-R" class="toc-h2 toc-link" data-title="Internal">SignConversionOption&lt;unsigned int&gt;</a>
     
                 <ul class="toc-list-h3">
                     
@@ -267,7 +280,7 @@
     </li>
 
     <li>
-        <a href="#printtostream" class="toc-h2 toc-link" data-title="Internal">printToStream</a>
+        <a href="#SignConversionOption-Lunsigned-long-R" class="toc-h2 toc-link" data-title="Internal">SignConversionOption&lt;unsigned long&gt;</a>
     
                 <ul class="toc-list-h3">
                     
@@ -278,7 +291,7 @@
     </li>
 
     <li>
-        <a href="#printtostream" class="toc-h2 toc-link" data-title="Internal">printToStream</a>
+        <a href="#SignConversionOption-Lunsigned-long-long-R" class="toc-h2 toc-link" data-title="Internal">SignConversionOption&lt;unsigned long long&gt;</a>
     
                 <ul class="toc-list-h3">
                     
@@ -289,7 +302,7 @@
     </li>
 
     <li>
-        <a href="#charintconverter" class="toc-h2 toc-link" data-title="Internal">CharIntConverter</a>
+        <a href="#printIntToStream" class="toc-h2 toc-link" data-title="Internal">printIntToStream</a>
     
                 <ul class="toc-list-h3">
                     
@@ -300,7 +313,7 @@
     </li>
 
     <li>
-        <a href="#charintconverter_char" class="toc-h2 toc-link" data-title="Internal">CharIntConverter_char</a>
+        <a href="#printStringToStream" class="toc-h2 toc-link" data-title="Internal">printStringToStream</a>
     
                 <ul class="toc-list-h3">
                     
@@ -311,7 +324,7 @@
     </li>
 
     <li>
-        <a href="#charintconverter_unsigned" class="toc-h2 toc-link" data-title="Internal">CharIntConverter_unsigned</a>
+        <a href="#printToStream" class="toc-h2 toc-link" data-title="Internal">printToStream</a>
     
                 <ul class="toc-list-h3">
                     
@@ -322,7 +335,7 @@
     </li>
 
     <li>
-        <a href="#savetostream" class="toc-h2 toc-link" data-title="Internal">saveToStream</a>
+        <a href="#printToStream" class="toc-h2 toc-link" data-title="Internal">printToStream</a>
     
                 <ul class="toc-list-h3">
                     
@@ -333,7 +346,62 @@
     </li>
 
     <li>
-        <a href="#savetostream" class="toc-h2 toc-link" data-title="Internal">saveToStream</a>
+        <a href="#printToStream" class="toc-h2 toc-link" data-title="Internal">printToStream</a>
+    
+                <ul class="toc-list-h3">
+                    
+
+
+                </ul>
+    
+    </li>
+
+    <li>
+        <a href="#CharIntConverter" class="toc-h2 toc-link" data-title="Internal">CharIntConverter</a>
+    
+                <ul class="toc-list-h3">
+                    
+
+
+                </ul>
+    
+    </li>
+
+    <li>
+        <a href="#CharIntConverter-Lchar-R" class="toc-h2 toc-link" data-title="Internal">CharIntConverter&lt;char&gt;</a>
+    
+                <ul class="toc-list-h3">
+                    
+
+
+                </ul>
+    
+    </li>
+
+    <li>
+        <a href="#CharIntConverter-Lunsigned-char-R" class="toc-h2 toc-link" data-title="Internal">CharIntConverter&lt;unsigned char&gt;</a>
+    
+                <ul class="toc-list-h3">
+                    
+
+
+                </ul>
+    
+    </li>
+
+    <li>
+        <a href="#saveToStream" class="toc-h2 toc-link" data-title="Internal">saveToStream</a>
+    
+                <ul class="toc-list-h3">
+                    
+
+
+                </ul>
+    
+    </li>
+
+    <li>
+        <a href="#saveToStream" class="toc-h2 toc-link" data-title="Internal">saveToStream</a>
     
                 <ul class="toc-list-h3">
                     
@@ -364,116 +432,255 @@
     <div class="content">
         
     
-    <h1 id="introduction">Introduction</h1>
+    <h1 id="Introduction">Introduction</h1>
+    
+        <p><a href="https://github.com/Loki-Astari/ThorsIOUtil">ThorsNisse</a></p>
+
+    
+    
+        
+    
+    <h2 id="Description">Description</h2>
+    
+        <p>This utility is designed to mimic the string format arguments used by the C function <code>printf()</code>. A <code>Format</code> object takes a "format string" that specify a printable string with <em>conversion specifications</em> introduced by the <code>'%'</code> character. For each <em>conversion specifications</em> there must also be a matching argument of the correct type.</p>
+<p>If there are not enough arguments or they are the wrong type this is a runtime error as the format string is parsed at runtime during the construction of the <code>Format</code> object.</p>
+<p>When the format object is passed to a <code>std::iostream</code> using the serialization operator <code>operator&lt;&lt;</code> all the arguments are serialized to the stream according to the <em>conversion specifications</em>.</p>
+
     
     
 
     
-    <h1 id="normal">Normal</h1>
+    <h2 id="Create&nbsp;Format">Create&nbsp;Format</h2>
+    
+        <pre><code class="cpp language-cpp">#include "ThorsIOUtil/Format.h"
+#include &lt;iostream&gt;
+
+using namespace Fmt = ThorsAnvil::IOUtil;
+
+int main()
+{
+    std::cout &lt;&lt; Fmt::make_format("Print Integre &gt;%5.3d&lt;\n", 5);   // Print Integre &gt;  005&lt;
+}</code></pre>
+<p>So how do you build a <code>Format</code> object?</p>
+<p>The easiest way is to use the <code>make_format(&lt;format string&gt; [, argument]*)</code>. This function takes the format string and the arguments and creates a <code>Format</code> object using the types of the arguments to construct a Format object of the correct type. Note this can be done by hand, but like <code>std::pair&lt;&gt;</code> it is simpler to use the utility function.</p>
+
+    
+    
+
+    
+    <h2 id="Testing">Testing</h2>
+    
+        <p>This library is tested with the same unit tests used by the GNU libraries to test <code>printf()</code>.</p>
+
+    
+    
+
+    
+    <h2 id="Conversion&nbsp;Specifications">Conversion&nbsp;Specifications</h2>
+    
+        
+
+    
+    
+        
+    
+    <h3 id="ConversionSpecifierFormat">Format</h3>
+    
+        <p>The <em>conversion specifiers</em> have the following format.</p>
+<p>Only the <code>&lt;Specifier&gt;</code> is required, all other part of the <em>conversion specifiers</em> are optional.</p>
+
+    
+    
+
+    
+    <h3 id="Specifier">Specifier</h3>
+    
+        <pre><code>Specifier
+    %           %% generates '%'
+
+    // The following match integer values.
+    //      will match an int parameter unless modified by the `Length`
+    d           prints a signed integer base 10
+    i           prints a signed integer base 10
+    o           prints an unsigned integer base 8
+    u           prints an unsigned integer base 10
+    X/x         prints an unsigned integer base 16
+
+    // The following matches floating point values
+    //      will match a double value unless modified by the `Length`
+    f           prints using a fixed point notation:                -?ddd.ddd
+    E/e         prints using expontent notation                     -?d.ddd[Ee][+-]?dd
+    G/g         prints using fixed point or exponent notation.
+    A/a         prints using a hexidecimal fraction notation.       -?0xh.hhh[Pp][+-]?dd
+
+    // Charavter types
+    //      Can use the `Length` modifier to change what it matches.
+    c           matches a char input                prints an unsigned char
+    s           matches a char* or std::string      prints a string of characters
+
+    // Other conversions
+    p           matches any pointer                 prints a hex number prefixed with 0x
+    n           does not match anything             prints the number of characters printed</code></pre>
+<p>The specifier field basically describes what type of object is being serialized. There are basically four types of object:</p>
+<ul>
+<li>Interger</li>
+<li>Floating Point</li>
+<li>Character (String is a list of characters)</li>
+<li>Pointer</li>
+</ul>
+<p>There are two special cases:</p>
+<ul>
+<li><code>%%</code>: This is the escape sequence and generates a '%' character.</li>
+<li><code>%n</code>: Outputs the number of characters serialized to the output stream.</li>
+</ul>
+<p>Example:    <code>%d</code></p>
+
+    
+    
+
+    
+    <h3 id="Flag">Flag</h3>
+    
+        <pre><code>Flags:  one or more of:
+    // For integers, floating point, char, string and pointer values
+    -           Left justify output inside the field.
+                This assumes you specify a `&lt;Width&gt;` field otherwise this will have no affect
+
+    // For integers and floating point values
+    +           Print the '+' symbol for positive values.
+    &lt;Space&gt;     Print the ' ' symbol for positive values (ignored if + also used)
+                This helps positive and negative values align with forcing the '+' symbol
+    '           Seporate digits into groups specified by LC_NUMERIC
+    0           Pad number with zero rather than space. Padding comes after sign and base information.
+                It is used to make sure the serialized output is at least `&lt;Width&gt;` wide.
+                Ignored if the '-' flag is used.
+
+    // For integers values
+    #           Add base information to number (After sign)
+                For %o values prefix value with '0'
+                For %x values prefix value with '0x'
+                For %X values prefix value with '0X'
+    // For floating point values
+    #           Allways add a decimal point
+                For %g %G forces trailing zero after decimal point.</code></pre>
+<p>The flag field is optional. If used you can use one or more of the flag characters to control how the value is serialized.</p>
+<p>Example: <code>%#x</code></p>
+
+    
+    
+
+    
+    <h3 id="Width">Width</h3>
+    
+        <p>The width is an optional integer that specifies the minimum width of the field we use to print the value. If the value is smaller than the width the field is padded using the padding value (see Flags to change the padding value).</p>
+<p>Note: If the value is larger than the specified width it will overflow the field (i.e. no cutting is done to truncate the value to the field width).</p>
+<p>Example: <code>%15d</code></p>
+
+    
+    
+
+    
+    <h3 id="Precision">Precision</h3>
+    
+        <pre><code>Precision:
+    // For integers values
+        The minimum number of digits used in the number.
+        Leadding zero(s) are added to achieve the minumum precision required.
+        If no value given then print as many digits as required.
+        If precision is zero and the value is zero then no value is printed.
+
+    // For floating point values
+        The precision is the number of digits following the decimal point</code></pre>
+<p>An optional field. A number prefixed by the '.' character. For integer and floating point values defines the number of digits that will be used.</p>
+<p>Example:    <code>%.8f</code></p>
+
+    
+    
+
+    
+    <h3 id="Length">Length</h3>
+    
+        <pre><code>Length: 
+    // The specifiers d/i/o/u/x/X match integer values.
+    // Unless proceeeded by one of the following length specifiers.
+    // That allow us match against alternatives object types.
+    hh          matches a char      or  unsigned char           parameter
+    h           marches a short     or  unsigned short          parameter
+    l           matches a long      or  unsigned long           parameter
+    ll          matches a long long or  unsigned long long      parameter
+    L           matches a long long or  unsigned long long      parameter
+    q           matches a long long or  unsigned long long      parameter
+    j           matches a std::intmax_t                         parameter
+    t           matches a std::ptrdiff_t                        parameter
+    z           matches a std::size_t                           parameter
+
+    // The following match floating point values unless modified by the Length parameter
+    L           matches a long double                           parameter
+
+    // The following match char and string conversions.
+    //      rather than `char` the base of the char/string will be std::wchar_t</code></pre>
+<p>The <code>&lt;Length&gt;</code> specifier changes the type of value that is bound to the specifier.</p>
+<p>Example:    <code>%ld</code></p>
+
+    
+    
+
+    
+    <h3 id="Notes">Notes</h3>
+    
+        <pre><code class="Cpp language-Cpp">#include "ThorsIOUtil/Format.h"
+#include &lt;iostream&gt;
+
+using namespace Fmt = ThorsAnvil::IOUtil;
+
+int main()
+{
+    short shortValue = 10;
+    std::cout &lt;&lt; Fmt::make_format("Print short &gt;%hd&lt;\n", shortValue);
+    std::cout &lt;&lt; Fmt::make_cppformat("Print short &gt;%hd&lt;\n", shortValue);
+
+    int intValue = 10;
+    std::cout &lt;&lt; Fmt::make_format("Print short &gt;%hd&lt;\n", intValue);
+    std::cout &lt;&lt; Fmt::make_cppformat("Print short &gt;%hd&lt;\n", intValue);  // This will throw a runtime error.
+}</code></pre>
+<p>In C <code>char</code> and <code>short</code> values are converted to int before being passed as arguments to <code>printf()</code>. Thus the <code>&lt;Length&gt;</code> fields <code>hh</code> and <code>h</code> will convert the int back to the appropriate type (char, short) before <code>printf()</code> serializes the value. This has the side affect that you can pass <code>int</code> values to <code>printf()</code> and it will serialize correctly.</p>
+<p>To conform with <code>C</code> we also allow <code>int</code> values to bind to <code>%hd</code> and <code>%hhd</code> <em>conversion specifiers</em> by default. But we also provide a stricter interpretation for C++ users that only allows <code>char</code> to bind to <code>%hhd</code> values and <code>short</code> to bind to <code>%hd</code> values.</p>
+<p>If you use <code>make_format()</code> the formatter uses C compatibility mode and will match <code>%hhd</code> and <code>%hd</code> against <code>int</code> values in addition to the match type expected.</p>
+<p>If you use <code>make_cppformat()</code> the <em>conversion specifiers</em> use the stricter C++ type mode.</p>
+
+    
+    
+
+
+    
+
+
+    
+
+    
+    <h1 id="APIDocs">APIDocs</h1>
     
         
 <dl>
 <dt>NameSpace:</dt><dd>ThorsAnvil::IOUtil</dd>
 <dt>Headers:</dt><dd>ThorsIOUtil</dd>
 
-    <dt>printToStream.h</dt><dd>
-        <ul>
-        
-        
-            <li>void printToStreamDefault()</li>
-        
-            <li>void printToStream()</li>
-        
-        </ul>
-    </dd>
-
-</dl>
-
-
     
+        <dt>Format.h</dt><dd>
+            <ul>
+            
+                
+            
+            
+                
+                    <li>Format&lt;Args...&gt; make_format()</li>
+                
+                    <li>Format&lt;Args...&gt; make_cppformat()</li>
+                
+            
+            </ul>
+        </dd>
     
-        
-    
-    <h2 id="printtostreamdefault">printToStreamDefault</h2>
-    
-        <div class="classTable">
-    <div class="classLayout">
-        <div class="classBlock">
-            <div class="classRow"><div class="classItem">Header:   </div><div class="classValue">ThorsIOUtil/printToStream.h</div><div></div></div>
-            <div class="classRow"><div class="classItem">NameSpace:</div><div class="classValue">ThorsAnvil::IOUtil</div><div></div></div>
-            <div class="classRow"><div class="classItem">Class:    </div><div class="classValue"></div><div></div></div>
-        </div>
-    </div>
-</div>
-<p></p>
-
-
-    
-    
-        
-
-    
-
-    
-    <h2 id="printtostream">printToStream</h2>
-    
-        <div class="classTable">
-    <div class="classLayout">
-        <div class="classBlock">
-            <div class="classRow"><div class="classItem">Header:   </div><div class="classValue">ThorsIOUtil/printToStream.h</div><div></div></div>
-            <div class="classRow"><div class="classItem">NameSpace:</div><div class="classValue">ThorsAnvil::IOUtil</div><div></div></div>
-            <div class="classRow"><div class="classItem">Class:    </div><div class="classValue"></div><div></div></div>
-        </div>
-    </div>
-</div>
-<p></p>
-
-
-    
-    
-        
-
-    
-
-
-    
-
-    
-    <h1 id="apidocs">APIDocs</h1>
-    
-        
-<dl>
-<dt>NameSpace:</dt><dd>ThorsAnvil::IOUtil</dd>
-<dt>Headers:</dt><dd>ThorsIOUtil</dd>
-
-    <dt>Format.h</dt><dd>
-        <ul>
-        
-            <li>Format </li>
-        
-        
-            <li>Format<Args...> make_format()</li>
-        
-        </ul>
-    </dd>
-
-    <dt>FormatInfo.h</dt><dd>
-        <ul>
-        
-            <li>FormatInfo </li>
-        
-        
-        </ul>
-    </dd>
-
-    <dt>Formatter.h</dt><dd>
-        <ul>
-        
-            <li>Formatter </li>
-        
-        
-        </ul>
-    </dd>
 
 </dl>
 
@@ -489,11 +696,18 @@
         <div class="classBlock">
             <div class="classRow"><div class="classItem">Header:   </div><div class="classValue">ThorsIOUtil/Format.h</div><div></div></div>
             <div class="classRow"><div class="classItem">NameSpace:</div><div class="classValue">ThorsAnvil::IOUtil</div><div></div></div>
+            
+            <div class="classRow"><div class="classItem">Template: </div><div class="classValue">template&lt;typename... Args&gt;</div><div></div></div>
+            
             <div class="classRow"><div class="classItem">Class:    </div><div class="classValue"></div><div></div></div>
         </div>
     </div>
 </div>
-<p></p>
+
+<p>Builds a <code>Format</code> object based on the types of the arguments.<br />
+<a href="https://github.com/param">@param</a> fmt       The format string.<br />
+<a href="https://github.com/param">@param</a> Args      Template parameter pack. Each argument is matched to a conversion specifier.<br />
+<a href="https://github.com/return">@return</a>          A format object that keeps a const reference to each argument.</p>
 
 
     
@@ -503,72 +717,27 @@
     
 
     
-    <h2 id="format">Format</h2>
+    <h2 id="make_cppformat">make_cppformat</h2>
     
         <div class="classTable">
     <div class="classLayout">
         <div class="classBlock">
             <div class="classRow"><div class="classItem">Header:   </div><div class="classValue">ThorsIOUtil/Format.h</div><div></div></div>
             <div class="classRow"><div class="classItem">NameSpace:</div><div class="classValue">ThorsAnvil::IOUtil</div><div></div></div>
-            <div class="classRow"><div class="classItem">Class:    </div><div class="classValue">Format</div><div></div></div>
             
-        
-        
-        
+            <div class="classRow"><div class="classItem">Template: </div><div class="classValue">template&lt;typename... Args&gt;</div><div></div></div>
+            
+            <div class="classRow"><div class="classItem">Class:    </div><div class="classValue"></div><div></div></div>
         </div>
     </div>
 </div>
-<p></p>
 
-
-    
-    
-        
-
-    
-
-    
-    <h2 id="formatinfo">FormatInfo</h2>
-    
-        <div class="classTable">
-    <div class="classLayout">
-        <div class="classBlock">
-            <div class="classRow"><div class="classItem">Header:   </div><div class="classValue">ThorsIOUtil/FormatInfo.h</div><div></div></div>
-            <div class="classRow"><div class="classItem">NameSpace:</div><div class="classValue">ThorsAnvil::IOUtil</div><div></div></div>
-            <div class="classRow"><div class="classItem">Class:    </div><div class="classValue">FormatInfo</div><div></div></div>
-            
-        
-        
-        
-        </div>
-    </div>
-</div>
-<p></p>
-
-
-    
-    
-        
-
-    
-
-    
-    <h2 id="formatter">Formatter</h2>
-    
-        <div class="classTable">
-    <div class="classLayout">
-        <div class="classBlock">
-            <div class="classRow"><div class="classItem">Header:   </div><div class="classValue">ThorsIOUtil/Formatter.h</div><div></div></div>
-            <div class="classRow"><div class="classItem">NameSpace:</div><div class="classValue">ThorsAnvil::IOUtil</div><div></div></div>
-            <div class="classRow"><div class="classItem">Class:    </div><div class="classValue">Formatter</div><div></div></div>
-            
-        
-        
-        
-        </div>
-    </div>
-</div>
-<p></p>
+<p>Builds a <code>Format</code> object based on the types of the arguments.</p>
+<p>This version has slightly tighter restrictions on matching parameters to conversion specifiers.<br />
+Like C++ the type system is much pickier than C.<br />
+<a href="https://github.com/param">@param</a> fmt       The format string.<br />
+<a href="https://github.com/param">@param</a> Args      Template parameter pack. Each argument is matched to a conversion specifier.<br />
+<a href="https://github.com/return">@return</a>          A format object that keeps a const reference to each argument.</p>
 
 
     
@@ -581,87 +750,152 @@
     
 
     
-    <h1 id="internal">Internal</h1>
+    <h1 id="Internal">Internal</h1>
     
         
 <dl>
 <dt>NameSpace:</dt><dd>ThorsAnvil::IOUtil</dd>
 <dt>Headers:</dt><dd>ThorsIOUtil</dd>
 
-    <dt>SignConversionOption.h</dt><dd>
-        <ul>
-        
-            <li>SignConversionOption </li>
-        
-            <li>SignConversionOption_char </li>
-        
-            <li>SignConversionOption_short </li>
-        
-            <li>SignConversionOption_int </li>
-        
-            <li>SignConversionOption_long </li>
-        
-            <li>SignConversionOption_long </li>
-        
-            <li>SignConversionOption_unsigned </li>
-        
-            <li>SignConversionOption_unsigned </li>
-        
-            <li>SignConversionOption_unsigned </li>
-        
-            <li>SignConversionOption_unsigned </li>
-        
-            <li>SignConversionOption_unsigned </li>
-        
-        
-        </ul>
-    </dd>
-
-    <dt>printIntToStream.h</dt><dd>
-        <ul>
-        
-        
-            <li>void printIntToStream()</li>
-        
-        </ul>
-    </dd>
-
-    <dt>printStringToStream.h</dt><dd>
-        <ul>
-        
-        
-            <li>void printStringToStream()</li>
-        
-        </ul>
-    </dd>
-
-    <dt>printToStream.h</dt><dd>
-        <ul>
-        
-            <li>CharIntConverter </li>
-        
-            <li>CharIntConverter_char </li>
-        
-            <li>CharIntConverter_unsigned </li>
-        
-        
-            <li>void printToStream()</li>
-        
-            <li>void printToStream()</li>
-        
-        </ul>
-    </dd>
-
-    <dt>saveToStream.h</dt><dd>
-        <ul>
-        
-        
-            <li>void saveToStream()</li>
-        
-            <li>void saveToStream()</li>
-        
-        </ul>
-    </dd>
+    
+        <dt>Format.h</dt><dd>
+            <ul>
+            
+                
+                    <li>Format </li>
+                
+            
+            
+                
+            
+            </ul>
+        </dd>
+    
+        <dt>FormatInfo.h</dt><dd>
+            <ul>
+            
+                
+                    <li>FormatInfo </li>
+                
+            
+            
+                
+            
+            </ul>
+        </dd>
+    
+        <dt>Formatter.h</dt><dd>
+            <ul>
+            
+                
+                    <li>NormalizeChar </li>
+                
+                    <li>Formatter </li>
+                
+            
+            
+                
+            
+            </ul>
+        </dd>
+    
+        <dt>SignConversionOption.h</dt><dd>
+            <ul>
+            
+                
+                    <li>SignConversionOption </li>
+                
+                    <li>SignConversionOption&lt;char&gt; </li>
+                
+                    <li>SignConversionOption&lt;short&gt; </li>
+                
+                    <li>SignConversionOption&lt;int&gt; </li>
+                
+                    <li>SignConversionOption&lt;long&gt; </li>
+                
+                    <li>SignConversionOption&lt;long long&gt; </li>
+                
+                    <li>SignConversionOption&lt;unsigned char&gt; </li>
+                
+                    <li>SignConversionOption&lt;unsigned short&gt; </li>
+                
+                    <li>SignConversionOption&lt;unsigned int&gt; </li>
+                
+                    <li>SignConversionOption&lt;unsigned long&gt; </li>
+                
+                    <li>SignConversionOption&lt;unsigned long long&gt; </li>
+                
+            
+            
+                
+            
+            </ul>
+        </dd>
+    
+        <dt>printIntToStream.h</dt><dd>
+            <ul>
+            
+                
+            
+            
+                
+                    <li>void printIntToStream()</li>
+                
+            
+            </ul>
+        </dd>
+    
+        <dt>printStringToStream.h</dt><dd>
+            <ul>
+            
+                
+            
+            
+                
+                    <li>void printStringToStream()</li>
+                
+            
+            </ul>
+        </dd>
+    
+        <dt>printToStream.h</dt><dd>
+            <ul>
+            
+                
+                    <li>CharIntConverter </li>
+                
+                    <li>CharIntConverter&lt;char&gt; </li>
+                
+                    <li>CharIntConverter&lt;unsigned char&gt; </li>
+                
+            
+            
+                
+                    <li>void printToStream()</li>
+                
+                    <li>void printToStream()</li>
+                
+                    <li>void printToStream()</li>
+                
+            
+            </ul>
+        </dd>
+    
+        <dt>saveToStream.h</dt><dd>
+            <ul>
+            
+                
+            
+            
+                
+                    <li>void saveToStream()</li>
+                
+                    <li>void saveToStream()</li>
+                
+            
+            </ul>
+        </dd>
+    
 
 </dl>
 
@@ -670,13 +904,140 @@
     
         
     
-    <h2 id="signconversionoption">SignConversionOption</h2>
+    <h2 id="Format">Format</h2>
+    
+        <div class="classTable">
+    <div class="classLayout">
+        <div class="classBlock">
+            <div class="classRow"><div class="classItem">Header:   </div><div class="classValue">ThorsIOUtil/Format.h</div><div></div></div>
+            <div class="classRow"><div class="classItem">NameSpace:</div><div class="classValue">ThorsAnvil::IOUtil</div><div></div></div>
+            
+            <div class="classRow"><div class="classItem">Template: </div><div class="classValue">template&lt;typename... Args&gt;</div><div></div></div>
+            
+            <div class="classRow"><div class="classItem">Class:    </div><div class="classValue">Format</div><div></div></div>
+            
+        
+        
+        
+        </div>
+    </div>
+</div>
+
+<p>This is the object returned by make_format() and make_cppformat()<br />
+This is the object that is passed to the <code>std::ostream</code> via <code>operator&lt;&lt;</code>.</p>
+<p>Internally it keeps the original string and references to all the parameters that<br />
+need to be serialized. When the object is constructed (at runtime) the conversion<br />
+specifiers in the string are validated against the actual parameters to make sure<br />
+the correctly match.</p>
+
+
+    
+    
+        
+
+    
+
+    
+    <h2 id="FormatInfo">FormatInfo</h2>
+    
+        <div class="classTable">
+    <div class="classLayout">
+        <div class="classBlock">
+            <div class="classRow"><div class="classItem">Header:   </div><div class="classValue">ThorsIOUtil/FormatInfo.h</div><div></div></div>
+            <div class="classRow"><div class="classItem">NameSpace:</div><div class="classValue">ThorsAnvil::IOUtil</div><div></div></div>
+            
+            <div class="classRow"><div class="classItem">Class:    </div><div class="classValue">FormatInfo</div><div></div></div>
+            
+        
+        
+        
+        </div>
+    </div>
+</div>
+
+<p>Each conversion specifier in the format string is parsed and converted into an object of this type.</p>
+
+
+    
+    
+        
+
+    
+
+    
+    <h2 id="NormalizeChar">NormalizeChar</h2>
+    
+        <div class="classTable">
+    <div class="classLayout">
+        <div class="classBlock">
+            <div class="classRow"><div class="classItem">Header:   </div><div class="classValue">ThorsIOUtil/Formatter.h</div><div></div></div>
+            <div class="classRow"><div class="classItem">NameSpace:</div><div class="classValue">ThorsAnvil::IOUtil</div><div></div></div>
+            
+            <div class="classRow"><div class="classItem">Template: </div><div class="classValue">template&lt;typename T&gt;</div><div></div></div>
+            
+            <div class="classRow"><div class="classItem">Class:    </div><div class="classValue">NormalizeChar</div><div></div></div>
+            
+        
+        
+        
+        </div>
+    </div>
+</div>
+
+<p>Char is a very special class.</p>
+<p>The type <code>char</code> can be either <code>signed char</code> or <code>unsigned char</code> and is its own specif type (unlike int).<br />
+type for all classes except <code>signed char</code> which is converted to <code>char</code>.</p>
+
+
+    
+    
+        
+
+    
+
+    
+    <h2 id="Formatter">Formatter</h2>
+    
+        <div class="classTable">
+    <div class="classLayout">
+        <div class="classBlock">
+            <div class="classRow"><div class="classItem">Header:   </div><div class="classValue">ThorsIOUtil/Formatter.h</div><div></div></div>
+            <div class="classRow"><div class="classItem">NameSpace:</div><div class="classValue">ThorsAnvil::IOUtil</div><div></div></div>
+            
+            <div class="classRow"><div class="classItem">Template: </div><div class="classValue">template&lt;&gt;</div><div></div></div>
+            
+            <div class="classRow"><div class="classItem">Class:    </div><div class="classValue">Formatter</div><div></div></div>
+            
+        
+        
+        
+        </div>
+    </div>
+</div>
+
+<p>Parses a string segment.</p>
+<p>It saves the static prefix before a conversion specifier.<br />
+Then it saves a conversion specifier into the <code>info</code> member.<br />
+It keeps track of the number of characters parsed in <code>used</code>.</p>
+
+
+    
+    
+        
+
+    
+
+    
+    <h2 id="SignConversionOption">SignConversionOption</h2>
     
         <div class="classTable">
     <div class="classLayout">
         <div class="classBlock">
             <div class="classRow"><div class="classItem">Header:   </div><div class="classValue">ThorsIOUtil/SignConversionOption.h</div><div></div></div>
             <div class="classRow"><div class="classItem">NameSpace:</div><div class="classValue">ThorsAnvil::IOUtil</div><div></div></div>
+            
+            <div class="classRow"><div class="classItem">Template: </div><div class="classValue">template&lt;typename T&gt;</div><div></div></div>
+            
             <div class="classRow"><div class="classItem">Class:    </div><div class="classValue">SignConversionOption</div><div></div></div>
             
         
@@ -685,7 +1046,11 @@
         </div>
     </div>
 </div>
-<p></p>
+
+<p>When handling integer types some<br />
+automatic conversions are allowed.</p>
+<p>This type handles these conversions.<br />
+It is used by Formatter::apply()</p>
 
 
     
@@ -695,14 +1060,17 @@
     
 
     
-    <h2 id="signconversionoption_char">SignConversionOption_char</h2>
+    <h2 id="SignConversionOption-Lchar-R">SignConversionOption&lt;char&gt;</h2>
     
         <div class="classTable">
     <div class="classLayout">
         <div class="classBlock">
             <div class="classRow"><div class="classItem">Header:   </div><div class="classValue">ThorsIOUtil/SignConversionOption.h</div><div></div></div>
             <div class="classRow"><div class="classItem">NameSpace:</div><div class="classValue">ThorsAnvil::IOUtil</div><div></div></div>
-            <div class="classRow"><div class="classItem">Class:    </div><div class="classValue">SignConversionOption_char</div><div></div></div>
+            
+            <div class="classRow"><div class="classItem">Template: </div><div class="classValue">template&lt;&gt;</div><div></div></div>
+            
+            <div class="classRow"><div class="classItem">Class:    </div><div class="classValue">SignConversionOption&lt;char&gt;</div><div></div></div>
             
         
         
@@ -710,7 +1078,8 @@
         </div>
     </div>
 </div>
-<p></p>
+
+<p>Specialization of SignConversionOption</p>
 
 
     
@@ -720,14 +1089,17 @@
     
 
     
-    <h2 id="signconversionoption_short">SignConversionOption_short</h2>
+    <h2 id="SignConversionOption-Lshort-R">SignConversionOption&lt;short&gt;</h2>
     
         <div class="classTable">
     <div class="classLayout">
         <div class="classBlock">
             <div class="classRow"><div class="classItem">Header:   </div><div class="classValue">ThorsIOUtil/SignConversionOption.h</div><div></div></div>
             <div class="classRow"><div class="classItem">NameSpace:</div><div class="classValue">ThorsAnvil::IOUtil</div><div></div></div>
-            <div class="classRow"><div class="classItem">Class:    </div><div class="classValue">SignConversionOption_short</div><div></div></div>
+            
+            <div class="classRow"><div class="classItem">Template: </div><div class="classValue">template&lt;&gt;</div><div></div></div>
+            
+            <div class="classRow"><div class="classItem">Class:    </div><div class="classValue">SignConversionOption&lt;short&gt;</div><div></div></div>
             
         
         
@@ -735,7 +1107,8 @@
         </div>
     </div>
 </div>
-<p></p>
+
+<p>Specialization of SignConversionOption</p>
 
 
     
@@ -745,14 +1118,17 @@
     
 
     
-    <h2 id="signconversionoption_int">SignConversionOption_int</h2>
+    <h2 id="SignConversionOption-Lint-R">SignConversionOption&lt;int&gt;</h2>
     
         <div class="classTable">
     <div class="classLayout">
         <div class="classBlock">
             <div class="classRow"><div class="classItem">Header:   </div><div class="classValue">ThorsIOUtil/SignConversionOption.h</div><div></div></div>
             <div class="classRow"><div class="classItem">NameSpace:</div><div class="classValue">ThorsAnvil::IOUtil</div><div></div></div>
-            <div class="classRow"><div class="classItem">Class:    </div><div class="classValue">SignConversionOption_int</div><div></div></div>
+            
+            <div class="classRow"><div class="classItem">Template: </div><div class="classValue">template&lt;&gt;</div><div></div></div>
+            
+            <div class="classRow"><div class="classItem">Class:    </div><div class="classValue">SignConversionOption&lt;int&gt;</div><div></div></div>
             
         
         
@@ -760,7 +1136,8 @@
         </div>
     </div>
 </div>
-<p></p>
+
+<p>Specialization of SignConversionOption</p>
 
 
     
@@ -770,14 +1147,17 @@
     
 
     
-    <h2 id="signconversionoption_long">SignConversionOption_long</h2>
+    <h2 id="SignConversionOption-Llong-R">SignConversionOption&lt;long&gt;</h2>
     
         <div class="classTable">
     <div class="classLayout">
         <div class="classBlock">
             <div class="classRow"><div class="classItem">Header:   </div><div class="classValue">ThorsIOUtil/SignConversionOption.h</div><div></div></div>
             <div class="classRow"><div class="classItem">NameSpace:</div><div class="classValue">ThorsAnvil::IOUtil</div><div></div></div>
-            <div class="classRow"><div class="classItem">Class:    </div><div class="classValue">SignConversionOption_long</div><div></div></div>
+            
+            <div class="classRow"><div class="classItem">Template: </div><div class="classValue">template&lt;&gt;</div><div></div></div>
+            
+            <div class="classRow"><div class="classItem">Class:    </div><div class="classValue">SignConversionOption&lt;long&gt;</div><div></div></div>
             
         
         
@@ -785,7 +1165,8 @@
         </div>
     </div>
 </div>
-<p></p>
+
+<p>Specialization of SignConversionOption</p>
 
 
     
@@ -795,14 +1176,17 @@
     
 
     
-    <h2 id="signconversionoption_long">SignConversionOption_long</h2>
+    <h2 id="SignConversionOption-Llong-long-R">SignConversionOption&lt;long long&gt;</h2>
     
         <div class="classTable">
     <div class="classLayout">
         <div class="classBlock">
             <div class="classRow"><div class="classItem">Header:   </div><div class="classValue">ThorsIOUtil/SignConversionOption.h</div><div></div></div>
             <div class="classRow"><div class="classItem">NameSpace:</div><div class="classValue">ThorsAnvil::IOUtil</div><div></div></div>
-            <div class="classRow"><div class="classItem">Class:    </div><div class="classValue">SignConversionOption_long</div><div></div></div>
+            
+            <div class="classRow"><div class="classItem">Template: </div><div class="classValue">template&lt;&gt;</div><div></div></div>
+            
+            <div class="classRow"><div class="classItem">Class:    </div><div class="classValue">SignConversionOption&lt;long long&gt;</div><div></div></div>
             
         
         
@@ -810,7 +1194,8 @@
         </div>
     </div>
 </div>
-<p></p>
+
+<p>Specialization of SignConversionOption</p>
 
 
     
@@ -820,14 +1205,17 @@
     
 
     
-    <h2 id="signconversionoption_unsigned">SignConversionOption_unsigned</h2>
+    <h2 id="SignConversionOption-Lunsigned-char-R">SignConversionOption&lt;unsigned char&gt;</h2>
     
         <div class="classTable">
     <div class="classLayout">
         <div class="classBlock">
             <div class="classRow"><div class="classItem">Header:   </div><div class="classValue">ThorsIOUtil/SignConversionOption.h</div><div></div></div>
             <div class="classRow"><div class="classItem">NameSpace:</div><div class="classValue">ThorsAnvil::IOUtil</div><div></div></div>
-            <div class="classRow"><div class="classItem">Class:    </div><div class="classValue">SignConversionOption_unsigned</div><div></div></div>
+            
+            <div class="classRow"><div class="classItem">Template: </div><div class="classValue">template&lt;&gt;</div><div></div></div>
+            
+            <div class="classRow"><div class="classItem">Class:    </div><div class="classValue">SignConversionOption&lt;unsigned char&gt;</div><div></div></div>
             
         
         
@@ -835,7 +1223,8 @@
         </div>
     </div>
 </div>
-<p></p>
+
+<p>Specialization of SignConversionOption</p>
 
 
     
@@ -845,14 +1234,17 @@
     
 
     
-    <h2 id="signconversionoption_unsigned">SignConversionOption_unsigned</h2>
+    <h2 id="SignConversionOption-Lunsigned-short-R">SignConversionOption&lt;unsigned short&gt;</h2>
     
         <div class="classTable">
     <div class="classLayout">
         <div class="classBlock">
             <div class="classRow"><div class="classItem">Header:   </div><div class="classValue">ThorsIOUtil/SignConversionOption.h</div><div></div></div>
             <div class="classRow"><div class="classItem">NameSpace:</div><div class="classValue">ThorsAnvil::IOUtil</div><div></div></div>
-            <div class="classRow"><div class="classItem">Class:    </div><div class="classValue">SignConversionOption_unsigned</div><div></div></div>
+            
+            <div class="classRow"><div class="classItem">Template: </div><div class="classValue">template&lt;&gt;</div><div></div></div>
+            
+            <div class="classRow"><div class="classItem">Class:    </div><div class="classValue">SignConversionOption&lt;unsigned short&gt;</div><div></div></div>
             
         
         
@@ -860,7 +1252,8 @@
         </div>
     </div>
 </div>
-<p></p>
+
+<p>Specialization of SignConversionOption</p>
 
 
     
@@ -870,14 +1263,17 @@
     
 
     
-    <h2 id="signconversionoption_unsigned">SignConversionOption_unsigned</h2>
+    <h2 id="SignConversionOption-Lunsigned-int-R">SignConversionOption&lt;unsigned int&gt;</h2>
     
         <div class="classTable">
     <div class="classLayout">
         <div class="classBlock">
             <div class="classRow"><div class="classItem">Header:   </div><div class="classValue">ThorsIOUtil/SignConversionOption.h</div><div></div></div>
             <div class="classRow"><div class="classItem">NameSpace:</div><div class="classValue">ThorsAnvil::IOUtil</div><div></div></div>
-            <div class="classRow"><div class="classItem">Class:    </div><div class="classValue">SignConversionOption_unsigned</div><div></div></div>
+            
+            <div class="classRow"><div class="classItem">Template: </div><div class="classValue">template&lt;&gt;</div><div></div></div>
+            
+            <div class="classRow"><div class="classItem">Class:    </div><div class="classValue">SignConversionOption&lt;unsigned int&gt;</div><div></div></div>
             
         
         
@@ -885,7 +1281,8 @@
         </div>
     </div>
 </div>
-<p></p>
+
+<p>Specialization of SignConversionOption</p>
 
 
     
@@ -895,14 +1292,17 @@
     
 
     
-    <h2 id="signconversionoption_unsigned">SignConversionOption_unsigned</h2>
+    <h2 id="SignConversionOption-Lunsigned-long-R">SignConversionOption&lt;unsigned long&gt;</h2>
     
         <div class="classTable">
     <div class="classLayout">
         <div class="classBlock">
             <div class="classRow"><div class="classItem">Header:   </div><div class="classValue">ThorsIOUtil/SignConversionOption.h</div><div></div></div>
             <div class="classRow"><div class="classItem">NameSpace:</div><div class="classValue">ThorsAnvil::IOUtil</div><div></div></div>
-            <div class="classRow"><div class="classItem">Class:    </div><div class="classValue">SignConversionOption_unsigned</div><div></div></div>
+            
+            <div class="classRow"><div class="classItem">Template: </div><div class="classValue">template&lt;&gt;</div><div></div></div>
+            
+            <div class="classRow"><div class="classItem">Class:    </div><div class="classValue">SignConversionOption&lt;unsigned long&gt;</div><div></div></div>
             
         
         
@@ -910,7 +1310,8 @@
         </div>
     </div>
 </div>
-<p></p>
+
+<p>Must have some description</p>
 
 
     
@@ -920,14 +1321,17 @@
     
 
     
-    <h2 id="signconversionoption_unsigned">SignConversionOption_unsigned</h2>
+    <h2 id="SignConversionOption-Lunsigned-long-long-R">SignConversionOption&lt;unsigned long long&gt;</h2>
     
         <div class="classTable">
     <div class="classLayout">
         <div class="classBlock">
             <div class="classRow"><div class="classItem">Header:   </div><div class="classValue">ThorsIOUtil/SignConversionOption.h</div><div></div></div>
             <div class="classRow"><div class="classItem">NameSpace:</div><div class="classValue">ThorsAnvil::IOUtil</div><div></div></div>
-            <div class="classRow"><div class="classItem">Class:    </div><div class="classValue">SignConversionOption_unsigned</div><div></div></div>
+            
+            <div class="classRow"><div class="classItem">Template: </div><div class="classValue">template&lt;&gt;</div><div></div></div>
+            
+            <div class="classRow"><div class="classItem">Class:    </div><div class="classValue">SignConversionOption&lt;unsigned long long&gt;</div><div></div></div>
             
         
         
@@ -935,7 +1339,8 @@
         </div>
     </div>
 </div>
-<p></p>
+
+<p>Must have some description</p>
 
 
     
@@ -945,18 +1350,25 @@
     
 
     
-    <h2 id="printinttostream">printIntToStream</h2>
+    <h2 id="printIntToStream">printIntToStream</h2>
     
         <div class="classTable">
     <div class="classLayout">
         <div class="classBlock">
             <div class="classRow"><div class="classItem">Header:   </div><div class="classValue">ThorsIOUtil/printIntToStream.h</div><div></div></div>
             <div class="classRow"><div class="classItem">NameSpace:</div><div class="classValue">ThorsAnvil::IOUtil</div><div></div></div>
+            
+            <div class="classRow"><div class="classItem">Template: </div><div class="classValue">template&lt;typename T&gt;</div><div></div></div>
+            
             <div class="classRow"><div class="classItem">Class:    </div><div class="classValue"></div><div></div></div>
         </div>
     </div>
 </div>
-<p></p>
+
+<p>Given an argument <code>arg</code> (which is one of the int types) and a format <code>info</code> serialize it to the stream <code>s</code><br />
+<a href="https://github.com/param">@param</a> s             stream to serialize onto<br />
+<a href="https://github.com/param">@param</a> arg           the integer argument we want to serialize<br />
+<a href="https://github.com/param">@param</a> info          formatInfo object that defines how to serialize arg</p>
 
 
     
@@ -966,18 +1378,23 @@
     
 
     
-    <h2 id="printstringtostream">printStringToStream</h2>
+    <h2 id="printStringToStream">printStringToStream</h2>
     
         <div class="classTable">
     <div class="classLayout">
         <div class="classBlock">
             <div class="classRow"><div class="classItem">Header:   </div><div class="classValue">ThorsIOUtil/printStringToStream.h</div><div></div></div>
             <div class="classRow"><div class="classItem">NameSpace:</div><div class="classValue">ThorsAnvil::IOUtil</div><div></div></div>
+            
             <div class="classRow"><div class="classItem">Class:    </div><div class="classValue"></div><div></div></div>
         </div>
     </div>
 </div>
-<p></p>
+
+<p>Given an argument <code>arg</code> and a format <code>info</code> serialize it to the stream <code>s</code><br />
+<a href="https://github.com/param">@param</a> s             stream to serialize onto<br />
+<a href="https://github.com/param">@param</a> arg           the string argument we want to serialize<br />
+<a href="https://github.com/param">@param</a> info          formatInfo object that defines how to serialize arg</p>
 
 
     
@@ -987,18 +1404,22 @@
     
 
     
-    <h2 id="printtostream">printToStream</h2>
+    <h2 id="printToStream">printToStream</h2>
     
         <div class="classTable">
     <div class="classLayout">
         <div class="classBlock">
             <div class="classRow"><div class="classItem">Header:   </div><div class="classValue">ThorsIOUtil/printToStream.h</div><div></div></div>
             <div class="classRow"><div class="classItem">NameSpace:</div><div class="classValue">ThorsAnvil::IOUtil</div><div></div></div>
+            
+            <div class="classRow"><div class="classItem">Template: </div><div class="classValue">template&lt;typename T&gt;</div><div></div></div>
+            
             <div class="classRow"><div class="classItem">Class:    </div><div class="classValue"></div><div></div></div>
         </div>
     </div>
 </div>
-<p></p>
+
+<p>Template method for strings</p>
 
 
     
@@ -1008,18 +1429,22 @@
     
 
     
-    <h2 id="printtostream">printToStream</h2>
+    <h2 id="printToStream">printToStream</h2>
     
         <div class="classTable">
     <div class="classLayout">
         <div class="classBlock">
             <div class="classRow"><div class="classItem">Header:   </div><div class="classValue">ThorsIOUtil/printToStream.h</div><div></div></div>
             <div class="classRow"><div class="classItem">NameSpace:</div><div class="classValue">ThorsAnvil::IOUtil</div><div></div></div>
+            
+            <div class="classRow"><div class="classItem">Template: </div><div class="classValue">template&lt;typename T&gt;</div><div></div></div>
+            
             <div class="classRow"><div class="classItem">Class:    </div><div class="classValue"></div><div></div></div>
         </div>
     </div>
 </div>
-<p></p>
+
+<p>Template method for strings</p>
 
 
     
@@ -1029,13 +1454,41 @@
     
 
     
-    <h2 id="charintconverter">CharIntConverter</h2>
+    <h2 id="printToStream">printToStream</h2>
     
         <div class="classTable">
     <div class="classLayout">
         <div class="classBlock">
             <div class="classRow"><div class="classItem">Header:   </div><div class="classValue">ThorsIOUtil/printToStream.h</div><div></div></div>
             <div class="classRow"><div class="classItem">NameSpace:</div><div class="classValue">ThorsAnvil::IOUtil</div><div></div></div>
+            
+            <div class="classRow"><div class="classItem">Template: </div><div class="classValue">template&lt;typename T&gt;</div><div></div></div>
+            
+            <div class="classRow"><div class="classItem">Class:    </div><div class="classValue"></div><div></div></div>
+        </div>
+    </div>
+</div>
+
+<p>Template method for strings</p>
+
+
+    
+    
+        
+
+    
+
+    
+    <h2 id="CharIntConverter">CharIntConverter</h2>
+    
+        <div class="classTable">
+    <div class="classLayout">
+        <div class="classBlock">
+            <div class="classRow"><div class="classItem">Header:   </div><div class="classValue">ThorsIOUtil/printToStream.h</div><div></div></div>
+            <div class="classRow"><div class="classItem">NameSpace:</div><div class="classValue">ThorsAnvil::IOUtil</div><div></div></div>
+            
+            <div class="classRow"><div class="classItem">Template: </div><div class="classValue">template&lt;typename T&gt;</div><div></div></div>
+            
             <div class="classRow"><div class="classItem">Class:    </div><div class="classValue">CharIntConverter</div><div></div></div>
             
         
@@ -1044,7 +1497,8 @@
         </div>
     </div>
 </div>
-<p></p>
+
+
 
 
     
@@ -1054,14 +1508,17 @@
     
 
     
-    <h2 id="charintconverter_char">CharIntConverter_char</h2>
+    <h2 id="CharIntConverter-Lchar-R">CharIntConverter&lt;char&gt;</h2>
     
         <div class="classTable">
     <div class="classLayout">
         <div class="classBlock">
             <div class="classRow"><div class="classItem">Header:   </div><div class="classValue">ThorsIOUtil/printToStream.h</div><div></div></div>
             <div class="classRow"><div class="classItem">NameSpace:</div><div class="classValue">ThorsAnvil::IOUtil</div><div></div></div>
-            <div class="classRow"><div class="classItem">Class:    </div><div class="classValue">CharIntConverter_char</div><div></div></div>
+            
+            <div class="classRow"><div class="classItem">Template: </div><div class="classValue">template&lt;&gt;</div><div></div></div>
+            
+            <div class="classRow"><div class="classItem">Class:    </div><div class="classValue">CharIntConverter&lt;char&gt;</div><div></div></div>
             
         
         
@@ -1069,7 +1526,8 @@
         </div>
     </div>
 </div>
-<p></p>
+
+
 
 
     
@@ -1079,14 +1537,17 @@
     
 
     
-    <h2 id="charintconverter_unsigned">CharIntConverter_unsigned</h2>
+    <h2 id="CharIntConverter-Lunsigned-char-R">CharIntConverter&lt;unsigned char&gt;</h2>
     
         <div class="classTable">
     <div class="classLayout">
         <div class="classBlock">
             <div class="classRow"><div class="classItem">Header:   </div><div class="classValue">ThorsIOUtil/printToStream.h</div><div></div></div>
             <div class="classRow"><div class="classItem">NameSpace:</div><div class="classValue">ThorsAnvil::IOUtil</div><div></div></div>
-            <div class="classRow"><div class="classItem">Class:    </div><div class="classValue">CharIntConverter_unsigned</div><div></div></div>
+            
+            <div class="classRow"><div class="classItem">Template: </div><div class="classValue">template&lt;&gt;</div><div></div></div>
+            
+            <div class="classRow"><div class="classItem">Class:    </div><div class="classValue">CharIntConverter&lt;unsigned char&gt;</div><div></div></div>
             
         
         
@@ -1094,7 +1555,8 @@
         </div>
     </div>
 </div>
-<p></p>
+
+
 
 
     
@@ -1104,18 +1566,22 @@
     
 
     
-    <h2 id="savetostream">saveToStream</h2>
+    <h2 id="saveToStream">saveToStream</h2>
     
         <div class="classTable">
     <div class="classLayout">
         <div class="classBlock">
             <div class="classRow"><div class="classItem">Header:   </div><div class="classValue">ThorsIOUtil/saveToStream.h</div><div></div></div>
             <div class="classRow"><div class="classItem">NameSpace:</div><div class="classValue">ThorsAnvil::IOUtil</div><div></div></div>
+            
+            <div class="classRow"><div class="classItem">Template: </div><div class="classValue">template&lt;typename T&gt;</div><div></div></div>
+            
             <div class="classRow"><div class="classItem">Class:    </div><div class="classValue"></div><div></div></div>
         </div>
     </div>
 </div>
-<p></p>
+
+
 
 
     
@@ -1125,18 +1591,22 @@
     
 
     
-    <h2 id="savetostream">saveToStream</h2>
+    <h2 id="saveToStream">saveToStream</h2>
     
         <div class="classTable">
     <div class="classLayout">
         <div class="classBlock">
             <div class="classRow"><div class="classItem">Header:   </div><div class="classValue">ThorsIOUtil/saveToStream.h</div><div></div></div>
             <div class="classRow"><div class="classItem">NameSpace:</div><div class="classValue">ThorsAnvil::IOUtil</div><div></div></div>
+            
+            <div class="classRow"><div class="classItem">Template: </div><div class="classValue">template&lt;typename T&gt;</div><div></div></div>
+            
             <div class="classRow"><div class="classItem">Class:    </div><div class="classValue"></div><div></div></div>
         </div>
     </div>
 </div>
-<p></p>
+
+
 
 
     
@@ -1153,6 +1623,7 @@
     <div class="dark-box"></div>
 </div>
 
+    <script src="javascripts/prism.js"></script>
 </body>
 
 
