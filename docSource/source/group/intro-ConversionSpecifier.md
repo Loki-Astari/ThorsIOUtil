@@ -3,6 +3,7 @@ layout: plain
 generate: false
 children:
     - name: Format
+      tag: ConversionSpecifierFormat
       value: intro-ConversionSpecifier-Format.md
     - name: Specifier
       value: intro-ConversionSpecifier-Specifier.md
