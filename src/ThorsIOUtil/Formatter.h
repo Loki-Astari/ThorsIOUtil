@@ -35,7 +35,7 @@ struct NormalizeChar<signed char>
     using Type = char;
 };
 
-// @class-api
+// @class-internal
 class Formatter
 {
     Strictness              strict;

@@ -5,6 +5,21 @@ nameSpace:  ThorsAnvil::IOUtil
 headers:
     base: ThorsIOUtil
     files:
+        - name:   Format.h
+          functions: []
+          classes:
+            - name:   Format
+              parent:  
+        - name:   FormatInfo.h
+          functions: []
+          classes:
+            - name:   FormatInfo
+              parent:  
+        - name:   Formatter.h
+          functions: []
+          classes:
+            - name:   Formatter
+              parent:  
         - name:   SignConversionOption.h
           functions: []
           classes:
@@ -73,6 +88,12 @@ headers:
               param:  [   std::ostream&,  Dynamic,  T const&  ]
           classes: []
 children:
+    - name: Format
+      value: ThorsIOUtil.Format.Format.md
+    - name: FormatInfo
+      value: ThorsIOUtil.FormatInfo.FormatInfo.md
+    - name: Formatter
+      value: ThorsIOUtil.Formatter.Formatter.md
     - name: SignConversionOption
       value: ThorsIOUtil.SignConversionOption.SignConversionOption.md
     - name: SignConversionOption-Lchar-R

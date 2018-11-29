@@ -16,7 +16,7 @@ namespace ThorsAnvil
     namespace IOUtil
     {
 
-// @class-api
+// @class-internal
 template<typename... Args>
 class Format
 {
