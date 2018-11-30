@@ -126,7 +126,7 @@ class Format
 // @function-api
 // Builds a `Format` object based on the types of the arguments.
 // @param fmt       The format string.
-// @param Args      Template parameter pack. Each argument is matched to a conversion specifier.
+// @param args      Template parameter pack. Each argument is matched to a conversion specifier.
 // @return          A format object that keeps a const reference to each argument.
 template<typename... Args>
 Format<Args...> make_format(char const* fmt, Args const&... args)
@@ -140,7 +140,7 @@ Format<Args...> make_format(char const* fmt, Args const&... args)
 // This version has slightly tighter restrictions on matching parameters to conversion specifiers.
 // Like C++ the type system is much pickier than C.
 // @param fmt       The format string.
-// @param Args      Template parameter pack. Each argument is matched to a conversion specifier.
+// @param args      Template parameter pack. Each argument is matched to a conversion specifier.
 // @return          A format object that keeps a const reference to each argument.
 template<typename... Args>
 Format<Args...> make_cppformat(char const* fmt, Args const&... args)
