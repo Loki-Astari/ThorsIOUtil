@@ -699,15 +699,29 @@ int main()
             
             <div class="classRow"><div class="classItem">Template: </div><div class="classValue">template&lt;typename... Args&gt;</div><div></div></div>
             
-            <div class="classRow"><div class="classItem">Class:    </div><div class="classValue"></div><div></div></div>
         </div>
+        
+        <div class="classBlock">
+            <div class="classRow"><div class="classSect">Return Value: char const* fmt</div></div>
+            <div class="classRow"><div class="classDesc">A format object that keeps a const reference to each argument.</div></div>
+        </div>
+        
+        
+        <div class="classBlock">
+            <div class="classRow"><div class="classSect">Parameters</div></div>
+        </div>
+        <div class="classBlock">
+            
+            <div class="classRow">&nbsp;<div class="classItem">char const* fmt</div><div class="classValue">The format string.</div></div>
+            
+            <div class="classRow">&nbsp;<div class="classItem">Args const&... args</div><div class="classValue">Template parameter pack. Each argument is matched to a conversion specifier.</div></div>
+            
+        </div>
+        
     </div>
 </div>
 
-<p>Builds a <code>Format</code> object based on the types of the arguments.<br />
-<a href="https://github.com/param">@param</a> fmt       The format string.<br />
-<a href="https://github.com/param">@param</a> Args      Template parameter pack. Each argument is matched to a conversion specifier.<br />
-<a href="https://github.com/return">@return</a>          A format object that keeps a const reference to each argument.</p>
+<p>Builds a <code>Format</code> object based on the types of the arguments.</p>
 
 
     
@@ -727,17 +741,31 @@ int main()
             
             <div class="classRow"><div class="classItem">Template: </div><div class="classValue">template&lt;typename... Args&gt;</div><div></div></div>
             
-            <div class="classRow"><div class="classItem">Class:    </div><div class="classValue"></div><div></div></div>
         </div>
+        
+        <div class="classBlock">
+            <div class="classRow"><div class="classSect">Return Value: char const* fmt</div></div>
+            <div class="classRow"><div class="classDesc">A format object that keeps a const reference to each argument.</div></div>
+        </div>
+        
+        
+        <div class="classBlock">
+            <div class="classRow"><div class="classSect">Parameters</div></div>
+        </div>
+        <div class="classBlock">
+            
+            <div class="classRow">&nbsp;<div class="classItem">char const* fmt</div><div class="classValue">The format string.</div></div>
+            
+            <div class="classRow">&nbsp;<div class="classItem">Args const&... args</div><div class="classValue">Template parameter pack. Each argument is matched to a conversion specifier.</div></div>
+            
+        </div>
+        
     </div>
 </div>
 
 <p>Builds a <code>Format</code> object based on the types of the arguments.</p>
 <p>This version has slightly tighter restrictions on matching parameters to conversion specifiers.<br />
-Like C++ the type system is much pickier than C.<br />
-<a href="https://github.com/param">@param</a> fmt       The format string.<br />
-<a href="https://github.com/param">@param</a> Args      Template parameter pack. Each argument is matched to a conversion specifier.<br />
-<a href="https://github.com/return">@return</a>          A format object that keeps a const reference to each argument.</p>
+Like C++ the type system is much pickier than C.</p>
 
 
     
@@ -1360,15 +1388,31 @@ It is used by Formatter::apply()</p>
             
             <div class="classRow"><div class="classItem">Template: </div><div class="classValue">template&lt;typename T&gt;</div><div></div></div>
             
-            <div class="classRow"><div class="classItem">Class:    </div><div class="classValue"></div><div></div></div>
         </div>
+        
+        <div class="classBlock">
+            <div class="classRow"><div class="classSect">Return Value: std::ostream& s</div></div>
+            <div class="classRow"><div class="classDesc"></div></div>
+        </div>
+        
+        
+        <div class="classBlock">
+            <div class="classRow"><div class="classSect">Parameters</div></div>
+        </div>
+        <div class="classBlock">
+            
+            <div class="classRow">&nbsp;<div class="classItem">std::ostream& s</div><div class="classValue">stream to serialize onto the integer argument we want to serialize formatInfo object that defines how to serialize arg</div></div>
+            
+            <div class="classRow">&nbsp;<div class="classItem">T arg</div><div class="classValue">the integer argument we want to serialize formatInfo object that defines how to serialize arg</div></div>
+            
+            <div class="classRow">&nbsp;<div class="classItem">FormatInfo const& info</div><div class="classValue">formatInfo object that defines how to serialize arg</div></div>
+            
+        </div>
+        
     </div>
 </div>
 
-<p>Given an argument <code>arg</code> (which is one of the int types) and a format <code>info</code> serialize it to the stream <code>s</code><br />
-<a href="https://github.com/param">@param</a> s             stream to serialize onto<br />
-<a href="https://github.com/param">@param</a> arg           the integer argument we want to serialize<br />
-<a href="https://github.com/param">@param</a> info          formatInfo object that defines how to serialize arg</p>
+<p>Given an argument <code>arg</code> (which is one of the int types) and a format <code>info</code> serialize it to the stream <code>s</code></p>
 
 
     
@@ -1386,15 +1430,31 @@ It is used by Formatter::apply()</p>
             <div class="classRow"><div class="classItem">Header:   </div><div class="classValue">ThorsIOUtil/printStringToStream.h</div><div></div></div>
             <div class="classRow"><div class="classItem">NameSpace:</div><div class="classValue">ThorsAnvil::IOUtil</div><div></div></div>
             
-            <div class="classRow"><div class="classItem">Class:    </div><div class="classValue"></div><div></div></div>
         </div>
+        
+        <div class="classBlock">
+            <div class="classRow"><div class="classSect">Return Value: std::ostream& s</div></div>
+            <div class="classRow"><div class="classDesc"></div></div>
+        </div>
+        
+        
+        <div class="classBlock">
+            <div class="classRow"><div class="classSect">Parameters</div></div>
+        </div>
+        <div class="classBlock">
+            
+            <div class="classRow">&nbsp;<div class="classItem">std::ostream& s</div><div class="classValue">stream to serialize onto the string argument we want to serialize formatInfo object that defines how to serialize arg</div></div>
+            
+            <div class="classRow">&nbsp;<div class="classItem">char const* const& arg</div><div class="classValue">the string argument we want to serialize formatInfo object that defines how to serialize arg</div></div>
+            
+            <div class="classRow">&nbsp;<div class="classItem">FormatInfo const& info</div><div class="classValue">formatInfo object that defines how to serialize arg</div></div>
+            
+        </div>
+        
     </div>
 </div>
 
-<p>Given an argument <code>arg</code> and a format <code>info</code> serialize it to the stream <code>s</code><br />
-<a href="https://github.com/param">@param</a> s             stream to serialize onto<br />
-<a href="https://github.com/param">@param</a> arg           the string argument we want to serialize<br />
-<a href="https://github.com/param">@param</a> info          formatInfo object that defines how to serialize arg</p>
+<p>Given an argument <code>arg</code> and a format <code>info</code> serialize it to the stream <code>s</code></p>
 
 
     
@@ -1414,8 +1474,27 @@ It is used by Formatter::apply()</p>
             
             <div class="classRow"><div class="classItem">Template: </div><div class="classValue">template&lt;typename T&gt;</div><div></div></div>
             
-            <div class="classRow"><div class="classItem">Class:    </div><div class="classValue"></div><div></div></div>
         </div>
+        
+        <div class="classBlock">
+            <div class="classRow"><div class="classSect">Return Value: std::ostream& s</div></div>
+            <div class="classRow"><div class="classDesc"></div></div>
+        </div>
+        
+        
+        <div class="classBlock">
+            <div class="classRow"><div class="classSect">Parameters</div></div>
+        </div>
+        <div class="classBlock">
+            
+            <div class="classRow">&nbsp;<div class="classItem">std::ostream& s</div><div class="classValue"></div></div>
+            
+            <div class="classRow">&nbsp;<div class="classItem">char const* const& arg</div><div class="classValue"></div></div>
+            
+            <div class="classRow">&nbsp;<div class="classItem">FormatInfo const& info</div><div class="classValue"></div></div>
+            
+        </div>
+        
     </div>
 </div>
 
@@ -1439,8 +1518,27 @@ It is used by Formatter::apply()</p>
             
             <div class="classRow"><div class="classItem">Template: </div><div class="classValue">template&lt;typename T&gt;</div><div></div></div>
             
-            <div class="classRow"><div class="classItem">Class:    </div><div class="classValue"></div><div></div></div>
         </div>
+        
+        <div class="classBlock">
+            <div class="classRow"><div class="classSect">Return Value: std::ostream& s</div></div>
+            <div class="classRow"><div class="classDesc"></div></div>
+        </div>
+        
+        
+        <div class="classBlock">
+            <div class="classRow"><div class="classSect">Parameters</div></div>
+        </div>
+        <div class="classBlock">
+            
+            <div class="classRow">&nbsp;<div class="classItem">std::ostream& s</div><div class="classValue"></div></div>
+            
+            <div class="classRow">&nbsp;<div class="classItem">char const* const& arg</div><div class="classValue"></div></div>
+            
+            <div class="classRow">&nbsp;<div class="classItem">FormatInfo const& info</div><div class="classValue"></div></div>
+            
+        </div>
+        
     </div>
 </div>
 
@@ -1464,8 +1562,27 @@ It is used by Formatter::apply()</p>
             
             <div class="classRow"><div class="classItem">Template: </div><div class="classValue">template&lt;typename T&gt;</div><div></div></div>
             
-            <div class="classRow"><div class="classItem">Class:    </div><div class="classValue"></div><div></div></div>
         </div>
+        
+        <div class="classBlock">
+            <div class="classRow"><div class="classSect">Return Value: std::ostream& s</div></div>
+            <div class="classRow"><div class="classDesc"></div></div>
+        </div>
+        
+        
+        <div class="classBlock">
+            <div class="classRow"><div class="classSect">Parameters</div></div>
+        </div>
+        <div class="classBlock">
+            
+            <div class="classRow">&nbsp;<div class="classItem">std::ostream& s</div><div class="classValue"></div></div>
+            
+            <div class="classRow">&nbsp;<div class="classItem">char const* const& arg</div><div class="classValue"></div></div>
+            
+            <div class="classRow">&nbsp;<div class="classItem">FormatInfo const& info</div><div class="classValue"></div></div>
+            
+        </div>
+        
     </div>
 </div>
 
@@ -1576,8 +1693,27 @@ It is used by Formatter::apply()</p>
             
             <div class="classRow"><div class="classItem">Template: </div><div class="classValue">template&lt;typename T&gt;</div><div></div></div>
             
-            <div class="classRow"><div class="classItem">Class:    </div><div class="classValue"></div><div></div></div>
         </div>
+        
+        <div class="classBlock">
+            <div class="classRow"><div class="classSect">Return Value: std::ostream&</div></div>
+            <div class="classRow"><div class="classDesc"></div></div>
+        </div>
+        
+        
+        <div class="classBlock">
+            <div class="classRow"><div class="classSect">Parameters</div></div>
+        </div>
+        <div class="classBlock">
+            
+            <div class="classRow">&nbsp;<div class="classItem"> std::ostream&</div><div class="classValue"></div></div>
+            
+            <div class="classRow">&nbsp;<div class="classItem"> Dynamic</div><div class="classValue"></div></div>
+            
+            <div class="classRow">&nbsp;<div class="classItem">T const&</div><div class="classValue"></div></div>
+            
+        </div>
+        
     </div>
 </div>
 
@@ -1601,8 +1737,27 @@ It is used by Formatter::apply()</p>
             
             <div class="classRow"><div class="classItem">Template: </div><div class="classValue">template&lt;typename T&gt;</div><div></div></div>
             
-            <div class="classRow"><div class="classItem">Class:    </div><div class="classValue"></div><div></div></div>
         </div>
+        
+        <div class="classBlock">
+            <div class="classRow"><div class="classSect">Return Value: std::ostream&</div></div>
+            <div class="classRow"><div class="classDesc"></div></div>
+        </div>
+        
+        
+        <div class="classBlock">
+            <div class="classRow"><div class="classSect">Parameters</div></div>
+        </div>
+        <div class="classBlock">
+            
+            <div class="classRow">&nbsp;<div class="classItem"> std::ostream&</div><div class="classValue"></div></div>
+            
+            <div class="classRow">&nbsp;<div class="classItem"> Dynamic</div><div class="classValue"></div></div>
+            
+            <div class="classRow">&nbsp;<div class="classItem">T const&</div><div class="classValue"></div></div>
+            
+        </div>
+        
     </div>
 </div>
 
