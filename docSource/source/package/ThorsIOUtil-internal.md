@@ -61,13 +61,13 @@ headers:
           classes: []
         - name:   printToStream.h
           functions:
-            - return: void
+            - return: typename std::enable_if_!std::is_integral<T::value>::type
               name:   printToStream
-              param:  [   std::ostream& s,  char const* const& arg,  FormatInfo const& info  ]
-            - return: void
+              param:  [   std::ostream& s,  T const& arg,  FormatInfo const&  ]
+            - return: typename std::enable_if_!std::is_integral<T::value>::typetypename std::enable_if_std::is_integral<T::value>::type
               name:   printToStream
-              param:  [   std::ostream& s,  char const* const& arg,  FormatInfo const& info  ]
-            - return: void
+              param:  [   std::ostream& s,  T const& arg,  FormatInfo const& info  ]
+            - return: typename std::enable_if_!std::is_integral<T::value>::typetypename std::enable_if_std::is_integral<T::value>::typevoid
               name:   printToStream
               param:  [   std::ostream& s,  char const* const& arg,  FormatInfo const& info  ]
           classes:
@@ -84,7 +84,7 @@ headers:
               param:  [   std::ostream&,  Dynamic,  T const&  ]
             - return: void
               name:   saveToStream
-              param:  [   std::ostream&,  Dynamic,  T const&  ]
+              param:  [   std::ostream& s,  Dynamic pos,  int const& size  ]
           classes: []
 children:
     - name: Format
