@@ -5,6 +5,7 @@
 #include "saveToStream.h"
 #include "FormatInfo.h"
 #include "SignConversionOption.h"
+#include "Utility.h"
 
 #include <ostream>
 #include <string>
@@ -19,6 +20,7 @@
 namespace ThorsAnvil::IOUtil
 {
 
+using ThorsAnvil::Utility::buildStringFromParts;
 
 template<typename T>
 inline bool checkNumLargerEqualToZero(T const& value)      {return value >= 0;}
@@ -235,7 +237,7 @@ class Formatter
                 case 'n':   info.specifier = Specifier::n;info.type = Type::Count;    break;
                 default:
                     // Not optional so throw if we don't find it.
-                   throw std::invalid_argument(std::string("Invalid Parameter specifier: ") + *fmt);
+                   throw std::invalid_argument(buildStringFromParts("Invalid Parameter specifier: ", *fmt));
             }
             ++fmt;
 
@@ -340,7 +342,7 @@ class Formatter
                     }
                     else
                     {
-                        throw std::invalid_argument(std::string("Actual argument does not match supplied argument (or conversions): Expected(") + info.expectedType.first->name() + ") Got(" + typeid(A).name() + ")");
+                        throw std::invalid_argument(buildStringFromParts("Actual argument does not match supplied argument (or conversions): Expected(", info.expectedType.first->name(), ") Got(", typeid(A).name(), ")"));
                     }
                 }
                 else

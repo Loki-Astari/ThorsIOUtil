@@ -56,11 +56,9 @@ void printIntToStream(std::ostream& s, T arg, FormatInfo const& info)
 
         if (info.prefixType)
         {
-            switch (s.flags() & std::ios_base::basefield)
-            {
-                case std::ios_base::hex:    extraChar   += 2;break;
-                case std::ios_base::oct:    extraDigits += 1;break;
-            }
+            std::ios_base::fmtflags flags = s.flags() & std::ios_base::basefield;
+            if (flags == std::ios_base::hex) {extraChar   += 2;}
+            if (flags == std::ios_base::oct) {extraDigits += 1;}
         }
         /*
          * Number of digits to print

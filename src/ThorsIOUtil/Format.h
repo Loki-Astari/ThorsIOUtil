@@ -3,6 +3,7 @@
 
 #include "printToStream.h"
 #include "Formatter.h"
+#include "Utility.h"
 
 #include <ostream>
 #include <sstream>
@@ -10,11 +11,15 @@
 #include <vector>
 #include <exception>
 #include <stdexcept>
+#include <functional>
+#include <algorithm>
 
 namespace ThorsAnvil
 {
     namespace IOUtil
     {
+
+using ThorsAnvil::Utility::buildStringFromParts;
 
 // @class-internal
 // This is the object returned by make_format() and make_cppformat()
@@ -97,9 +102,7 @@ class Format
             }), std::end(prefix));
             if (test(nextFormatter))
             {
-                std::stringstream message;
-                message << "Invalid Format: " << mes << " specifiers for provided arguments";
-                throw std::invalid_argument(message.str());
+                throw std::invalid_argument(buildStringFromParts("Invalid Format: ", mes, " specifiers for provided arguments"));
             }
             return {prefix, prefix.size() + extra};
         }
