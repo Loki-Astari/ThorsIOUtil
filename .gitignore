@@ -26,3 +26,5 @@ stamp-*
 
 config.h
 *Config.h
+
+build
