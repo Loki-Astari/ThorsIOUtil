@@ -12,6 +12,46 @@ namespace ThorsAnvil
     namespace Utility
     {
 
+/* Used to preserve a streams format state */
+/* Usage:
+ *     stream << StreamFormatterNoChange{} << std::hex << std::setprecision(23) << value;
+ *     // After the expression is complete the state of the stream is reverted to its original state.
+ */
+class StreamFormatterNoChange
+{
+    mutable std::ios*               stream;
+    mutable std::ios_base::fmtflags flags;
+    mutable std::streamsize         precision;
+    public:
+        StreamFormatterNoChange()
+            : stream(nullptr)
+        {}
+        ~StreamFormatterNoChange()
+        {
+            if (stream)
+            {
+                stream->flags(flags);
+                stream->precision(precision);
+            }
+        }
+        void saveStream(std::ios& s) const
+        {
+            stream    = &s;
+            flags     = s.flags();
+            precision = s.precision();
+        }
+        friend std::ostream& operator<<(std::ostream& stream, StreamFormatterNoChange const& formatter)
+        {
+            formatter.saveStream(stream);
+            return stream;
+        }
+        friend std::istream& operator>>(std::istream& stream, StreamFormatterNoChange const& formatter)
+        {
+            formatter.saveStream(stream);
+            return stream;
+        }
+};
+
 template<typename... Args>
 void print(std::ostream& s, Args&... args)
 {
@@ -30,9 +70,9 @@ std::string buildStringFromParts(Args const&... args)
 
 // @function
 template<typename... Args>
-std::string buildErrorMessage(char const*, char const*, Args const&... args)
+std::string buildErrorMessage(char const* className, char const* method, Args const&... args)
 {
-    return buildStringFromParts(args...);
+    return buildStringFromParts(className, "::", method, ": ", args...);
 }
 
 inline std::string errnoToName()
