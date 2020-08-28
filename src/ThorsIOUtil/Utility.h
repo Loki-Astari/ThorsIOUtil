@@ -75,6 +75,12 @@ std::string buildErrorMessage(char const* className, char const* method, Args co
     return buildStringFromParts(className, "::", method, ": ", args...);
 }
 
+template<typename... Args>
+std::string buildBugReport(Args const& ...a)
+{
+    return buildErrorMessage(a..., "\nPlease File a Bug Report: ");
+}
+
 inline std::string errnoToName()
 {
     switch (errno)
