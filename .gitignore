@@ -27,4 +27,6 @@ stamp-*
 config.h
 *Config.h
 
+unittest.cpp
+
 build
