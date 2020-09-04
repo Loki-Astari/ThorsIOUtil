@@ -5,6 +5,7 @@ a.out
 
 unittest
 
+report/
 coverage/
 debug/
 release/
