@@ -69,10 +69,16 @@ std::string buildStringFromParts(Args const&... args)
 }
 
 // @function
+std::size_t getUniqueErrorId()
+{
+    static std::size_t  errorMessageId = 0;
+    return errorMessageId++;
+
+// @function
 template<typename... Args>
 std::string buildErrorMessage(char const* className, char const* method, Args const&... args)
 {
-    return buildStringFromParts(className, "::", method, ": ", args...);
+    return buildStringFromParts("id: ", getUniqueErrorId(), " ", className, "::", method, ": ", args...);
 }
 
 template<typename... Args>
