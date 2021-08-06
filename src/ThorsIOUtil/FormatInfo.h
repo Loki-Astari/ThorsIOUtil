@@ -4,8 +4,10 @@
 #include <iostream>
 #include <typeinfo>
 
-namespace ThorsAnvil::IOUtil
+namespace ThorsAnvil
 {
+    namespace IOUtil
+    {
 
 // Enum representing the Length, specifier and type information provided by the format string
 #pragma vera-pushoff
@@ -53,6 +55,7 @@ struct FormatInfo
 
 };
 
+    }
 }
 
 #endif

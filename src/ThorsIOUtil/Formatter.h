@@ -17,8 +17,10 @@
 #include <type_traits>
 
 
-namespace ThorsAnvil::IOUtil
+namespace ThorsAnvil
 {
+    namespace IOUtil
+    {
 
 using ThorsAnvil::Utility::buildStringFromParts;
 
@@ -450,6 +452,7 @@ class Formatter
             }
 };
 
+    }
 }
 
 #endif
