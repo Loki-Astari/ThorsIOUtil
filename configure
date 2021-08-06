@@ -767,7 +767,6 @@ build_vendor
 build_cpu
 build
 CMAKE
-UNZIP
 OBJEXT
 EXEEXT
 ac_ct_CC
@@ -782,6 +781,7 @@ PYTHON_LIBS
 PYTHON_CPPFLAGS
 PYTHON
 PYTHON_VERSION
+UNZIP
 target_alias
 host_alias
 build_alias
@@ -4865,6 +4865,7 @@ test -n "$UNZIP" || UNZIP=":"
     if test "x${enable_vera}" != "xno"
 then :
 
+
             for ac_prog in cmake
 do
   # Extract the first word of "$ac_prog", so it can be a program name with args.
@@ -5899,6 +5900,7 @@ fi
     VERATOOL=${VERATOOL}
 
 
+
     THOR_TARGETLIBS=""
     if test "x$enable_shared" == "xyes"
 then :
@@ -5917,7 +5919,6 @@ then :
 fi
 
     THOR_TARGETLIBS=${THOR_TARGETLIBS}
-
 
 
 
