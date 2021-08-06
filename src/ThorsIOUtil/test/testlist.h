@@ -4,7 +4,7 @@
 #       The reference to COPYING/README see the above project.
 #
 # Various printf tests compiled from various sources
-# Copyright © 2013 Bart Massey
+# Copyright (C) 2013 Bart Massey
 # This program is licensed under the GPL version 2 or later.
 # Please see the file COPYING in this distribution for
 # license terms.
