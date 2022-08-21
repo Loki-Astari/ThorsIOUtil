@@ -6,8 +6,8 @@ before_install:
 install:
     - ./.build/travis/setup ${TRAVIS_OS_NAME}
 script:
-    - ./configure --with-boost=/tmp/extra --enable-verapython2
-    - export PATH=${PATH}:$(pwd)/build/bin;make
+    - ./configure --with-boost=/tmp/extra
+    - make
 after_success:
     - bash <(curl -s https://codecov.io/bash)
 branches:
