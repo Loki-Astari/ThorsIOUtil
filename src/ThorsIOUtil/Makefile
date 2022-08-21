@@ -5,5 +5,7 @@ TARGET                      = ThorsIOUtil.head Example.app
 %/Example.o:				FILE_WARNING_FLAGS	+= -Wno-unknown-pragmas
 
 FILE_WARNING_FLAGS			+= -Wno-unknown-pragmas
+VERA_PROFILE_FormatInfo.h	= ThorsIOUtil_Format
+VERA_PROFILE_Formatter.h	= ThorsIOUtil_Format
 
 include $(THORSANVIL_ROOT)/build/tools/Makefile

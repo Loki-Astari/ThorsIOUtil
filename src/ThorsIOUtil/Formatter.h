@@ -199,7 +199,6 @@ class Formatter
                                 info.length  = Length::hh;
                             }
                             break;
-#pragma vera-pushoff
                 case 'l':   info.length = Length::l;
                             if (*fmt == 'l')
                             {
@@ -207,7 +206,6 @@ class Formatter
                                 info.length  = Length::ll;
                             }
                             break;
-#pragma vera-pop
                 case 'j':   info.length = Length::j;break;
                 case 'z':   info.length = Length::z;break;
                 case 't':   info.length = Length::t;break;
@@ -408,7 +406,6 @@ class Formatter
             {
                 static std::map<std::pair<Type, Length>, AllowedType>    typeMap =
                 {
-#pragma vera-pushoff
                     {{Type::Int,   Length::none}, {&typeid(int), 0}},
                     {{Type::Int,   Length::hh},   {&typeid(char), 0xFF}},
                     {{Type::Int,   Length::h},    {&typeid(short int), 0xFFFF}},
@@ -441,7 +438,6 @@ class Formatter
                     {{Type::Count, Length::j},    {&typeid(std::intmax_t*), 0}},
                     {{Type::Count, Length::z},    {&typeid(std::size_t*), 0}},
                     {{Type::Count, Length::t},    {&typeid(std::ptrdiff_t*), 0}}
-#pragma vera-pop
                 };
                 auto find = typeMap.find({type, length});
                 if (find == typeMap.end())
