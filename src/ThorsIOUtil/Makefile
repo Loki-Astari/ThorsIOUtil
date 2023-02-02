@@ -5,6 +5,7 @@ TARGET                      = ThorsIOUtil.head Example.app
 %/Example.o:				FILE_WARNING_FLAGS	+= -Wno-unknown-pragmas
 
 FILE_WARNING_FLAGS			+= -Wno-unknown-pragmas
+UNITTEST_CXXFLAGS			+= -Wno-deprecated-declarations
 VERA_PROFILE_FormatInfo.h	= ThorsIOUtil_Format
 VERA_PROFILE_Formatter.h	= ThorsIOUtil_Format
 
