@@ -676,9 +676,6 @@ AM_BACKSLASH
 AM_DEFAULT_VERBOSITY
 AM_DEFAULT_V
 AM_V
-CSCOPE
-ETAGS
-CTAGS
 am__fastdepCXX_FALSE
 am__fastdepCXX_TRUE
 CXXDEPMODE
@@ -775,6 +772,7 @@ LDFLAGS
 CXXFLAGS
 CXX
 UNZIP
+DefaultLinkDir
 target_alias
 host_alias
 build_alias
@@ -2904,6 +2902,21 @@ ac_compiler_gnu=$ac_cv_c_compiler_gnu
 
 
 
+
+
+    DefaultLinkDir="/usr/local"
+    host=$(uname -p)
+    if test "${host}" == "arm"
+then :
+
+        DefaultLinkDir="/opt/homebrew"
+        if test "${prefix}" == "NONE"
+then :
+  prefix=${DefaultLinkDir}
+fi
+
+fi
+    DefaultLinkDir=${DefaultLinkDir}
 
 
     for ac_prog in bzip2
@@ -17865,20 +17878,6 @@ CXXDEPMODE=depmode=$am_cv_CXX_dependencies_compiler_type
 else
   am__fastdepCXX_TRUE='#'
   am__fastdepCXX_FALSE=
-fi
-
-
-# Variables for tags utilities; see am/tags.am
-if test -z "$CTAGS"; then
-  CTAGS=ctags
-fi
-
-if test -z "$ETAGS"; then
-  ETAGS=etags
-fi
-
-if test -z "$CSCOPE"; then
-  CSCOPE=cscope
 fi
 
 
