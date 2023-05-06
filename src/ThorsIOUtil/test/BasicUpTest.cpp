@@ -1,7 +1,7 @@
+
 #include "Format.h"
 
-
-#include "gtest/gtest.h"
+#include "lokigtest.h"
 #include <sstream>
 
 using ThorsAnvil::IOUtil::make_format;

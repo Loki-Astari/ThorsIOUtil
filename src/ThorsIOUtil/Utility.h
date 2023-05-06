@@ -110,7 +110,9 @@ std::string errnoToName()
         THOR_CASE( ECONNABORTED );
         THOR_CASE( ECONNRESET );
         THOR_CASE( EDESTADDRREQ );
+#ifndef _WIN32
         THOR_CASE( EDQUOT );
+#endif
         THOR_CASE( EEXIST );
         THOR_CASE( EFAULT );
         THOR_CASE( EFBIG );
