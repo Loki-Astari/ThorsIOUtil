@@ -53,6 +53,8 @@ struct NormalizeChar<signed char>
 // It keeps track of the number of characters parsed in `used`.
 class Formatter
 {
+    static constexpr std::size_t minusOne = -1;
+
     Strictness              strict;
     // The number of characters read in the formatter.
     std::size_t             used;
@@ -104,7 +106,7 @@ class Formatter
         {
             // precision of 0 is a special case.
             // We need to know if the precision has not been specified at all.
-            info.precision = -1;
+            info.precision = minusOne;
 
             // Scan the format string to set up all the
             // the member variables.
@@ -365,7 +367,7 @@ class Formatter
                                             : info.width;
                 std::size_t fractPrec = (info.useDynamicSize == Dynamic::Precision || info.useDynamicSize == Dynamic::Both)
                                             ? s.iword(static_cast<int>(Dynamic::Precision))
-                                            : info.precision == -1UL && info.type == Type::Float ? 6 : info.precision;
+                                            : info.precision == minusOne && info.type == Type::Float ? 6 : info.precision;
                 bool                    forceLeft = info.leftJustify;
                 std::ios_base::fmtflags format    = info.format;
                 if ((info.useDynamicSize == Dynamic::Width || info.useDynamicSize == Dynamic::Both) && s.iword(static_cast<int>(Dynamic::Width)) < 0)
