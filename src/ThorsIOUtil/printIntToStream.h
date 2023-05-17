@@ -28,7 +28,7 @@ template<typename T>
 inline
 void printIntToStream(std::ostream& s, T arg, FormatInfo const& info)
 {
-    static constexpr std::size_t minusOne	   = -1;
+    static constexpr std::size_t minusOne = -1;
     static long double  const logFor16    = std::log10(16.0L);
     static long double  const logFor10    = std::log10(10.0L);
     static long double  const logFor08    = std::log10(8.0L);
