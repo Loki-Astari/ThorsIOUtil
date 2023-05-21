@@ -1,4 +1,4 @@
-THORSANVIL_ROOT             = $(shell realpath ../../)
+THORSANVIL_ROOT             = ../..
 
 TARGET                      = ThorsIOUtil.head Example.app
 %/fake.o:					FILE_WARNING_FLAGS	+= -Wno-unknown-pragmas

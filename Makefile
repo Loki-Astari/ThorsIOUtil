@@ -1,4 +1,4 @@
-THORSANVIL_ROOT             = $(shell realpath ./)
+THORSANVIL_ROOT             = .
 
 TARGET                      = src
 
