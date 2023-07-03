@@ -761,6 +761,7 @@ NO_UNUSED_PRIVATE_FIELD_TEST
 ac_ct_CC
 CFLAGS
 CC
+COLOUR_STATE
 THOR_TARGETLIBS
 VERATOOL
 TestVera
@@ -819,6 +820,7 @@ ac_user_opts='
 enable_option_checking
 enable_vera
 with_hostbuild
+enable_colour
 with_standard
 enable_shared
 enable_static
@@ -1472,6 +1474,8 @@ Optional Features:
   --disable-FEATURE       do not include FEATURE (same as --enable-FEATURE=no)
   --enable-FEATURE[=ARG]  include FEATURE [ARG=yes]
   --disable-vera          Disable vera. Disable Static analysis of source.
+
+  --disable-colour        Turns off text colouring in the makefile output
 
   --enable-shared[=PKGS]  build shared libraries [default=yes]
   --enable-static[=PKGS]  build static libraries [default=yes]
@@ -3737,6 +3741,26 @@ then :
 fi
 
 
+    COLOUR_STATE="ON"
+    DARK_MODE=""
+    # Check whether --enable-colour was given.
+if test ${enable_colour+y}
+then :
+  enableval=$enable_colour;
+fi
+
+    if test "x$enable_colour" == "xno"
+then :
+
+            COLOUR_STATE="OFF"
+            subconfigure="${subconfigure} --disable-colour"
+
+
+fi
+    COLOUR_STATE=${COLOUR_STATE}
+
+
+
     if test "x${with_hostbuild}" == "x"
 then :
 
@@ -5577,7 +5601,7 @@ fi
 fi
 
 fi
-    ${COV} --version 2>&1 | grep -Eo '(\d+\.)+\d+' || ${COV} --version 2>&1 | grep -Po '(\d+\.)+\d+' > /dev/null
+    ${COV} --version 2>&1 | grep -Eo '([[:digit:]]+\.)+[[:digit:]]+' || ${COV} --version 2>&1 | grep -Po '(\d+\.)+\d+' > /dev/null
     if test $? != 0
 then :
   as_fn_error $? "
