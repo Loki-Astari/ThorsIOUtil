@@ -18203,7 +18203,7 @@ fi
 
 
 
-ac_config_headers="$ac_config_headers src/ThorsIOUtil/ThorsIOUtilConfig.h"
+ac_config_headers="$ac_config_headers config.h src/ThorsIOUtil/ThorsIOUtilConfig.h"
 
 ac_config_files="$ac_config_files Makefile.extra Makefile.config:build/autotools/build/Makefile.config.in:Makefile.config.in"
 
@@ -19316,6 +19316,7 @@ do
   case $ac_config_target in
     "libtool") CONFIG_COMMANDS="$CONFIG_COMMANDS libtool" ;;
     "depfiles") CONFIG_COMMANDS="$CONFIG_COMMANDS depfiles" ;;
+    "config.h") CONFIG_HEADERS="$CONFIG_HEADERS config.h" ;;
     "src/ThorsIOUtil/ThorsIOUtilConfig.h") CONFIG_HEADERS="$CONFIG_HEADERS src/ThorsIOUtil/ThorsIOUtilConfig.h" ;;
     "Makefile.extra") CONFIG_FILES="$CONFIG_FILES Makefile.extra" ;;
     "Makefile.config") CONFIG_FILES="$CONFIG_FILES Makefile.config:build/autotools/build/Makefile.config.in:Makefile.config.in" ;;
