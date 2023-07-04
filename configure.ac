@@ -42,6 +42,14 @@ LT_INIT
 # Note: you can push the config file to sub directories in the AC_CONFIG_HEADERS macro (see example)
 # Note: Local Make variables should be placed in Makefile.config.in
 AM_INIT_AUTOMAKE([foreign -Wall -Werror])
+AH_TOP([
+#ifndef  THORS_IOUTIL_CONFIG_H
+#define  THORS_IOUTIL_CONFIG_H
+])
+AH_BOTTOM([
+#endif
+])
+
 AC_CONFIG_HEADERS([src/ThorsIOUtil/ThorsIOUtilConfig.h])
 AC_CONFIG_FILES([Makefile.extra Makefile.config:build/autotools/build/Makefile.config.in:Makefile.config.in])
 AC_OUTPUT

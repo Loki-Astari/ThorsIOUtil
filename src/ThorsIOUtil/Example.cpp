@@ -1,4 +1,3 @@
-#include "ThorsIOUtilConfig.h"
 #include "Example.h"
 #include "Format.h"
 #include <iostream>
