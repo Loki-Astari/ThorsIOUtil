@@ -1,5 +1,10 @@
 /* src/ThorsIOUtil/ThorsIOUtilConfig.h.in.  Generated from configure.ac by autoheader.  */
 
+
+#ifndef  THORS_IOUTIL_CONFIG_H
+#define  THORS_IOUTIL_CONFIG_H
+
+
 /* Define to 1 if you have the <dlfcn.h> header file. */
 #undef HAVE_DLFCN_H
 
@@ -29,6 +34,12 @@
 
 /* Define to 1 if you have the <unistd.h> header file. */
 #undef HAVE_UNISTD_H
+
+/* Enable to use header only libraries */
+#undef HEADER_ONLY
+
+/* For header only convery to inline */
+#undef HEADER_ONLY_INCLUDE
 
 /* Define to the sub-directory where libtool stores uninstalled libraries. */
 #undef LT_OBJDIR
@@ -65,3 +76,7 @@
 
 /* Version number of package */
 #undef VERSION
+
+
+#endif
+

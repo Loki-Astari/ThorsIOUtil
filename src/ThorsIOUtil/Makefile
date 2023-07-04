@@ -1,6 +1,7 @@
-THORSANVIL_ROOT             = $(realpath ../../)
+THORSANVIL_ROOT             ?= $(realpath ../../)
 
 TARGET                      = ThorsIOUtil.head Example.app
+NAMESPACE					= ThorsAnvil::IOUtil
 %/fake.o:					FILE_WARNING_FLAGS	+= -Wno-unknown-pragmas
 %/Example.o:				FILE_WARNING_FLAGS	+= -Wno-unknown-pragmas
 
