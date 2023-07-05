@@ -17323,6 +17323,17 @@ ac_compiler_gnu=$ac_cv_cxx_compiler_gnu
 
 
 
+    sedStrip='s/-.*//'
+    UNAME=`uname -s | sed "${sedString}"`
+    if test "x${UNAME}" = "xMSYS_NT"
+then :
+
+        git config --local core.symlinks true
+        find src/ -type f | xargs -I^ git restore --source=HEAD ^
+
+fi
+
+
 # Build all the Makefiles and configuration files.
 # Used by ThorMaker
 # Note: you can push the config file to sub directories in the AC_CONFIG_HEADERS macro (see example)
