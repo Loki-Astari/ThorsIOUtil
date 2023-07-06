@@ -36,6 +36,7 @@ AC_COMPILE_IFELSE(
 # Add support for shared libraries.
 LT_INIT
 
+AX_THOR_FIX_GIT_SYMLINKS_WINDOWS
 
 # Build all the Makefiles and configuration files.
 # Used by ThorMaker
