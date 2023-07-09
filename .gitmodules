@@ -2,5 +2,5 @@
 	path = docSource/themes/documentation
 	url = git@github.com:Loki-Astari/andvari-theme-documentation.git
 [submodule ".build"]
-	path = .build
+	path = build
 	url = git@github.com:Loki-Astari/ThorMaker.git
