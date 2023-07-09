@@ -5,5 +5,6 @@ TARGET                      = ThorsIOUtil.head Example.app
 %/Example.o:				FILE_WARNING_FLAGS	+= -Wno-unknown-pragmas
 
 FILE_WARNING_FLAGS			+= -Wno-unknown-pragmas
+VERA						= echo
 
 include $(THORSANVIL_ROOT)/build/tools/Makefile
