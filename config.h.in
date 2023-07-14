@@ -1,9 +1,11 @@
 /* config.h.in.  Generated from configure.ac by autoheader.  */
 
 
+
 #ifndef  THORS_IOUTIL_CONFIG_H
 #define  THORS_IOUTIL_CONFIG_H
 
+    
 
 /* Define to 1 if you have the <dlfcn.h> header file. */
 #undef HAVE_DLFCN_H
@@ -78,5 +80,7 @@
 #undef VERSION
 
 
+
 #endif
 
+    
