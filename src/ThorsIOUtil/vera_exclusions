@@ -1,0 +1,5 @@
+set ruleExclusions(T010) {
+    FormatInfo.h
+    Formatter.h
+}
+
