@@ -2,6 +2,7 @@ a.out
 *.o
 *.lex.cpp
 .*.swp
+*.gcov
 
 unittest
 
