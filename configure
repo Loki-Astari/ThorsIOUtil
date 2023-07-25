@@ -3802,14 +3802,6 @@ fi
 
 
 
-printf "%s\n" "#define HEADER_ONLY 0" >>confdefs.h
-
-
-printf "%s\n" "#define HEADER_ONLY_INCLUDE /**/" >>confdefs.h
-
-
-
-
 
 
 
@@ -4576,6 +4568,15 @@ fi
 
 fi
 
+
+
+
+
+
+printf "%s\n" "#define THORS_IOUTIL_HEADER_ONLY 0" >>confdefs.h
+
+
+printf "%s\n" "#define THORS_IOUTIL_HEADER_ONLY_INCLUDE /**/" >>confdefs.h
 
 
 

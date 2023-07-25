@@ -37,12 +37,6 @@
 /* Define to 1 if you have the <unistd.h> header file. */
 #undef HAVE_UNISTD_H
 
-/* Enable to use header only libraries */
-#undef HEADER_ONLY
-
-/* For header only convery to inline */
-#undef HEADER_ONLY_INCLUDE
-
 /* Define to the sub-directory where libtool stores uninstalled libraries. */
 #undef LT_OBJDIR
 
@@ -75,6 +69,12 @@
 /* Not all platforms support integers this large. So lets do an explicit test
    */
 #undef SUPPORT_SIGNED_INTEGER_LITERAL_THAT_IS_HUGE
+
+/* Enable to use header only libraries */
+#undef THORS_IOUTIL_HEADER_ONLY
+
+/* For header only convert to inline */
+#undef THORS_IOUTIL_HEADER_ONLY_INCLUDE
 
 /* Version number of package */
 #undef VERSION
