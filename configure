@@ -713,11 +713,13 @@ build
 LIBTOOL
 CXX_STD_FLAG
 CXXSTDVER
+ExpFlag23
 ExpFlag20
 ExpFlag17
 ExpFlag14
 ExpFlag11
 CXXExpLanguage
+StdFlag23
 StdFlag20
 StdFlag17
 StdFlag14
@@ -791,7 +793,7 @@ enable_option_checking
 enable_vera
 enable_colour
 enable_dark_mode
-with_standard
+with_standard_version
 enable_shared
 enable_static
 with_pic
@@ -1465,9 +1467,9 @@ Optional Features:
 Optional Packages:
   --with-PACKAGE[=ARG]    use PACKAGE [ARG=yes]
   --without-PACKAGE       do not use PACKAGE (same as --with-PACKAGE=no)
-  --with-standard=<version>
+  --with-standard-version=<version>
                           Use the specified version <version> of the C++
-                          standard
+                          standard. Default 17
 
   --with-pic[=PKGS]       try to use only PIC/non-PIC objects [default=use
                           both]
@@ -4093,40 +4095,27 @@ fi
 
 
 
-# Check whether --with-standard was given.
-if test ${with_standard+y}
+# Check whether --with-standard-version was given.
+if test ${with_standard_version+y}
 then :
-  withval=$with_standard;
+  withval=$with_standard_version;
 fi
 
 
-    minLangFeature=17
-    askedLangFeature=${minLangFeature}
-    if test "x${with_standard}" != "x"
+    askedLangFeature=17
+    if test "x${with_standard_version}" != "x"
 then :
 
-            askedLangFeature=${with_standard}
+            askedLangFeature=${with_standard_version}
+            subconfigure="${subconfigure} --with-standard-version=${with_standard_version}"
 
 
 fi
 
-    if test "" = ""
-then :
-  maxLangFeature=17
-else $as_nop
-  maxLangFeature=$askedLangFeature
-fi
+    minLangFeature=3
     if test $minLangFeature -gt $askedLangFeature
 then :
   as_fn_error $? "Invalid Language requested: ${askedLangFeature}. Minimum: ${minLangFeature}" "$LINENO" 5
-fi
-    if test $askedLangFeature -gt $maxLangFeature
-then :
-  as_fn_error $? "Invalid Language requested: ${askedLangFeature}. Maximum: ${maxLangFeature}" "$LINENO" 5
-fi
-    if test $minLangFeature -gt $maxLangFeature
-then :
-  as_fn_error $? "Invalid Language max: ${maxLangFeature} can not be less ${minLangFeature}" "$LINENO" 5
 fi
 
     CXXMaxLanguage=03
@@ -4324,8 +4313,8 @@ fi
 printf "%s\n" "$ax_cv_check_cxxflags___std_cpp23" >&6; }
 if test "x$ax_cv_check_cxxflags___std_cpp23" = xyes
 then :
-  CXXMaxLanguage=20
- StdFlag20=-std=c++20
+  CXXMaxLanguage=23
+ StdFlag23=-std=c++23
 
 else $as_nop
   :
@@ -4525,15 +4514,12 @@ printf "%s\n" "$ax_cv_check_cxxflags___std_cpp2b" >&6; }
 if test "x$ax_cv_check_cxxflags___std_cpp2b" = xyes
 then :
   CXXExpLanguage=23
- ExpFlag20=-std=c++2b
+ ExpFlag23=-std=c++2b
 
 else $as_nop
   :
 fi
 
-
-    #CXX_STD_FLAG
-    #CXXSTDVER
 
     if test $askedLangFeature -le $CXXMaxLanguage
 then :
