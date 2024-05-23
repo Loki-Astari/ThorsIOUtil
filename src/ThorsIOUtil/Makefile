@@ -1,6 +1,7 @@
 THORSANVIL_ROOT             ?= $(realpath ../../)
+COVERAGE_REQUIRED			= 20
 
-TARGET                      = ThorsIOUtil.head Example.app
+TARGET                      = ThorsIOUtil.head Example.prog
 NAMESPACE					= ThorsAnvil::IOUtil
 
 include $(THORSANVIL_ROOT)/build/tools/Makefile
