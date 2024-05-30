@@ -747,6 +747,7 @@ VERATOOL
 TestVera
 COV
 DefaultLinkDir
+THOR_PACKAGE_NAME
 target_alias
 host_alias
 build_alias
@@ -3514,6 +3515,11 @@ ac_compiler_gnu=$ac_cv_cxx_compiler_gnu
 
     export BUILDING_ThorsIOUtil=1
 
+printf "%s\n" "#define THOR_PACKAGE_NAME ThorsIOUtil" >>confdefs.h
+
+    THOR_PACKAGE_NAME=ThorsIOUtil
+
+
     ac_ext=cpp
 ac_cpp='$CXXCPP $CPPFLAGS'
 ac_compile='$CXX -c $CXXFLAGS $CPPFLAGS conftest.$ac_ext >&5'
@@ -4047,7 +4053,14 @@ then :
 fi
 
 
-    askedLangFeature=17
+
+    if test "x" == "x"
+then :
+  askedLangFeature=17
+else $as_nop
+  askedLangFeature=
+
+fi
     if test "x${with_standard_version}" != "x"
 then :
 
@@ -17481,6 +17494,11 @@ fi
             popd
 
     export BUILDING_${third}=1
+
+printf "%s\n" "#define THOR_PACKAGE_NAME \${third}" >>confdefs.h
+
+    THOR_PACKAGE_NAME=${third}
+
 
         done
         popd

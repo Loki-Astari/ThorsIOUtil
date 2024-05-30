@@ -76,6 +76,9 @@
 /* For header only convert to inline */
 #undef THORS_IOUTIL_HEADER_ONLY_INCLUDE
 
+/* Name of package for header files */
+#undef THOR_PACKAGE_NAME
+
 /* Version number of package */
 #undef VERSION
 
