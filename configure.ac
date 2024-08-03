@@ -16,6 +16,6 @@ AC_COMPILE_IFELSE(
 
 LT_INIT
 
-AX_THOR_FUNC_TERM_BUILD([IOUTIL], [src/ThorsIOUtil/ThorsIOUtilConfig.h])
+AX_THOR_FUNC_TERM_BUILD([IOUTIL], [src/ThorsIOUtil/ThorsIOUtilConfig.h:config.h.in])
 
 AC_OUTPUT

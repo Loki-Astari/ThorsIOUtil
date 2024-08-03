@@ -149,7 +149,7 @@ THOR_PRINTF_TEST(79, "8.e+08",                        "%#1.1g",        789456123
 # The arg constant here is not legal C.
 #endif
 #if defined(SUPPORT_SIGNED_INTEGER_LITERAL_THAT_IS_HUGE)
-THOR_PRINTF_TEST(80, "-8589934591",                   "%lld",         18446744065119617025LL)
+THOR_PRINTF_TEST(80, "-8589934591",                   "%lld",         18446744065119617025ULL)
 #endif
 THOR_PRINTF_TEST(81, "    +100",                      "%+8lld",       100LL)
 THOR_PRINTF_TEST(82, "+00000100",                     "%+.8lld",      100LL)
@@ -204,7 +204,7 @@ THOR_PRINTF_TEST(119, " 0000000000000000000000000000000000000001", "% .40d", 1)
 #See above.
 #endif
 #if defined(SUPPORT_SIGNED_INTEGER_LITERAL_THAT_IS_HUGE)
-THOR_PRINTF_TEST(120, "-8589934591",                   "%lld",          18446744065119617025LL)
+THOR_PRINTF_TEST(120, "-8589934591",                   "%lld",          18446744065119617025ULL)
 #endif
 #if 0
 # libc fails this, with "" and return code -1 (!)
