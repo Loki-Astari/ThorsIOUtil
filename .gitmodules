@@ -1,6 +1,6 @@
 [submodule "docSource/themes/documentation"]
 	path = docSource/themes/documentation
-	url = ../andvari-theme-documentation.git
+	url = ../../Loki-Astari/andvari-theme-documentation.git
 [submodule ".build"]
 	path = build
-	url = ../ThorMaker.git
+	url = ../../Loki-Astari/ThorMaker.git
