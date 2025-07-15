@@ -785,8 +785,6 @@ PACKAGE_TARNAME
 PACKAGE_NAME
 PATH_SEPARATOR
 SHELL
-MAGIC_ENUM_FILE
-HAVE_MagicEnumHeaderOnly
 am__quote'
 ac_subst_files=''
 ac_user_opts='
