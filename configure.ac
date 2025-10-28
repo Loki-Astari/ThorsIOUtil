@@ -1,4 +1,4 @@
-AC_INIT([ThorsIOUtil], [3.0], [Loki.Astari+ThorsAnvil@gmail.com])
+AC_INIT([ThorsIOUtil], [3.0], [Loki.Astari+ThorsIOUtil@gmail.com])
 AC_PREREQ([2.65])
 
 AC_CONFIG_MACRO_DIR([build/autotools/m4])
