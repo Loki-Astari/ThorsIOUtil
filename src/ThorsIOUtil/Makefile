@@ -3,6 +3,7 @@ COVERAGE_REQUIRED			= 20
 
 TARGET                      = ThorsIOUtil.head Example.prog
 NAMESPACE					= ThorsAnvil::IOUtil
+LDLIBS_EXTERN_BUILD			+= ThorSerialize
 
 include $(THORSANVIL_ROOT)/build/tools/Makefile
 

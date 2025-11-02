@@ -7,6 +7,7 @@ AC_CONFIG_AUX_DIR([build/autotools/build])
 AX_THOR_FUNC_INIT_BUILD([ThorsIOUtil], [src/ThorsIOUtil/Format.h], [20])
 
 AX_THOR_FEATURE_HEADER_ONLY_VARIANT([THORS_IOUTIL])
+AX_THOR_CHECK_USE_THORS_SERIALIZE([ThorsLogging])
 
 AC_COMPILE_IFELSE(
     [AC_LANG_SOURCE([int main(){auto value = 18446744065119617025LL;}])],
