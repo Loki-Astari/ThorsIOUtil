@@ -4707,7 +4707,19 @@ test -n "$UNZIP" || UNZIP=":"
         " "$LINENO" 5
     fi
     pushd build/third
-    ./setup "${CXX}  ${CXX_STD_FLAG}" || as_fn_error $? "Failed to set up the test utilities" "$LINENO" 5
+    buildTool="make"
+    buildConfig=""
+    sedStrip='s/-.*//'
+    UNAME=`uname -s | sed "${sedStrip}"`
+    if  test "x${UNAME}" = "xMSYS_NT" || test "x${UNAME}" = "xMINGW64_NT"
+then :
+
+            buildTool="ninja"
+            buildConfig="-G Ninja"
+
+
+fi
+    ./setup "${CXX}  ${CXX_STD_FLAG}" "${buildTool}" "${buildConfig}" || as_fn_error $? "Failed to set up the test utilities" "$LINENO" 5
     popd
 
 
