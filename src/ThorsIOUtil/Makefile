@@ -1,3 +1,4 @@
+CONFIG_NAME					= ThorsIOUtil
 THORSANVIL_ROOT             ?= $(realpath ../../)
 COVERAGE_REQUIRED			= 20
 
