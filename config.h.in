@@ -79,9 +79,6 @@
 
 /* For header only convert to inline */
 
-/* Name of package for header files */
-#undef THOR_PACKAGE_NAME
-
 /* Version number of package */
 #undef VERSION
 
