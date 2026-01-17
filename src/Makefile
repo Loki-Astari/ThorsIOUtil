@@ -1,5 +1,5 @@
-THORSANVIL_ROOT             = $(realpath ../)
+THORSANVIL_ROOT				?= $(realpath ../)
 
-TARGET                      = ThorsIOUtil
+TARGET						= ThorsIOUtil
 
 include $(THORSANVIL_ROOT)/build/tools/Project.Makefile
