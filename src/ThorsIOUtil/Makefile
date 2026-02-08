@@ -1,7 +1,7 @@
 CONFIG_NAME					= ThorsIOUtil
 THORSANVIL_ROOT             ?= $(realpath ../../)
 COVERAGE_REQUIRED			= 20
-TARGET                      = ThorsIOUtil.head Example.prog
+TARGET                      = ThorsIOUtil.head
 NAMESPACE					= ThorsAnvil::IOUtil
 
 
