@@ -4,6 +4,9 @@ a.out
 .*.swp
 *.gcov
 
+.cluade
+.clangd
+
 unittest
 
 report/
